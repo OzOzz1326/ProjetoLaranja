@@ -7,8 +7,6 @@ import Rodape from './components/Rodape.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <MenuSuperior/>
-    <App />
-    <Rodape/>
+    <App />  
   </StrictMode>,
 )
