@@ -1,0 +1,159 @@
+#pagina-quadras {
+	min-height: calc(100vh - 142px);
+	padding: 52px 24px 96px;
+	background: transparent;
+	color: #f0f0f0;
+}
+
+#pagina-quadras .cabecalho-quadras,
+#pagina-quadras .lista-quadras,
+#pagina-quadras .estado-vazio {
+	max-width: 940px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#pagina-quadras .voltar-quadras {
+	display: inline-block;
+	margin-bottom: 42px;
+	color: #a9c4ae;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+#pagina-quadras .voltar-quadras:hover {
+	color: #57c785;
+}
+
+#pagina-quadras .etiqueta-quadras {
+	margin: 0 0 12px;
+	color: #57c785;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 3px;
+}
+
+#pagina-quadras h1 {
+	margin: 0;
+	color: #f4fff6;
+	font-size: clamp(30px, 5vw, 48px);
+}
+
+#pagina-quadras .cabecalho-quadras > p:last-child {
+	margin: 14px 0 38px;
+	color: #a9c4ae;
+	font-size: 16px;
+}
+
+#pagina-quadras .lista-quadras {
+	display: grid;
+	gap: 16px;
+}
+
+#pagina-quadras .card-quadra {
+	padding: 24px;
+	border: 1px solid #255b35;
+	border-radius: 12px;
+	background: rgba(13, 43, 23, 0.86);
+}
+
+#pagina-quadras .topo-quadra {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+#pagina-quadras h2 {
+	margin: 0;
+	color: #f4fff6;
+	font-size: 20px;
+}
+
+#pagina-quadras .topo-quadra p {
+	margin: 8px 0 0;
+	color: #a9c4ae;
+	font-size: 14px;
+}
+
+#pagina-quadras .status-quadra {
+	padding: 6px 10px;
+	border-radius: 20px;
+	background: rgba(87, 199, 133, 0.14);
+	color: #57c785;
+	font-size: 12px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+#pagina-quadras .horarios-quadra {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-top: 24px;
+	padding-top: 18px;
+	border-top: 1px solid rgba(87, 199, 133, 0.18);
+}
+
+#pagina-quadras .horarios-quadra > span {
+	color: #a9c4ae;
+	font-size: 13px;
+}
+
+#pagina-quadras .horarios-quadra > div {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+#pagina-quadras .horarios-quadra button,
+#pagina-quadras .botao-voltar {
+	padding: 9px 14px;
+	border: 1px solid #57c785;
+	border-radius: 6px;
+	background: transparent;
+	color: #57c785;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+#pagina-quadras .horarios-quadra button {
+	cursor: pointer;
+}
+
+#pagina-quadras .horarios-quadra button:hover,
+#pagina-quadras .botao-voltar:hover {
+	background: #57c785;
+	color: #07190c;
+}
+
+#pagina-quadras .estado-vazio {
+	padding: 48px 24px;
+	border: 1px solid #255b35;
+	border-radius: 12px;
+	text-align: center;
+	background: rgba(13, 43, 23, 0.86);
+}
+
+#pagina-quadras .estado-vazio p {
+	margin: 12px 0 28px;
+	color: #a9c4ae;
+}
+
+#pagina-quadras .botao-voltar {
+	display: inline-block;
+	text-decoration: none;
+}
+
+@media (max-width: 650px) {
+	#pagina-quadras {
+		padding: 36px 18px 72px;
+	}
+
+	#pagina-quadras .topo-quadra,
+	#pagina-quadras .horarios-quadra {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+}
