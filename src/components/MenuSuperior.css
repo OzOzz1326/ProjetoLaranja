@@ -53,6 +53,7 @@
     padding: 8px 2px;
     position: relative;
     transition: color 0.25s ease;
+    text-align: center;
 }
 
 /* Efeito de underline animado no hover/ativo */

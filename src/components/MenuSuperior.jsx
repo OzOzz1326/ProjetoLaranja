@@ -10,8 +10,6 @@ function MenuSuperior() {
                 <ul className="nav-links">
                     <li><a href="#">Início</a></li>
                     <li><a href="#">Quadras</a></li>
-                    <li><a href="#" >Filiais</a></li>
-                    <li><a href="#">Torneios</a></li>
                 </ul>
                 <div className="search-container">
                     <input type="text" placeholder="Pesquisar..." className="search-input" id="busca" />
