@@ -1,23 +1,40 @@
 .rodape {
-  background-color: #148354;
-  color: #ffffff;
-  padding: 20px;
+  background: linear-gradient(180deg, rgba(20, 131, 84, 0.96), rgba(10, 53, 31, 0.96));
+  color: #edf7f1;
+  padding: 26px 20px 18px;
   text-align: center;
-  font-size: 14px;
-  position:absolute;
-  bottom: 0;
   font-size: 15px;
   width: 100%;
+  border-top: 1px solid rgba(133, 232, 175, 0.28);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.15);
+  
 }
 
-.rodape nav{
+.rodape nav {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-bottom: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  margin-bottom: 12px;
 }
 
 .rodape a {
-  color: #bbb;
+  color: #d9f7e7;
   text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.rodape a:hover {
+  color: #ffffff;
+  opacity: 1;
+}
+
+.rodape p {
+  margin: 0;
+  color: #dfeee4;
+  font-size: 13px;
+  opacity: 0.95;
 }

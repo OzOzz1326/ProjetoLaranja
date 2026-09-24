@@ -5,10 +5,11 @@ function Rodape() {
     <footer className="rodape">
       <nav>
         <a href="#home">Início</a>
-        <a href="#sobre">Sobre</a>
+        <a href="#quadras">Quadras</a>
+        <a href="#eventos">Eventos</a>
         <a href="#contato">Contato</a>
       </nav>
-      <p>&copy; {new Date().getFullYear()} Meu Site. Todos os direitos reservados.</p>
+      <p>&copy; {new Date().getFullYear()} Sport In City. Todos os direitos reservados.</p>
     </footer>
   );
 }
