@@ -7,10 +7,10 @@
   position:absolute;
   bottom: 0;
   font-size: 15px;
-  box-shadow
+  width: 100%;
 }
 
-.rodape nav {
+.rodape nav{
   display: flex;
   justify-content: center;
   gap: 15px;
