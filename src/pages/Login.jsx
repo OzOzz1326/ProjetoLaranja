@@ -1,36 +1,42 @@
-import "./Login.css"
+import "./Cadastro.css";
+import "./Login.css";
 
 function Login() {
     return (
-        <div>
-            <main className="container-login">
-                <div className="card-login">
-                    <div className="topo-card">
-                        <div className="icone-login">
-                            <div className="head-icon"></div>
-                            <div className="body-icon"></div>
-                        </div>
-                        <h1 className="titulo-login">Login</h1>
+        <main className="pagina-cadastro">
+            <div className="titulo-pagina">
+                <h1>Login</h1>
+                <p>Bem-vindo de volta ao Sport In City</p>
+            </div>
+
+            <div className="card-form cadastro-card">
+                <h2>Acesse sua conta</h2>
+
+                <form className="form-cadastro">
+                    <div className="campo">
+                        <label htmlFor="email">Telefone/Email</label>
+                        <input id="email" type="text" placeholder="Telefone ou Email" required />
                     </div>
 
-                    <form className="formulario">
-                        <label htmlFor="email">Telefone/Email:</label>
-                        <input type="text" id="email" className="input-login" placeholder="Telefone ou Email" required />
+                    <div className="campo">
+                        <label htmlFor="senha">Senha</label>
+                        <input id="senha" type="password" placeholder="Senha" required />
+                    </div>
 
-                        <label htmlFor="senha">Senha:</label>
-                        <input type="password" id="senha" className="input-login" placeholder="Senha" required />
+                    <div className="termos">
+                        <a href="#" style={{ color: '#57C785', fontSize: '13px', textDecoration: 'none' }}>Esqueci minha senha</a>
+                    </div>
 
-                        <div className="botao-login">
-                            <button type="submit" className="btn-entrar">Entrar</button>
-                        </div>
+                    <button type="submit" className="btn-salvar">
+                        Entrar
+                    </button>
 
-                        <a href="#" className="esqueci-senha">Esqueci minha senha.</a>
-
-                        <p className="cadastro">Não possui uma conta? <a href="cadastro.html">Cadastre-se aqui!</a></p>
-                    </form>
-                </div>
-            </main>
-        </div>
+                    <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '13px', color: '#8ab894' }}>
+                        Não possui uma conta? <a href="./Cadastro" style={{ color: '#57C785', fontWeight: 'bold', textDecoration: 'none' }}>Cadastre-se aqui!</a>
+                    </p>
+                </form>
+            </div>
+        </main>
     );
 }
 
