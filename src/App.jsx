@@ -11,7 +11,6 @@ function App() {
           <Route path="/pagina-inicial" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/cadastro" element={<Cadastro/>}/>
-          <Route path="/quadras" element={<Quadras/>}/>
         </Routes>
       </BrowserRouter>
     </div>

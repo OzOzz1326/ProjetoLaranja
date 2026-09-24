@@ -1,11 +1,9 @@
 import "./Cadastro.css"
 
 function Cadastro(){
-    return (
-        <div>
-            <input type="text"/>
-        </div>
-    );
+    return(
+        <div></div>
+        );
 }
 
 export default Cadastro;

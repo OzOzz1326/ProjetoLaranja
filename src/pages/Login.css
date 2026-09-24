@@ -1,0 +1,138 @@
+/* ===== FUNDO DA PÁGINA ===== */
+.pagina-cadastro {
+    min-height: calc(100vh - 70px);
+    background-image:
+        linear-gradient(rgba(7, 25, 12, 0.72), rgba(7, 25, 12, 0.72)),
+        url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL263qNMmTGx8zeoePxm_AQ2tHPb4Dd54RW-SKSo2I8cSo44VhhxtFIg4&s=10');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 50px 60px;
+    gap: 30px;
+}
+
+/* CONTEÚDO PRINCIPAL (Card de Login) */
+.container-login {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-login {
+    margin-top: 70px;
+    background-color: rgba(10, 30, 15, 0.82);
+    width: 400px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    color: white;
+    backdrop-filter: blur(8px);
+}
+
+.topo-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Icone de perfil dentro do card (Feito com CSS) */
+.icone-login {
+    width: 90px;
+    height: 90px;
+    background-color: #05401c; /* Verde mais escuro do fundo do icone */
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.head-icon {
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+.body-icon {
+    width: 50px;
+    height: 30px;
+    background-color: white;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    margin-top: 5px;
+}
+
+.titulo-login {
+    font-size: 40px;
+    font-weight: normal;
+    margin: 0;
+    color: black;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.formulario label {
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: white;
+}
+
+.input-login {
+    padding: 12px;
+    border: none;
+    margin-bottom: 2px;
+    font-size: 16px;
+    outline: none;
+}
+
+.esqueci-senha {
+    color: white;
+    font-size: 12px;
+    text-decoration: none;
+    text-align: right;
+    margin-bottom: 40px;
+    margin-top: 5px;
+}
+
+.cadastro {
+    font-size: 15px;
+    text-align: center;
+    margin-top: 20px;
+    color: black;
+}
+
+.cadastro a {
+    color: white;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.botao-login {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.btn-entrar {
+    background-color: #5ab13f; /* Verde mais claro do botao */
+    color: black;
+    border: none;
+    padding: 10px 40px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.btn-entrar:hover {
+    background-color: #6edb4c;
+}
