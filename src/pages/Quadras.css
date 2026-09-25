@@ -45,6 +45,24 @@
 	font-size: 16px;
 }
 
+#pagina-quadras .botao-cadastrar-quadra {
+	display: inline-block;
+	margin: 0 0 24px;
+	padding: 10px 14px;
+	border: 1px solid #57c785;
+	border-radius: 5px;
+	background: #57c785;
+	color: #07190c;
+	font-size: 14px;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+#pagina-quadras .botao-cadastrar-quadra:hover {
+	background: transparent;
+	color: #57c785;
+}
+
 #pagina-quadras .lista-quadras {
 	display: grid;
 	gap: 16px;

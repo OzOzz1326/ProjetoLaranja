@@ -29,16 +29,17 @@ O projeto está em uma fase inicial de desenvolvimento, com a base visual e de n
 - [ ] Garantir que a tela inicial e a etapa de seleção de esporte reflitam os dados reais do banco.
 
 ### 4. Autenticação e usuários
-- [ ] Implementar login funcional com autenticação do Supabase.
-- [ ] Implementar cadastro real de usuários.
+- [x] Implementar login com `supabase.auth.signInWithPassword`.
+- [x] Criar usuários no Supabase Auth e associar perfil pela coluna `email` em `usuarios`.
 - [ ] Validar e proteger rotas que exigem login.
 - [ ] Criar fluxo de logout e controle de sessão.
 
 ### 5. Cadastro e gestão de quadras
-- [ ] Finalizar e implementar `src/pages/CriarQuadra.jsx` com formulário completo.
-- [ ] Conectar o formulário de cadastro de quadra ao Supabase.
-- [ ] Validar campos obrigatórios e relacionamentos entre tabela e esporte.
+- [x] Implementar `src/pages/CriarQuadra.jsx` com formulário de dados principais, dias/horários de funcionamento e comodidades.
+- [x] Conectar o formulário ao Supabase usando `id_usuario`, `nome`, `tipo_jogo`, `descricao`, `preco`, `imagem`, `funcionamento_seg` a `funcionamento_dom`, `horario_inicio`, `horario_fim` e `outros`.
+- [x] Validar os campos obrigatórios e horários do formulário.
 - [ ] Criar a lógica de atualização e remoção de quadras, se necessário.
+- [x] Adicionar acesso ao cadastro de quadra na página `Quadras`.
 
 ### 6. Melhorias de experiência e regras de negócio
 - [ ] Adicionar filtros por cidade, bairro, esporte e disponibilidade.
@@ -60,8 +61,8 @@ O projeto está em uma fase inicial de desenvolvimento, com a base visual e de n
 
 - O projeto já está com a base visual funcional, mas ainda está no estágio 1 do desenvolvimento definido em `docs/arquitetura.md`.
 - As páginas de formulário e a seleção de esporte não estão conectadas a dados reais de banco.
-- A tela `CriarQuadra` ainda está vazia e precisa ser implementada.
-- A autenticação não está funcional, e as rotas atualmente não possuem proteção real.
+- A tela `CriarQuadra` cadastra os dados da quadra, os dias e horários de funcionamento e a descrição `outros` via Supabase; falhas de banco são exibidas somente no console.
+- Cadastro e login usam Supabase Auth e relacionam o perfil pela coluna `email`; ainda falta proteção global de rotas e logout.
 - O caminho principal do app ainda está configurado para `/pagina-inicial`, então a rota raiz pode exigir ajuste de navegação no futuro.
 
 ## Próximo passo recomendado

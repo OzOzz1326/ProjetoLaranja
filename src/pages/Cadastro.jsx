@@ -7,26 +7,72 @@ function Cadastro() {
     const [dataNascimento, alteraDataNascimento] = useState("")
     const [email, alteraEmail] = useState("")
     const [senha, alteraSenha] = useState("")
+    const [salvando, alteraSalvando] = useState(false)
 
     async function inserirUsuario() {
-        const obj = {
-            nome: nome,
-            email: email,
-            senha: senha,
-            data_nascimento: dataNascimento
+        if (!supabase) {
+            alert("Não foi possível conectar ao serviço de cadastro.")
+            return
         }
 
-        const { error } = await supabase.from("usuarios").insert(obj)
+        alteraSalvando(true)
 
-        if (error == null) {
-            alert("Usuário cadastrado com sucesso!")
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email,
+                password: senha,
+                options: {
+                    data: {
+                        nome,
+                        data_nascimento: dataNascimento,
+                    },
+                },
+            })
+
+            if (error) {
+                console.error("Erro ao cadastrar usuário no Supabase Auth:", error)
+                alert(`Não foi possível cadastrar o usuário: ${error.message}`)
+                return
+            }
+
+            const { data: perfil, error: erroBuscaPerfil } = await supabase
+                .from("usuarios")
+                .select("id")
+                .eq("email", email)
+                .maybeSingle()
+
+            if (erroBuscaPerfil) {
+                console.error("Erro ao localizar o perfil do usuário:", erroBuscaPerfil)
+                alert(`A conta foi criada, mas não foi possível localizar o perfil: ${erroBuscaPerfil.message}`)
+                return
+            }
+
+            if (!perfil) {
+                const { error: erroPerfil } = await supabase.from("usuarios").insert({
+                    nome,
+                    email,
+                    data_nascimento: dataNascimento,
+                })
+
+                if (erroPerfil) {
+                    console.error("Erro ao criar o perfil do usuário:", erroPerfil)
+                    alert(`A conta foi criada, mas não foi possível salvar o perfil: ${erroPerfil.message}`)
+                    return
+                }
+            }
+
+            alert(data.session
+                ? "Usuário cadastrado com sucesso!"
+                : "Cadastro iniciado. Confira seu e-mail para confirmar a conta.")
             alteraNome("")
             alteraDataNascimento("")
             alteraEmail("")
             alteraSenha("")
-        } else {
-            alert("Erro ao cadastrar usuário. Verifique os dados e tente novamente.")
-            console.log(error)
+        } catch (error) {
+            console.error("Erro inesperado ao cadastrar usuário:", error)
+            alert("Ocorreu um erro ao cadastrar. Confira o console do navegador.")
+        } finally {
+            alteraSalvando(false)
         }
     }
 
@@ -104,8 +150,8 @@ function Cadastro() {
                         </label>
                     </div>
 
-                    <button type="submit" className="btn-salvar">
-                        Cadastrar
+                    <button type="submit" className="btn-salvar" disabled={salvando}>
+                        {salvando ? "Cadastrando..." : "Cadastrar"}
                     </button>
                 </form>
             </div>

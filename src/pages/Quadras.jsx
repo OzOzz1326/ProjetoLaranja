@@ -5,7 +5,10 @@ import { Link, useSearchParams } from "react-router-dom";
 
 const nomesEsportes = {
     futebol: "Futebol",
+    futsal: "Futsal",
     futvolei: "Futvôlei",
+    basquete: "Basquete",
+    volei: "Vôlei",
     tenis: "Tênis",
     beachtenis: "Beach Tênis",
 };
@@ -108,6 +111,7 @@ function Quadras(){
                 <p className="etiqueta-quadras">QUADRAS DISPONÍVEIS</p>
                 <h1>{esporteSelecionado ? `Quadras de ${nomeEsporte}` : "Encontre sua quadra"}</h1>
                 <p>Veja os locais e escolha o melhor horário para jogar.</p>
+                <Link className="botao-cadastrar-quadra" to="/cadastrar-quadra">Cadastrar nova quadra</Link>
             </div>
 
             {carregando ? (

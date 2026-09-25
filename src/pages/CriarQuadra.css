@@ -1,0 +1,172 @@
+#pagina-criar-quadra {
+	min-height: calc(100vh - 142px);
+	padding: 48px 24px 80px;
+	color: #f0f0f0;
+}
+
+#pagina-criar-quadra .cabecalho-criar-quadra,
+#pagina-criar-quadra .formulario-quadra {
+	max-width: 680px;
+	margin: 0 auto;
+}
+
+#pagina-criar-quadra .cabecalho-criar-quadra > a {
+	display: inline-block;
+	margin-bottom: 28px;
+	color: #a9c4ae;
+	text-decoration: none;
+}
+
+#pagina-criar-quadra .etiqueta-criar-quadra {
+	margin: 0 0 10px;
+	color: #57c785;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+#pagina-criar-quadra h1 {
+	margin: 0;
+	color: #f4fff6;
+	font-size: 36px;
+}
+
+#pagina-criar-quadra .cabecalho-criar-quadra > p:last-child {
+	margin: 12px 0 28px;
+	color: #a9c4ae;
+}
+
+#pagina-criar-quadra .formulario-quadra {
+	display: grid;
+	gap: 18px;
+	padding: 24px;
+	border: 1px solid #255b35;
+	border-radius: 8px;
+	background: rgba(13, 43, 23, 0.86);
+}
+
+#pagina-criar-quadra .campo-quadra {
+	display: grid;
+	gap: 7px;
+	color: #e5f1e8;
+	font-size: 14px;
+}
+
+#pagina-criar-quadra .campo-quadra input,
+#pagina-criar-quadra .campo-quadra select,
+#pagina-criar-quadra .campo-quadra textarea {
+	width: 100%;
+	padding: 11px 12px;
+	border: 1px solid #477252;
+	border-radius: 5px;
+	background: #102b19;
+	color: #f4fff6;
+	font: inherit;
+}
+
+#pagina-criar-quadra .campo-quadra textarea {
+	resize: vertical;
+}
+
+#pagina-criar-quadra .grupo-horarios-quadra {
+	display: grid;
+	gap: 10px;
+	min-width: 0;
+	margin: 0;
+	padding: 16px;
+	border: 1px solid #477252;
+	border-radius: 5px;
+}
+
+#pagina-criar-quadra .grupo-horarios-quadra legend {
+	padding: 0 6px;
+	color: #e5f1e8;
+	font-size: 14px;
+}
+
+#pagina-criar-quadra .linha-horario-quadra {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 8px 0;
+	border-bottom: 1px solid rgba(87, 199, 133, 0.16);
+}
+
+#pagina-criar-quadra .seletor-dia-quadra {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #e5f1e8;
+}
+
+#pagina-criar-quadra .campos-horario-quadra {
+	display: flex;
+	gap: 10px;
+}
+
+#pagina-criar-quadra .campos-horario-quadra label {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: #a9c4ae;
+	font-size: 12px;
+}
+
+#pagina-criar-quadra .campos-horario-quadra input {
+	width: 112px;
+	padding: 7px;
+	border: 1px solid #477252;
+	border-radius: 4px;
+	background: #102b19;
+	color: #f4fff6;
+}
+
+#pagina-criar-quadra .texto-fechado-quadra,
+#pagina-criar-quadra .campo-quadra small {
+	color: #a9c4ae;
+	font-size: 12px;
+}
+
+#pagina-criar-quadra .botao-criar-quadra {
+	padding: 12px 16px;
+	border: 1px solid #57c785;
+	border-radius: 5px;
+	background: #57c785;
+	color: #07190c;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+#pagina-criar-quadra .botao-criar-quadra:disabled {
+	opacity: 0.65;
+	cursor: wait;
+}
+
+#pagina-criar-quadra .mensagem-formulario {
+	margin: 0;
+	color: #ffb4a9;
+}
+
+@media (max-width: 600px) {
+	#pagina-criar-quadra {
+		padding: 32px 16px 56px;
+	}
+
+	#pagina-criar-quadra h1 {
+		font-size: 30px;
+	}
+
+	#pagina-criar-quadra .formulario-quadra {
+		padding: 18px;
+	}
+
+	#pagina-criar-quadra .linha-horario-quadra {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	#pagina-criar-quadra .campos-horario-quadra {
+		width: 100%;
+		flex-wrap: wrap;
+	}
+}
