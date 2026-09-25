@@ -1,9 +1,34 @@
+import { useState } from "react";
+import { supabase } from "../supabase";
 import "./Cadastro.css";
 
 function Cadastro() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-    };
+    const [nome, alteraNome] = useState("")
+    const [dataNascimento, alteraDataNascimento] = useState("")
+    const [email, alteraEmail] = useState("")
+    const [senha, alteraSenha] = useState("")
+
+    async function inserirUsuario() {
+        const obj = {
+            nome: nome,
+            email: email,
+            senha: senha,
+            data_nascimento: dataNascimento
+        }
+
+        const { error } = await supabase.from("usuarios").insert(obj)
+
+        if (error == null) {
+            alert("Usuário cadastrado com sucesso!")
+            alteraNome("")
+            alteraDataNascimento("")
+            alteraEmail("")
+            alteraSenha("")
+        } else {
+            alert("Erro ao cadastrar usuário. Verifique os dados e tente novamente.")
+            console.log(error)
+        }
+    }
 
     return (
         <main className="pagina-cadastro">
@@ -15,40 +40,34 @@ function Cadastro() {
             <div className="card-form cadastro-card">
                 <h2>Cadastro</h2>
 
-                <form className="form-cadastro" onSubmit={handleSubmit}>
+                <form className="form-cadastro" onSubmit={(event) => {
+                    event.preventDefault();
+                    inserirUsuario();
+                }}>
                     <div className="campo">
                         <label htmlFor="nome-completo">Nome completo</label>
                         <input
                             type="text"
                             id="nome-completo"
-                            name="nome-completo"
+                            name="nome"
                             placeholder="Ex: João da Silva"
                             required
                             minLength="3"
+                            value={nome}
+                            onChange={(e) => alteraNome(e.target.value)}
                         />
                     </div>
 
-                    <div className="campos-linha">
-                        <div className="campo">
-                            <label htmlFor="data-nascimento">Data de Nascimento</label>
-                            <input
-                                type="date"
-                                id="data-nascimento"
-                                name="data-nascimento"
-                                required
-                            />
-                        </div>
-
-                        <div className="campo">
-                            <label htmlFor="telefone">Telefone</label>
-                            <input
-                                type="tel"
-                                id="telefone"
-                                name="telefone"
-                                placeholder="(16) 99999-9999"
-                                required
-                            />
-                        </div>
+                    <div className="campo">
+                        <label htmlFor="data-nascimento">Data de Nascimento</label>
+                        <input
+                            type="date"
+                            id="data-nascimento"
+                            name="dataNascimento"
+                            required
+                            value={dataNascimento}
+                            onChange={(e) => alteraDataNascimento(e.target.value)}
+                        />
                     </div>
 
                     <div className="campo">
@@ -59,6 +78,8 @@ function Cadastro() {
                             name="email"
                             placeholder="seuemail@exemplo.com"
                             required
+                            value={email}
+                            onChange={(e) => alteraEmail(e.target.value)}
                         />
                     </div>
 
@@ -71,6 +92,8 @@ function Cadastro() {
                             placeholder="Crie uma senha segura"
                             required
                             minLength="6"
+                            value={senha}
+                            onChange={(e) => alteraSenha(e.target.value)}
                         />
                     </div>
 
