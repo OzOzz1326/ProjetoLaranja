@@ -1,0 +1,243 @@
+.detalhes-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Inter', 'Roboto', sans-serif;
+    color: #333;
+}
+
+.detalhes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 1rem;
+}
+
+.detalhes-header h1 {
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.tipo-jogo-badge {
+    background-color: #ff7f00; /* Laranja premium */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(255, 127, 0, 0.2);
+}
+
+.detalhes-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+@media (max-width: 900px) {
+    .detalhes-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+.imagem-container {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.quadra-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.quadra-img:hover {
+    transform: scale(1.02);
+}
+
+.imagem-placeholder {
+    color: #adb5bd;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.info-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #2b2b2b;
+}
+
+.descricao {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-left: 4px solid #ff7f00;
+}
+
+.info-item strong {
+    color: #495057;
+    font-size: 0.95rem;
+}
+
+.info-item span {
+    font-size: 1.1rem;
+    color: #212529;
+    font-weight: 500;
+}
+
+.outros-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.outros-section strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #343a40;
+}
+
+.outros-section p {
+    margin: 0;
+    color: #495057;
+    line-height: 1.5;
+}
+
+/* Sidebar e Card de Reserva */
+.detalhes-sidebar {
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.reserva-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+}
+
+.reserva-card h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.preco-container {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.preco-valor {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2b2b2b;
+}
+
+.preco-periodo {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-left: 0.5rem;
+}
+
+.dias-funcionamento {
+    margin-bottom: 2rem;
+}
+
+.dias-funcionamento h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #495057;
+}
+
+.dias-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.dia-badge {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.dia-badge:hover {
+    background-color: #ff7f00;
+    color: white;
+    cursor: default;
+}
+
+.btn-reservar {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #ff7f00 0%, #ff5500 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(255, 127, 0, 0.3);
+}
+
+.btn-reservar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 127, 0, 0.4);
+}
+
+.btn-reservar:active {
+    transform: translateY(0);
+}
+
+.loading-container, .error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    font-family: 'Inter', sans-serif;
+    color: #555;
+}
