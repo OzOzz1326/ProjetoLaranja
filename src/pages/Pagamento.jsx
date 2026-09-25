@@ -1,6 +1,21 @@
-import "./Pagamento.css"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import "./Pagamento.css";
 
 function Pagamento() {
+    const [metodo, setMetodo] = useState("credito");
+
+    const opcoesPagamento = [
+        { id: "credito", titulo: "Cartão de crédito", detalhe: "Pagamentos parcelados", selo: "💳" },
+        { id: "debito", titulo: "Cartão de débito", detalhe: "Pagamento à vista", selo: "💸" },
+        { id: "pix", titulo: "Pix", detalhe: "Pagamento instantâneo", selo: "📱" },
+    ];
+
+    function confirmarPagamento(evento) {
+        evento.preventDefault();
+        alert("Reserva confirmada!");
+    }
+
     return (
         <main id="pagina-pagamento" className="pagina-pagamento">
             <header className="cabecalho-pagamento">
@@ -28,10 +43,7 @@ function Pagamento() {
                                     name="metodo-pagamento"
                                     value={opcao.id}
                                     checked={metodo === opcao.id}
-                                    onChange={() => {
-                                        setMetodo(opcao.id);
-                                        setMensagem("");
-                                    }}
+                                    onChange={() => setMetodo(opcao.id)}
                                 />
                                 <span className="indicador-pagamento" aria-hidden="true" />
                                 <span className="selo-pagamento" aria-hidden="true">{opcao.selo}</span>
@@ -43,19 +55,6 @@ function Pagamento() {
                             </label>
                         ))}
                     </div>
-
-                    {metodo === "credito" && (
-                        <label className="campo-parcelas-pagamento">
-                            <span>Parcelamento</span>
-                            <select value={parcelas} onChange={(evento) => setParcelas(evento.target.value)}>
-                                {[1, 2, 3, 4, 5, 6].map((quantidade) => (
-                                    <option value={quantidade} key={quantidade}>
-                                        {quantidade}x de {total === null ? "a definir" : formataMoeda(total / quantidade)}{quantidade === 1 ? " à vista" : " sem juros"}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    )}
 
                     <p className="aviso-pagamento">Esta etapa não processa cobranças. Os dados do cartão não são solicitados nem armazenados.</p>
                 </section>
@@ -69,37 +68,30 @@ function Pagamento() {
                     <div className="detalhes-quadra-pagamento">
                         <span className="marca-quadra-pagamento" aria-hidden="true">SC</span>
                         <div>
-                            <h3>{nomeQuadra || "Nenhuma quadra selecionada"}</h3>
-                            <p>{esporte || "Quadra esportiva"}</p>
+                            <h3>Quadra esportiva</h3>
+                            <p>Futebol</p>
                         </div>
                     </div>
-                    {endereco && <p className="endereco-pagamento">{endereco}</p>}
 
                     <dl className="linhas-resumo-pagamento">
-                        {dataReserva && <div><dt>Data</dt><dd>{dataReserva}</dd></div>}
-                        {horarioReserva && <div><dt>Horário</dt><dd>{horarioReserva}</dd></div>}
-                        {precoHora !== null && !Number.isNaN(precoHora) && (
-                            <div><dt>Quadra · {quantidadeHoras}h</dt><dd>{formataMoeda(precoHora)} / h</dd></div>
-                        )}
+                        <div><dt>Data</dt><dd>25/09/2026</dd></div>
+                        <div><dt>Horário</dt><dd>19:00 às 20:00</dd></div>
+                        <div><dt>Quadra · 1h</dt><dd>R$ 120,00 / h</dd></div>
                     </dl>
 
                     <div className="total-pagamento">
                         <span>Total</span>
-                        <strong>{total === null ? "A definir" : formataMoeda(total)}</strong>
+                        <strong>R$ 120,00</strong>
                     </div>
 
-                    {!quadraSelecionada && <p className="aviso-quadra-pagamento">Escolha uma quadra e um horário antes de continuar.</p>}
-                    {mensagem && <p className="mensagem-pagamento" role="status">{mensagem}</p>}
-
-                    <button className="botao-confirmar-pagamento" type="submit" disabled={!quadraSelecionada}>
-                        {metodo === "local" ? "Confirmar opção" : "Continuar"}<span aria-hidden="true">→</span>
+                    <button className="botao-confirmar-pagamento" type="submit">
+                        {metodo === "pix" ? "Confirmar pix" : "Continuar"}<span aria-hidden="true">→</span>
                     </button>
                     <p className="seguranca-pagamento">Você só paga depois de conferir os dados da reserva.</p>
                 </aside>
             </form>
         </main>
     );
-    );
 }
-export default Pagamento;
+
 export default Pagamento;
