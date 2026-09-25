@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Quadras from "./pages/Quadras";
+import CriarQuadra from "./pages/CriarQuadra";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/quadras" element={<Quadras />} />
+        <Route path="/cadastrar-quadra" element={<CriarQuadra />} />
       </Routes>
       <Rodape />
     </BrowserRouter>
