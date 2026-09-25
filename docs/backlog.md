@@ -52,6 +52,10 @@ O projeto está em uma fase inicial de desenvolvimento, com a base visual e de n
 - [ ] Rodar ajustes finais e revisão de build.
 - [ ] Preparar o projeto para publicação.
 
+### 8. Página de contato
+- [x] Exibir seis contatos demonstrativos da equipe com funções, telefone e e-mail.
+- [ ] Trocar os dados demonstrativos pelos contatos reais do local antes da publicação.
+
 ## Observações importantes da revisão de código
 
 - O projeto já está com a base visual funcional, mas ainda está no estágio 1 do desenvolvimento definido em `docs/arquitetura.md`.

@@ -19,6 +19,27 @@
   margin-bottom: 12px;
 }
 
+.rodape-contato {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(217, 247, 231, 0.22);
+}
+
+.rodape-contato span {
+  color: #edf7f1;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rodape-contato a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .rodape a {
   color: #d9f7e7;
   text-decoration: none;
