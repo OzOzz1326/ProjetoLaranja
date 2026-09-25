@@ -1,16 +1,21 @@
-# React + Vite
+# Projeto integrador
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Tarefas
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Caio**
+    - Tela inicial do sistema (menu superior e rodape)
+    - Tela de quadras: Buscar no banco todas as quadras e mostrar na tela
+    - Cadastrar uma nova quadra
+- **Nickolas**
+    - Tela de contato
+    - Tela de pagamento
+- **Kaique**
+    - Mostrar detalhes de uma quadra (buscar quadra de id 23)
+    - Botão para reservar o horário
+    - Registrar uma reserva
+- **Ana**
+    - Login/Cadastro
+        - Pesquisar como fazer login no Supabase
+        - Guardar dados da sessão do usuário (localhost)
+        - Cadastrar usuário
+        - Mostrar o perfil do usuário
