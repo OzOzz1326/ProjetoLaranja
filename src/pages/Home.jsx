@@ -10,22 +10,22 @@ function Home() {
       valor: "futebol",
     },
     {
-      nome: "Futvôlei",
+      nome: "Futsal",
       descricao: "Quadras de areia prontas para o seu próximo jogo.",
       icone: "🏐",
-      valor: "futvolei",
+      valor: "futsal",
     },
     {
-      nome: "Tênis",
+      nome: "Basquete",
       descricao: "Escolha uma quadra e reserve seu horário.",
       icone: "🎾",
-      valor: "tenis",
+      valor: "basquete",
     },
     {
-      nome: "Beach Tênis",
+      nome: "Vôlei",
       descricao: "Pratique na areia com quem você gosta.",
       icone: "🏖️",
-      valor: "beachtenis",
+      valor: "vôlei",
     },
   ];
 

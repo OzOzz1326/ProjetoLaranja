@@ -22,9 +22,9 @@ O projeto está em uma fase inicial de desenvolvimento, com a base visual e de n
 - [x] Definir o estilo visual do projeto em CSS puro por página e por componente.
 
 ### 3. Busca e exibição de dados reais
-- [ ] Conectar a página `Quadras` ao Supabase para buscar registros reais.
-- [ ] Filtrar os resultados pelo parâmetro `esporte` recebido pela URL.
-- [ ] Exibir estados de carregamento, vazio e erro na tela de quadras.
+- [x] Conectar a página `Quadras` ao Supabase para buscar registros reais.
+- [x] Filtrar os resultados pelo parâmetro `esporte` recebido pela URL.
+- [x] Exibir estados de carregamento, vazio e erro na tela de quadras.
 - [ ] Definir a estrutura da tabela de quadras com campos como esporte, nome, endereço e disponibilidade.
 - [ ] Garantir que a tela inicial e a etapa de seleção de esporte reflitam os dados reais do banco.
 
@@ -51,6 +51,10 @@ O projeto está em uma fase inicial de desenvolvimento, com a base visual e de n
 - [ ] Validar regras de negócio e comportamento em cenários de erro.
 - [ ] Rodar ajustes finais e revisão de build.
 - [ ] Preparar o projeto para publicação.
+
+### 8. Página de contato
+- [x] Exibir seis contatos demonstrativos da equipe com funções, telefone e e-mail.
+- [ ] Trocar os dados demonstrativos pelos contatos reais do local antes da publicação.
 
 ## Observações importantes da revisão de código
 

@@ -1,0 +1,160 @@
+#pagina-contato {
+	min-height: calc(100vh - 142px);
+	padding: 52px 24px 84px;
+	color: #f0f0f0;
+}
+
+.cabecalho-contato,
+.lista-contatos,
+.aviso-contatos-exemplo {
+	max-width: 1040px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.cabecalho-contato {
+	margin-bottom: 26px;
+	text-align: center;
+}
+
+.etiqueta-contato {
+	margin: 0 0 12px;
+	color: #57c785;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 2px;
+}
+
+.cabecalho-contato h1 {
+	margin: 0;
+	color: #f4fff6;
+	font-size: 40px;
+	line-height: 1.12;
+}
+
+.cabecalho-contato > p:last-child {
+	margin: 14px auto 0;
+	color: #b9cbbd;
+	font-size: 15px;
+	line-height: 1.6;
+}
+
+.aviso-contatos-exemplo {
+	margin-top: 0;
+	margin-bottom: 18px;
+	padding: 12px 15px;
+	border-left: 3px solid #8bc99e;
+	background: rgba(13, 43, 23, 0.76);
+	color: #d5e0d8;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.lista-contatos {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 14px;
+}
+
+.cartao-contato {
+	min-width: 0;
+	padding: 20px;
+	border: 1px solid rgba(113, 172, 128, 0.36);
+	border-radius: 6px;
+	background: rgba(12, 39, 21, 0.9);
+}
+
+.topo-cartao-contato {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 17px;
+}
+
+.iniciais-contato {
+	display: grid;
+	width: 42px;
+	height: 42px;
+	flex: 0 0 42px;
+	place-items: center;
+	border: 1px solid rgba(87, 199, 133, 0.5);
+	border-radius: 50%;
+	background: rgba(87, 199, 133, 0.12);
+	color: #a5e3b8;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.setor-contato {
+	color: #83d29c;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 1px;
+	text-align: right;
+}
+
+.cartao-contato h2 {
+	margin: 0;
+	color: #f4fff6;
+	font-size: 18px;
+}
+
+.funcao-contato {
+	margin: 5px 0 17px;
+	color: #afc2b3;
+	font-size: 13px;
+}
+
+.dados-contato {
+	display: grid;
+	gap: 4px;
+	padding-top: 13px;
+	border-top: 1px solid rgba(217, 247, 231, 0.14);
+}
+
+.dados-contato span {
+	margin-top: 6px;
+	color: #9daf9f;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.dados-contato p,
+.dados-contato a {
+	min-width: 0;
+	margin: 0;
+	color: #e1eee4;
+	font-size: 13px;
+	line-height: 1.5;
+	overflow-wrap: anywhere;
+}
+
+.dados-contato a:hover {
+	color: #8fe0a8;
+}
+
+@media (max-width: 760px) {
+	#pagina-contato {
+		padding: 40px 18px 64px;
+	}
+
+	.lista-contatos {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.cabecalho-contato h1 {
+		font-size: 32px;
+	}
+}
+
+@media (max-width: 520px) {
+	.lista-contatos {
+		grid-template-columns: 1fr;
+	}
+
+	.cabecalho-contato h1 {
+		font-size: 29px;
+	}
+}
