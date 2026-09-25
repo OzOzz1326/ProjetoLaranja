@@ -43,11 +43,13 @@ function Detalhes() {
     const diasDisponiveis = quadra.dias_funcionamento || ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
 
     return (
-        <div className="detalhes-container">
-            <div className="detalhes-header">
-                <h1>{quadra.nome}</h1>
-                <span className="tipo-jogo-badge">{quadra.tipo_jogo}</span>
-            </div>
+        <div id="pagina-detalhes">
+            <div className="detalhes-container">
+                <a href="/quadras" className="voltar-detalhes">← Voltar para quadras</a>
+                <div className="detalhes-header">
+                    <h1>{quadra.nome}</h1>
+                    <span className="tipo-jogo-badge">{quadra.tipo_jogo}</span>
+                </div>
 
             <div className="detalhes-content">
                 <div className="detalhes-main">
@@ -113,6 +115,7 @@ function Detalhes() {
                         <button className="btn-reservar">Solicitar Reserva</button>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     );
