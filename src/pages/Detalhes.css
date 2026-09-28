@@ -1,3 +1,6 @@
+/* ==============================================================
+   1. ESTRUTURA GERAL DA PÁGINA E CONTAINER PRINCIPAL
+   ============================================================== */
 #pagina-detalhes {
     min-height: calc(100vh - 142px);
     padding: 52px 24px 96px;
@@ -50,6 +53,11 @@
     border: 1px solid rgba(87, 199, 133, 0.3);
 }
 
+/* ==============================================================
+   2. LAYOUT PRINCIPAL (GRID) - IMAGEM E INFORMAÇÕES
+   ============================================================== 
+   O conteúdo é dividido em 2 colunas no desktop e 1 no mobile.
+*/
 #pagina-detalhes .detalhes-content {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -153,7 +161,9 @@
     font-size: 15px;
 }
 
-/* Sidebar e Card de Reserva */
+/* ==============================================================
+   3. SIDEBAR E CARD DE "SOLICITAR RESERVA" LADO DIREITO
+   ============================================================== */
 #pagina-detalhes .detalhes-sidebar {
     position: sticky;
     top: 32px;
@@ -246,7 +256,11 @@
     color: #a9c4ae;
 }
 
-/* --- ESTILOS DO MODAL DE RESERVA (novos) --- */
+/* ==============================================================
+   4. ESTILOS DO MODAL (JANELA SOBREPOSTA) DE RESERVA
+   ============================================================== 
+   Controla a janela escura de fundo (overlay) e a caixa branca (modal-content).
+*/
 .modal-overlay {
     position: fixed;
     top: 0;

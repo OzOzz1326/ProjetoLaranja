@@ -4,25 +4,37 @@ import { supabase } from "../supabase";
 import "./Detalhes.css";
 
 function Detalhes() {
-    // Captura o ID da quadra selecionada passado na URL (ex: /detalhes?id=22)
+    // =========================================================================
+    // 1. OBTENÇÃO DO ID DA QUADRA
+    // =========================================================================
+    // O Hook useSearchParams captura parâmetros passados na URL (ex: /detalhes?id=22)
+    // O Hook useParams captura parâmetros definidos nas rotas (ex: /detalhes/22)
+    // Aqui garantimos que pegamos o id de uma das duas formas. Se falhar, usa 23 como teste.
     const [searchParams] = useSearchParams();
     const params = useParams();
     const quadraId = searchParams.get("id") || params.id || 23;
 
-    const [quadra, setQuadra] = useState(null);
-    const [loading, setLoading] = useState(true);
+    // =========================================================================
+    // 2. ESTADOS (STATE) DA PÁGINA E DO MODAL DE RESERVA
+    // =========================================================================
+    // useState é usado para guardar os dados da tela e reagir a mudanças.
+    const [quadra, setQuadra] = useState(null); // Guarda todas as informações da quadra que veio do banco
+    const [loading, setLoading] = useState(true); // Controla se a página exibe a mensagem de carregando
 
-    // Estado para controlar se o modal de reserva está aberto (novo)
+    // Controla se a janelinha (modal) de fazer reserva está visível (aberta) ou não
     const [isModalOpen, setIsModalOpen] = useState(false);
     
-    // Estados para os campos do formulário de reserva (novo)
+    // Variáveis (estados) que guardam o que o usuário digita/seleciona no formulário de reserva
     const [diaSemana, setDiaSemana] = useState("");
     const [dataReserva, setDataReserva] = useState("");
     const [horarioReserva, setHorarioReserva] = useState("");
     const [participantes, setParticipantes] = useState(1);
-    const [loadingReserva, setLoadingReserva] = useState(false);
+    const [loadingReserva, setLoadingReserva] = useState(false); // Efeito de carregando do botão "Confirmar Reserva"
 
-    // Função para lidar com o envio da reserva (novo)
+    // =========================================================================
+    // 3. FUNÇÃO QUE SALVA A RESERVA NO BANCO (SUPABASE)
+    // =========================================================================
+    // Essa função é chamada quando o formulário do modal é enviado (botão de confirmar)
     const handleReserva = async (e) => {
         e.preventDefault();
         setLoadingReserva(true);
@@ -97,6 +109,10 @@ function Detalhes() {
         }
     };
 
+    // =========================================================================
+    // 4. BUSCA DOS DADOS DA QUADRA AO ABRIR A PÁGINA
+    // =========================================================================
+    // useEffect roda automaticamente assim que a página abre ou quando quadraId muda.
     useEffect(() => {
         const fetchQuadra = async () => {
             setLoading(true);
@@ -135,7 +151,11 @@ function Detalhes() {
         return <div className="error-container"><h2>Quadra não encontrada!</h2></div>;
     }
 
-    // Calcula os dias disponíveis de acordo com os dados salvos para essa quadra
+    // =========================================================================
+    // 5. CÁLCULO DOS DIAS DA SEMANA DISPONÍVEIS
+    // =========================================================================
+    // Verifica quais dias a quadra funciona (ex: funcionamento_seg = true) no banco.
+    // Isso será usado tanto para exibir as tags na tela quanto nas opções do modal.
     const diasDisponiveis = (() => {
         if (!quadra) return [];
         const mapaDias = [
@@ -153,6 +173,10 @@ function Detalhes() {
             : (quadra.dias_funcionamento || ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]);
     })();
 
+    // =========================================================================
+    // 6. RENDERIZAÇÃO (TELA VISUAL HTML/JSX)
+    // =========================================================================
+    // Aqui é retornado todo o código que o usuário vê na tela.
     return (
         <div id="pagina-detalhes">
             <div className="detalhes-container">
