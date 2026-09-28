@@ -138,7 +138,10 @@ function Quadras(){
                                         <p><strong>Descrição:</strong> {quadra.descricao}</p>
                                         <p><strong>Esporte:</strong> {tipos.join(", ") || "Não informado"}</p>
                                         <p><strong>Preço:</strong> R$ {Number(quadra.preco || 0).toFixed(2)}</p>
-                                        <button type="button" className="botao-voltar">Ver detalhes da quadra</button>
+                                        {/* Link que direciona para a página de detalhes com o ID da quadra selecionada */}
+                                        <Link to={`/detalhes?id=${quadra.id}`} className="botao-voltar">
+                                            Ver detalhes da quadra
+                                        </Link>
                                     </div>
 
                                     <div className="imagem-card-quadra">

@@ -245,3 +245,106 @@
     height: 50vh;
     color: #a9c4ae;
 }
+
+/* --- ESTILOS DO MODAL DE RESERVA (novos) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #07190c;
+    border: 1px solid #255b35;
+    border-radius: 12px;
+    padding: 32px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    color: #57c785;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    color: #a9c4ae;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #255b35;
+    background: rgba(13, 43, 23, 0.86);
+    color: #f4fff6;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #57c785;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.btn-cancelar {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #255b35;
+    background: transparent;
+    color: #a9c4ae;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-cancelar:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-confirmar {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #57c785;
+    color: #07190c;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-confirmar:hover {
+    background: #4ab375;
+}
+
+.btn-confirmar:disabled {
+    background: #255b35;
+    color: #a9c4ae;
+    cursor: not-allowed;
+}

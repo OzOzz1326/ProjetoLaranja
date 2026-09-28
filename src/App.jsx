@@ -25,6 +25,7 @@ function App() {
         <Route path="/pagamento" element={<Pagamento />} />
         <Route path="/contato" element={<Contato />} />
         <Route path="/detalhes" element={<Detalhes />} />
+        <Route path="/detalhes/:id" element={<Detalhes />} />
         <Route path="/perfil" element={<Perfil />} />
       </Routes>
       <Rodape />
