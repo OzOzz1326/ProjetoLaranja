@@ -10,6 +10,8 @@ function Rodape() {
         <Link to="/quadras">Quadras</Link>
         <Link to="/contato">Contato</Link>
         <a href="#">Sobre nós</a>
+        
+           <Link to="/contato">Contato</Link>
       </nav>
       <p>&copy; {new Date().getFullYear()} Sport In City. Todos os direitos reservados.</p>
     </footer>

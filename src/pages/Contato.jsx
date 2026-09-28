@@ -1,12 +1,12 @@
 import "./Contato.css"
 
 const equipe = [
-    { nome: "Ana Martins", funcao: "Gerente da unidade", setor: "GESTÃO", telefone: "+55 (00) 00000-0000", email: "ana.martins@example.com" },
-    { nome: "Lucas Ferreira", funcao: "Reservas e horários", setor: "RESERVAS", telefone: "+55 (00) 00000-0000", email: "lucas.ferreira@example.com" },
-    { nome: "Camila Rocha", funcao: "Atendimento ao cliente", setor: "ATENDIMENTO", telefone: "+55 (00) 00000-0000", email: "camila.rocha@example.com" },
-    { nome: "Rafael Mendes", funcao: "Manutenção das quadras", setor: "ESTRUTURA", telefone: "+55 (00) 00000-0000", email: "rafael.mendes@example.com" },
-    { nome: "Bruna Costa", funcao: "Eventos e torneios", setor: "EVENTOS", telefone: "+55 (00) 00000-0000", email: "bruna.costa@example.com" },
-    { nome: "Diego Alves", funcao: "Financeiro", setor: "FINANCEIRO", telefone: "+55 (00) 00000-0000", email: "diego.alves@example.com" },
+    { nome: "Nickolas Brisolari", funcao: "Gerente da unidade", setor: "GESTÃO", telefone: "+55 (00) 00000-0000", email: "nicklas.brisolari@example.com" },
+    { nome: "Kaique Jesus", funcao: "Reservas e horários", setor: "RESERVAS", telefone: "+55 (00) 00000-0000", email: "kaique.jesus@example.com" },
+    { nome: "Ana Julia", funcao: "Atendimento ao cliente", setor: "ATENDIMENTO", telefone: "+55 (00) 00000-0000", email: "ana.julia@example.com" },
+    { nome: "Conrado Saud", funcao: "Manutenção das quadras", setor: "ESTRUTURA", telefone: "+55 (00) 00000-0000", email: "rafael.mendes@example.com" },
+    { nome: "Caio Matos", funcao: "Eventos e torneios", setor: "EVENTOS", telefone: "+55 (00) 00000-0000", email: "conrado.saud@example.com" },
+    { nome: "Giliade Macedo", funcao: "Financeiro", setor: "FINANCEIRO", telefone: "+55 (00) 00000-0000", email: "giliade.macedo@example.com" },
 ];
 
 function Contato() {
