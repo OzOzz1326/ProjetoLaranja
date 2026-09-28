@@ -9,6 +9,7 @@ import CriarQuadra from "./pages/CriarQuadra";
 import Pagamento from "./pages/Pagamento";
 import Contato from "./pages/Contato";
 import Detalhes from "./pages/Detalhes";
+import Perfil from "./pages/Perfil";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/pagina-inicial" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/perfil" element={<Perfil />} />
         <Route path="/quadras" element={<Quadras />} />
         <Route path="/cadastrar-quadra" element={<CriarQuadra />} />
         <Route path="/pagamento" element={<Pagamento />} />

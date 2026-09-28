@@ -38,22 +38,22 @@ function Home() {
       </section>
 
       <section className="lista-esportes" aria-label="Escolha um esporte">
-            {esportes.map((esporte) => (
-            <Link
-                className="card-esporte"
-                key={esporte.valor}
-                to={`/quadras?esporte=${esporte.valor}`}
-            >
-                <span className="icone-esporte" aria-hidden="true">{esporte.icone}</span>
-                <span className="conteudo-esporte">
-                <strong>{esporte.nome}</strong>
-                <span>{esporte.descricao}</span>
-                </span>
-                <span className="seta-esporte" aria-hidden="true">→</span>
-            </Link>
-            ))}
-        </section>
-        </main>
+        {esportes.map((esporte) => (
+          <Link
+            className="card-esporte"
+            key={esporte.valor}
+            to={`/quadras?esporte=${esporte.valor}`}
+          >
+            <span className="icone-esporte" aria-hidden="true">{esporte.icone}</span>
+            <span className="conteudo-esporte">
+              <strong>{esporte.nome}</strong>
+              <span>{esporte.descricao}</span>
+            </span>
+            <span className="seta-esporte" aria-hidden="true">→</span>
+          </Link>
+        ))}
+      </section>
+    </main>
   );
 }
 

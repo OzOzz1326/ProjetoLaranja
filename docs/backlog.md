@@ -28,11 +28,14 @@ O projeto está em uma fase inicial de desenvolvimento, com a base visual e de n
 - [ ] Definir a estrutura da tabela de quadras com campos como esporte, nome, endereço e disponibilidade.
 - [ ] Garantir que a tela inicial e a etapa de seleção de esporte reflitam os dados reais do banco.
 
-### 4. Autenticação e usuários
+### 4. Autenticação e usuários (Tarefas da Ana)
 - [x] Implementar login com `supabase.auth.signInWithPassword`.
 - [x] Criar usuários no Supabase Auth e associar perfil pela coluna `email` em `usuarios`.
-- [ ] Validar e proteger rotas que exigem login.
-- [ ] Criar fluxo de logout e controle de sessão.
+- [x] Guardar dados da sessão do usuário no `localStorage` no login e no cadastro.
+- [x] Criar tela de perfil em `src/pages/Perfil.jsx` exibindo dados do usuário, próxima partida e botão de logout (conforme protótipo).
+- [x] Implementar fluxo de logout com limpeza de sessão e controle dinâmico de avatar no `MenuSuperior`.
+- [x] Redesenhar as telas de Login e Cadastro fiéis às páginas 11 e 12 do protótipo `laranja-protótipo.pdf`.
+- [ ] Validar e proteger rotas que exigem login estrito (ex: `/cadastrar-quadra`).
 
 ### 5. Cadastro e gestão de quadras
 - [x] Implementar `src/pages/CriarQuadra.jsx` com formulário de dados principais, dias/horários de funcionamento e comodidades.
