@@ -10,6 +10,7 @@ import Pagamento from "./pages/Pagamento";
 import Contato from "./pages/Contato";
 import Detalhes from "./pages/Detalhes";
 import Perfil from "./pages/Perfil";
+import Sobre from "./pages/Sobre";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/detalhes" element={<Detalhes />} />
         <Route path="/detalhes/:id" element={<Detalhes />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/sobre" element={<Sobre />} />
       </Routes>
       <Rodape />
     </BrowserRouter>

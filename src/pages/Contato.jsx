@@ -18,10 +18,6 @@ function Contato() {
                 <p>Encontre a pessoa certa para ajudar com sua visita, reserva ou evento.</p>
             </header>
 
-            <p className="aviso-contatos-exemplo">
-                Contatos demonstrativos. Substitua nomes, telefones e e-mails pelos dados reais da equipe antes de publicar.
-            </p>
-
             <section className="lista-contatos" aria-label="Equipe do local">
                 {equipe.map((pessoa) => (
                     <article className="cartao-contato" key={pessoa.email}>
