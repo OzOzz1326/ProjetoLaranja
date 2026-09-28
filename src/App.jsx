@@ -9,6 +9,7 @@ import CriarQuadra from "./pages/CriarQuadra";
 import Pagamento from "./pages/Pagamento";
 import Contato from "./pages/Contato";
 import Detalhes from "./pages/Detalhes";
+import Perfil from "./pages/Perfil";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/pagamento" element={<Pagamento />} />
         <Route path="/contato" element={<Contato />} />
         <Route path="/detalhes" element={<Detalhes />} />
+        <Route path="/perfil" element={<Perfil />} />
       </Routes>
       <Rodape />
     </BrowserRouter>
