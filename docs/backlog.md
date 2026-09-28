@@ -63,7 +63,7 @@ O projeto está em uma fase inicial de desenvolvimento, com a base visual e de n
 - As páginas de formulário e a seleção de esporte não estão conectadas a dados reais de banco.
 - A tela `CriarQuadra` cadastra os dados da quadra, os dias e horários de funcionamento e a descrição `outros` via Supabase; falhas de banco são exibidas somente no console.
 - Cadastro e login usam Supabase Auth e relacionam o perfil pela coluna `email`; ainda falta proteção global de rotas e logout.
-- O caminho principal do app ainda está configurado para `/pagina-inicial`, então a rota raiz pode exigir ajuste de navegação no futuro.
+- Rota raiz `/` configurada para apontar diretamente para a página inicial em conjunto com `/pagina-inicial`.
 
 ## Próximo passo recomendado
 

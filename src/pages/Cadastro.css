@@ -1,172 +1,133 @@
-.pagina-cadastro {
-    min-height: 100vh;
+#pagina-cadastro {
+    min-height: calc(100vh - 64px);
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
+    background-image:
+        linear-gradient(rgba(7, 25, 12, 0.65), rgba(7, 25, 12, 0.65)),
+        url('/estadio.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
-.titulo-pagina {
-    text-align: center;
+#pagina-cadastro .card-cadastro {
+    background-color: #0c6a30;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 24px;
+    padding: 36px 36px 40px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(87, 199, 133, 0.25);
+}
+
+#pagina-cadastro .header-cadastro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
     margin-bottom: 24px;
+    color: #ffffff;
 }
 
-.titulo-pagina h1 {
-    font-size: 32px;
+#pagina-cadastro .header-cadastro svg {
+    color: #ffffff;
+}
+
+#pagina-cadastro .header-cadastro h1 {
+    font-size: 34px;
     font-weight: 700;
-    color: #57C785;
+    color: #ffffff;
     letter-spacing: 0.5px;
     margin: 0;
 }
 
-.titulo-pagina p {
-    font-size: 14px;
-    color: #8ab894;
-    margin-top: 8px;
-}
-
-.card-form {
-    background-color: rgba(10, 30, 15, 0.82);
-    border: 1px solid #1e4a28;
-    border-radius: 16px;
-    padding: 30px 28px;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-    width: 100%;
-    max-width: 720px;
-}
-
-.cadastro-card {
-    margin: 0 auto;
-}
-
-.card-form h2 {
-    font-size: 16px;
-    font-weight: 700;
-    color: #57C785;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 22px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #1e4a28;
-}
-
-.form-cadastro {
+#pagina-cadastro .form-cadastro {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 14px;
 }
 
-.campo {
+#pagina-cadastro .campo-cadastro {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 10px;
 }
 
-.campo label {
-    font-size: 13px;
+#pagina-cadastro .campo-cadastro label {
+    color: #ffffff;
+    font-size: 15px;
     font-weight: 600;
-    color: #8ab894;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
 }
 
-.campo input[type="text"],
-.campo input[type="email"],
-.campo input[type="tel"],
-.campo input[type="password"],
-.campo input[type="date"],
-.campo textarea,
-.campo select {
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid #2a5c35;
-    border-radius: 8px;
-    color: #f0f0f0;
+#pagina-cadastro .campo-cadastro input {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding: 11px 14px;
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    padding: 10px 14px;
+    font-size: 15px;
     outline: none;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+#pagina-cadastro .campo-cadastro input:focus {
+    border-color: #57c785;
+    box-shadow: 0 0 8px rgba(87, 199, 133, 0.6);
+}
+
+#pagina-cadastro .campo-cadastro input::placeholder {
+    color: #888888;
+}
+
+#pagina-cadastro .btn-salvar-cadastro {
     width: 100%;
-}
-
-.campo input::placeholder,
-.campo textarea::placeholder {
-    color: rgba(194, 216, 201, 0.7);
-}
-
-.campo input:focus,
-.campo select:focus,
-.campo textarea:focus {
-    border-color: #57C785;
-    background-color: rgba(87, 199, 133, 0.07);
-}
-
-.campos-linha {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
-.termos {
-    margin-top: 6px;
-    margin-bottom: 18px;
-}
-
-.termos label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: #c8dccb;
-    cursor: pointer;
-}
-
-.termos input[type="checkbox"] {
-    accent-color: #57C785;
-    width: 16px;
-    height: 16px;
-}
-
-.btn-salvar {
-    width: 100%;
-    max-width: 280px;
-    margin: 0 auto;
-    padding: 14px 60px;
-    background-color: #57C785;
-    color: #071209;
+    margin-top: 12px;
+    padding: 13px 20px;
+    background-color: #52b75a;
+    color: #ffffff;
     font-family: 'Inter', sans-serif;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
     border: none;
-    border-radius: 30px;
+    border-radius: 6px;
     cursor: pointer;
-    letter-spacing: 0.5px;
-    transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(87, 199, 133, 0.35);
+    transition: background-color 0.2s, transform 0.15s;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 
-.btn-salvar:hover {
-    background-color: #45a069;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 28px rgba(87, 199, 133, 0.5);
+#pagina-cadastro .btn-salvar-cadastro:hover {
+    background-color: #45a24d;
+    transform: translateY(-1px);
 }
 
-.btn-salvar:active {
+#pagina-cadastro .btn-salvar-cadastro:active {
     transform: translateY(0);
 }
 
-@media (max-width: 640px) {
-    .campos-linha {
-        grid-template-columns: 1fr;
-    }
+#pagina-cadastro .btn-salvar-cadastro:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
 
-    .card-form {
-        padding: 22px 18px;
-    }
+#pagina-cadastro .link-login-retorno {
+    margin-top: 16px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 14px;
+}
 
-    .titulo-pagina h1 {
-        font-size: 26px;
-    }
+#pagina-cadastro .link-login-retorno a {
+    color: #afffca;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+#pagina-cadastro .link-login-retorno a:hover {
+    color: #ffffff;
+    text-decoration: underline;
 }

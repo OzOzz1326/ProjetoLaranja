@@ -1,127 +1,133 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../supabase";
 import "./Cadastro.css";
 
 function Cadastro() {
-    const [nome, alteraNome] = useState("")
-    const [dataNascimento, alteraDataNascimento] = useState("")
-    const [email, alteraEmail] = useState("")
-    const [senha, alteraSenha] = useState("")
-    const [salvando, alteraSalvando] = useState(false)
+    const navigate = useNavigate();
+    const [nome, alteraNome] = useState("");
+    const [dataNascimento, alteraDataNascimento] = useState("");
+    const [email, alteraEmail] = useState("");
+    const [senha, alteraSenha] = useState("");
+    const [confirmaSenha, alteraConfirmaSenha] = useState("");
+    const [salvando, alteraSalvando] = useState(false);
 
-    async function inserirUsuario() {
+    async function inserirUsuario(evento) {
+        evento.preventDefault();
+
         if (!supabase) {
-            alert("Não foi possível conectar ao serviço de cadastro.")
-            return
+            alert("Não foi possível conectar ao serviço do Supabase.");
+            return;
         }
 
-        alteraSalvando(true)
+        if (senha !== confirmaSenha) {
+            alert("A confirmação de senha não confere com a senha digitada.");
+            return;
+        }
+
+        if (senha.length < 6) {
+            alert("A senha deve conter no mínimo 6 caracteres.");
+            return;
+        }
+
+        alteraSalvando(true);
 
         try {
             const { data, error } = await supabase.auth.signUp({
-                email,
+                email: email.trim(),
                 password: senha,
                 options: {
                     data: {
-                        nome,
+                        nome: nome.trim(),
                         data_nascimento: dataNascimento,
                     },
                 },
-            })
+            });
 
             if (error) {
-                console.error("Erro ao cadastrar usuário no Supabase Auth:", error)
-                alert(`Não foi possível cadastrar o usuário: ${error.message}`)
-                return
+                console.error("Erro ao cadastrar usuário no Supabase Auth:", error);
+                alert(`Não foi possível cadastrar o usuário: ${error.message}`);
+                return;
             }
 
-            const { data: perfil, error: erroBuscaPerfil } = await supabase
+            // Insere ou atualiza o perfil na tabela 'usuarios'
+            const { data: perfilExistente } = await supabase
                 .from("usuarios")
                 .select("id")
-                .eq("email", email)
-                .maybeSingle()
+                .eq("email", email.trim())
+                .maybeSingle();
 
-            if (erroBuscaPerfil) {
-                console.error("Erro ao localizar o perfil do usuário:", erroBuscaPerfil)
-                alert(`A conta foi criada, mas não foi possível localizar o perfil: ${erroBuscaPerfil.message}`)
-                return
-            }
-
-            if (!perfil) {
+            if (!perfilExistente) {
                 const { error: erroPerfil } = await supabase.from("usuarios").insert({
-                    nome,
-                    email,
+                    nome: nome.trim(),
+                    email: email.trim(),
                     data_nascimento: dataNascimento,
-                })
+                });
 
                 if (erroPerfil) {
-                    console.error("Erro ao criar o perfil do usuário:", erroPerfil)
-                    alert(`A conta foi criada, mas não foi possível salvar o perfil: ${erroPerfil.message}`)
-                    return
+                    console.warn("Aviso ao salvar na tabela usuarios:", erroPerfil);
                 }
             }
 
-            alert(data.session
-                ? "Usuário cadastrado com sucesso!"
-                : "Cadastro iniciado. Confira seu e-mail para confirmar a conta.")
-            alteraNome("")
-            alteraDataNascimento("")
-            alteraEmail("")
-            alteraSenha("")
+            const dadosUsuario = {
+                id: data.user?.id || Date.now(),
+                nome: nome.trim(),
+                email: email.trim(),
+                data_nascimento: dataNascimento,
+            };
+
+            // Guarda os dados da sessão do usuário no localStorage
+            localStorage.setItem("usuario", JSON.stringify(dadosUsuario));
+
+            alert("Cadastro realizado com sucesso! Bem-vindo(a) ao SportInCity!");
+            navigate("/perfil");
         } catch (error) {
-            console.error("Erro inesperado ao cadastrar usuário:", error)
-            alert("Ocorreu um erro ao cadastrar. Confira o console do navegador.")
+            console.error("Erro inesperado ao cadastrar usuário:", error);
+            alert("Ocorreu um erro ao cadastrar. Confira os dados digitados.");
         } finally {
-            alteraSalvando(false)
+            alteraSalvando(false);
         }
     }
 
     return (
-        <main className="pagina-cadastro">
-            <div className="titulo-pagina">
-                <h1>Crie sua conta</h1>
-                <p>Preencha os dados abaixo para começar a usar o Sport In City</p>
-            </div>
+        <main id="pagina-cadastro" className="pagina-cadastro">
+            <div className="card-cadastro">
+                <div className="header-cadastro">
+                    <svg viewBox="0 0 24 24" width="40" height="40" fill="currentColor">
+                        <path d="M12 15c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0-8c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm8-3h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h4.05l1.83-2h4.24l1.83 2H20v12z"/>
+                    </svg>
+                    <h1>Cadastre-se</h1>
+                </div>
 
-            <div className="card-form cadastro-card">
-                <h2>Cadastro</h2>
-
-                <form className="form-cadastro" onSubmit={(event) => {
-                    event.preventDefault();
-                    inserirUsuario();
-                }}>
-                    <div className="campo">
-                        <label htmlFor="nome-completo">Nome completo</label>
+                <form className="form-cadastro" onSubmit={inserirUsuario}>
+                    <div className="campo-cadastro">
+                        <label htmlFor="cad-nome">Nome Completo:</label>
                         <input
+                            id="cad-nome"
                             type="text"
-                            id="nome-completo"
-                            name="nome"
-                            placeholder="Ex: João da Silva"
+                            placeholder="Ex: Ana Silva"
                             required
-                            minLength="3"
                             value={nome}
                             onChange={(e) => alteraNome(e.target.value)}
                         />
                     </div>
 
-                    <div className="campo">
-                        <label htmlFor="data-nascimento">Data de Nascimento</label>
+                    <div className="campo-cadastro">
+                        <label htmlFor="cad-nasc">Data de Nascimento:</label>
                         <input
+                            id="cad-nasc"
                             type="date"
-                            id="data-nascimento"
-                            name="dataNascimento"
                             required
                             value={dataNascimento}
                             onChange={(e) => alteraDataNascimento(e.target.value)}
                         />
                     </div>
 
-                    <div className="campo">
-                        <label htmlFor="email">Email</label>
+                    <div className="campo-cadastro">
+                        <label htmlFor="cad-email">Telefone/Email:</label>
                         <input
+                            id="cad-email"
                             type="email"
-                            id="email"
-                            name="email"
                             placeholder="seuemail@exemplo.com"
                             required
                             value={email}
@@ -129,30 +135,39 @@ function Cadastro() {
                         />
                     </div>
 
-                    <div className="campo">
-                        <label htmlFor="senha">Senha</label>
+                    <div className="campo-cadastro">
+                        <label htmlFor="cad-senha">Crie uma senha:</label>
                         <input
+                            id="cad-senha"
                             type="password"
-                            id="senha"
-                            name="senha"
-                            placeholder="Crie uma senha segura"
+                            placeholder="Mínimo 6 caracteres"
                             required
-                            minLength="6"
+                            minLength={6}
                             value={senha}
                             onChange={(e) => alteraSenha(e.target.value)}
                         />
                     </div>
 
-                    <div className="termos">
-                        <label>
-                            <input type="checkbox" required />
-                            <span>Li e aceito os termos e condições.</span>
-                        </label>
+                    <div className="campo-cadastro">
+                        <label htmlFor="cad-confirma">Confirme sua senha:</label>
+                        <input
+                            id="cad-confirma"
+                            type="password"
+                            placeholder="Digite novamente a senha"
+                            required
+                            minLength={6}
+                            value={confirmaSenha}
+                            onChange={(e) => alteraConfirmaSenha(e.target.value)}
+                        />
                     </div>
 
-                    <button type="submit" className="btn-salvar" disabled={salvando}>
-                        {salvando ? "Cadastrando..." : "Cadastrar"}
+                    <button type="submit" className="btn-salvar-cadastro" disabled={salvando}>
+                        {salvando ? "Salvando..." : "Salvar Login"}
                     </button>
+
+                    <p className="link-login-retorno">
+                        Já possui uma conta? <Link to="/login">Faça login aqui!</Link>
+                    </p>
                 </form>
             </div>
         </main>

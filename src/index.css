@@ -2,20 +2,21 @@
     box-sizing: border-box;
 }
 
-body{
-    font-family: Arial, sans-serif;
+body {
+    font-family: 'Inter', Arial, sans-serif;
     margin: 0;
     color: #f0f0f0;
     background-color: #07190c;
     background-image:
-        linear-gradient(rgba(7, 25, 12, 0.72), rgba(7, 25, 12, 0.72)),
-        url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL263qNMmTGx8zeoePxm_AQ2tHPb4Dd54RW-SKSo2I8cSo44VhhxtFIg4&s=10');
+        linear-gradient(rgba(7, 25, 12, 0.70), rgba(7, 25, 12, 0.75)),
+        url('/estadio.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
 
-h1{
-    font-family: 'Times New Roman', Times, serif;
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', Arial, sans-serif;
+    margin: 0;
 }
 

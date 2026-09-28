@@ -1,0 +1,331 @@
+#pagina-perfil {
+    min-height: calc(100vh - 64px);
+    padding: 40px 24px 60px;
+    background-image:
+        linear-gradient(rgba(7, 25, 12, 0.65), rgba(7, 25, 12, 0.65)),
+        url('/estadio.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#pagina-perfil .container-perfil {
+    width: 100%;
+    max-width: 980px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+/* Lado Esquerdo / Principal */
+#pagina-perfil .painel-principal-perfil {
+    background-color: rgba(12, 106, 48, 0.92);
+    border: 1px solid rgba(87, 199, 133, 0.3);
+    border-radius: 24px;
+    padding: 32px 36px 28px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+#pagina-perfil .cabecalho-usuario {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+#pagina-perfil .foto-perfil {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+    border: 3px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    flex-shrink: 0;
+}
+
+#pagina-perfil .info-nome-usuario {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#pagina-perfil .linha-nome {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#pagina-perfil .linha-nome h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+#pagina-perfil .btn-icone-editar {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: transform 0.15s;
+}
+
+#pagina-perfil .btn-icone-editar:hover {
+    transform: scale(1.2);
+}
+
+#pagina-perfil .subtitulo-perfil {
+    margin: 0;
+    color: #bbf7d0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#pagina-perfil .bloco-editar-nome {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#pagina-perfil .bloco-editar-nome input {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ffffff;
+    background: #ffffff;
+    color: #111;
+    font-size: 15px;
+    outline: none;
+}
+
+#pagina-perfil .bloco-editar-nome button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background-color: #52b75a;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#pagina-perfil .bloco-editar-nome .btn-cancelar {
+    background-color: #e53e3e;
+}
+
+/* Card Próxima Partida (Página 13 do protótipo) */
+#pagina-perfil .card-proxima-partida {
+    background-color: rgba(7, 25, 12, 0.45);
+    border: 2px solid rgba(87, 199, 133, 0.4);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+#pagina-perfil .logo-partida img {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+#pagina-perfil .detalhes-partida h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 10px 0;
+    letter-spacing: 0.4px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+#pagina-perfil .item-partida {
+    margin: 6px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#pagina-perfil .check-verde {
+    color: #4ade80;
+    font-size: 20px;
+}
+
+/* Rodapé / Botão Logout */
+#pagina-perfil .rodape-acoes-perfil {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+#pagina-perfil .btn-logout {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#pagina-perfil .btn-logout:hover {
+    background-color: #ef4444;
+    border-color: #ef4444;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+}
+
+/* Painel Lateral */
+#pagina-perfil .painel-lateral-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#pagina-perfil .card-dados-conta,
+#pagina-perfil .card-atalhos-perfil {
+    background-color: rgba(12, 106, 48, 0.92);
+    border: 1px solid rgba(87, 199, 133, 0.3);
+    border-radius: 20px;
+    padding: 24px 28px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+#pagina-perfil .card-dados-conta h3,
+#pagina-perfil .card-atalhos-perfil h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 16px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 8px;
+}
+
+#pagina-perfil .item-dado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 14px;
+    color: #e2f7ea;
+}
+
+#pagina-perfil .item-dado strong {
+    color: #bbf7d0;
+}
+
+#pagina-perfil .status-ativo {
+    background-color: #22c55e;
+    color: #ffffff;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#pagina-perfil .btn-atalho {
+    display: block;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    transition: background-color 0.2s, transform 0.15s;
+}
+
+#pagina-perfil .btn-atalho:hover {
+    background-color: #52b75a;
+    transform: translateX(4px);
+}
+
+/* Estado sem sessão */
+#pagina-perfil .card-sem-sessao {
+    background-color: #0c6a30;
+    border-radius: 20px;
+    padding: 40px 36px;
+    text-align: center;
+    max-width: 440px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+}
+
+#pagina-perfil .card-sem-sessao h2 {
+    color: #ffffff;
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+#pagina-perfil .card-sem-sessao p {
+    color: #bbf7d0;
+    font-size: 15px;
+    margin-bottom: 24px;
+}
+
+#pagina-perfil .botoes-sem-sessao {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+}
+
+#pagina-perfil .btn-ir-login,
+#pagina-perfil .btn-ir-cadastro {
+    text-decoration: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    transition: transform 0.15s;
+}
+
+#pagina-perfil .btn-ir-login {
+    background-color: #52b75a;
+    color: #ffffff;
+}
+
+#pagina-perfil .btn-ir-cadastro {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+#pagina-perfil .btn-ir-login:hover,
+#pagina-perfil .btn-ir-cadastro:hover {
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    #pagina-perfil .container-perfil {
+        grid-template-columns: 1fr;
+    }
+}

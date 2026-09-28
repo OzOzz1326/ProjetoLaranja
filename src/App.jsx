@@ -15,6 +15,7 @@ function App() {
     <BrowserRouter>
       <MenuSuperior />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/pagina-inicial" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />

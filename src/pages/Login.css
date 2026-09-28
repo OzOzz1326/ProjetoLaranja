@@ -1,81 +1,154 @@
-.pagina-cadastro {
-    min-height: calc(100vh - 70px);
+#pagina-login {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
     background-image:
-        linear-gradient(rgba(7, 25, 12, 0.72), rgba(7, 25, 12, 0.72)),
-        url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL263qNMmTGx8zeoePxm_AQ2tHPb4Dd54RW-SKSo2I8cSo44VhhxtFIg4&s=10');
+        linear-gradient(rgba(7, 25, 12, 0.65), rgba(7, 25, 12, 0.65)),
+        url('/estadio.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+}
+
+#pagina-login .card-login {
+    background-color: #0c6a30;
+    width: 100%;
+    max-width: 440px;
+    border-radius: 24px;
+    padding: 36px 36px 40px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
     display: flex;
     flex-direction: column;
-    padding: 40px 50px 60px;
-    gap: 30px;
+    align-items: center;
+    border: 1px solid rgba(87, 199, 133, 0.25);
 }
 
-.login {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  background: transparent;
+#pagina-login .avatar-header-login {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
 }
 
-.login section {
-  width: 100%;
-  max-width: 360px;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+#pagina-login h1 {
+    font-size: 38px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 24px 0;
+    letter-spacing: 0.5px;
+    text-align: center;
 }
 
-.login header {
-  text-align: center;
-  margin-bottom: 1.5rem;
+#pagina-login .form-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
-.login header svg {
-  width: 80px;
-  height: 80px;
-  color: #888;
-  background: #eee;
-  border-radius: 50%;
-  padding: 8px;
+#pagina-login .campo-login {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-.login form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+#pagina-login .campo-login label {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
 }
 
-.login input {
-  padding: 0.7rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
+#pagina-login .campo-login input {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: box-shadow 0.2s, border-color 0.2s;
 }
 
-.login button {
-  margin-top: 0.5rem;
-  padding: 0.8rem;
-  border: none;
-  border-radius: 8px;
-  background: #2563eb;
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
+#pagina-login .campo-login input:focus {
+    border-color: #57c785;
+    box-shadow: 0 0 8px rgba(87, 199, 133, 0.6);
 }
 
-.login button:hover {
-  background: #1d4ed8;
+#pagina-login .campo-login input::placeholder {
+    color: #888888;
 }
 
-.login a {
-  color: #2563eb;
-  text-decoration: none;
+#pagina-login .esqueci-senha {
+    text-align: right;
+    margin-top: -4px;
 }
 
-.login p {
-  margin: 0;
-  text-align: center;
+#pagina-login .esqueci-senha a {
+    color: #e2f7ea;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+#pagina-login .esqueci-senha a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+#pagina-login .btn-entrar {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px 20px;
+    background-color: #52b75a;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.15s;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+#pagina-login .btn-entrar:hover {
+    background-color: #45a24d;
+    transform: translateY(-1px);
+}
+
+#pagina-login .btn-entrar:active {
+    transform: translateY(0);
+}
+
+#pagina-login .btn-entrar:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+#pagina-login .link-cadastro {
+    margin-top: 18px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+#pagina-login .link-cadastro a {
+    color: #afffca;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+#pagina-login .link-cadastro a:hover {
+    color: #ffffff;
+    text-decoration: underline;
 }
