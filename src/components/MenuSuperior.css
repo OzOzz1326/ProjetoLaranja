@@ -7,13 +7,15 @@
 
 .navbar {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    min-height: 64px;
-    padding: 0 32px;
-    background: linear-gradient(180deg, #0e6830 0%, #0a5024 100%);
-    border-bottom: 2px solid rgba(87, 199, 133, 0.35);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    min-height: 70px;
+    padding: 0 28px;
+    background-color: rgba(7, 25, 12, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(87, 199, 133, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
 }
 
 .logo-container {
@@ -27,100 +29,124 @@
 }
 
 .logo-container img {
-    height: 48px;
+    height: 42px;
     width: auto;
     object-fit: contain;
-    transition: transform 0.2s ease;
+    transition: transform 0.25s ease, filter 0.25s ease;
     cursor: pointer;
 }
 
 .logo-container img:hover {
-    transform: scale(1.04);
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 8px rgba(87, 199, 133, 0.4));
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 36px;
+    justify-content: center;
+    gap: 32px;
     list-style: none;
-    margin: 0 0 0 40px;
+    margin: 0;
     padding: 0;
+    width: 100%;
 }
 
 .nav-links li a {
     text-decoration: none;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    padding: 6px 4px;
+    color: #c8dccb;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    padding: 8px 2px;
     position: relative;
-    transition: color 0.2s ease, opacity 0.2s ease;
+    transition: color 0.25s ease;
+    text-align: center;
+}
+
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2.5px;
+    background: linear-gradient(90deg, #57C785, #45a069);
+    border-radius: 2px;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-links li a:hover {
-    color: #bbf7d0;
+    color: #57C785;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
 }
 
 .nav-actions {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 20px;
+    gap: 16px;
+    width: 100%;
 }
 
 .search-container {
     display: flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.18);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
-    padding: 4px 8px 4px 14px;
-    transition: all 0.25s ease;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid #2a5c35;
+    border-radius: 24px;
+    padding: 4px 6px 4px 16px;
+    transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .search-container:focus-within {
-    background-color: rgba(255, 255, 255, 0.28);
-    border-color: #ffffff;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+    border-color: #57C785;
+    background-color: rgba(87, 199, 133, 0.08);
+    box-shadow: 0 0 14px rgba(87, 199, 133, 0.25);
 }
 
 .search-input {
     background: transparent;
     border: none;
     outline: none;
-    color: #ffffff;
+    color: #f0f0f0;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    width: 150px;
+    width: 170px;
     transition: width 0.3s ease;
 }
 
 .search-input::placeholder {
-    color: rgba(255, 255, 255, 0.75);
+    color: #8ab894;
+    opacity: 0.85;
 }
 
 .search-container:focus-within .search-input {
-    width: 190px;
+    width: 210px;
 }
 
 .search-btn {
     background: transparent;
     border: none;
     outline: none;
-    color: #ffffff;
-    font-size: 16px;
+    color: #57C785;
+    font-size: 15px;
     cursor: pointer;
-    padding: 4px;
+    padding: 6px 8px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .search-btn:hover {
     transform: scale(1.15);
+    background-color: rgba(87, 199, 133, 0.15);
 }
 
 .avatar-usuario-btn {
@@ -128,7 +154,7 @@
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    color: #ffffff;
+    color: #c8dccb;
     font-weight: 600;
     font-size: 14px;
     padding: 4px 8px;
@@ -145,8 +171,8 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: #ffffff;
-    color: #0b5024;
+    background-color: rgba(87, 199, 133, 0.15);
+    color: #57C785;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,8 +181,8 @@
 }
 
 .circulo-avatar.deslogado {
-    background-color: rgba(255, 255, 255, 0.85);
-    color: #0a5024;
+    background-color: rgba(87, 199, 133, 0.15);
+    color: #57C785;
 }
 
 .circulo-avatar:hover {

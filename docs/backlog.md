@@ -60,6 +60,11 @@ O projeto está em uma fase inicial de desenvolvimento, com a base visual e de n
 - [x] Exibir seis contatos demonstrativos da equipe com funções, telefone e e-mail.
 - [ ] Trocar os dados demonstrativos pelos contatos reais do local antes da publicação.
 
+### 9. Página sobre
+- [x] Apresentar o objetivo do Sport In City e seus públicos em `src/pages/Sobre.jsx`.
+- [x] Manter os estilos da página isolados em `src/pages/Sobre.css`.
+- [x] Conectar a rota `/sobre` e o link "Sobre nós" do rodapé.
+
 ## Observações importantes da revisão de código
 
 - O projeto já está com a base visual funcional, mas ainda está no estágio 1 do desenvolvimento definido em `docs/arquitetura.md`.
