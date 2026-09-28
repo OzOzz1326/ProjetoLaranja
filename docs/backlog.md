@@ -1,78 +1,81 @@
 # Backlog do projeto Sport In City
 
-## Visão geral do estado atual
+## Estado atual
 
-O projeto está em uma fase inicial de desenvolvimento, com a base visual e de navegação já montada e funcionando, mas ainda sem a integração real com o banco e autenticação. A revisão geral do código confirmou que o front-end foi implementado em nível de layout e rotas, enquanto a etapa de busca e persistência de dados no Supabase ainda precisa ser concluída.
+Revisado em 28/09/2026 com base no código de `src/` e nas migrações disponíveis. O projeto tem navegação e telas principais implementadas, autenticação Supabase, consulta/cadastro de quadras e gravação de reservas. Isso ainda não representa um fluxo pronto para produção: a página inicial e o pagamento usam dados fixos, as rotas não são protegidas e a reserva tem um fallback que pode atribuir a ação a outro usuário.
 
-## Ordem de desenvolvimento
+O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`. A migração versionada disponível só remove `usuarios.senha`; o esquema completo esperado pelo app e as regras do banco precisam ser confirmados no projeto Supabase.
 
-### 1. Estrutura base do app
-- [x] Criar a estrutura React + Vite do projeto.
-- [x] Configurar o cliente do Supabase em `src/supabase.js`.
-- [x] Definir as rotas principais em `src/App.jsx`.
-- [x] Montar o layout global com `MenuSuperior` e `Rodape`.
-- [x] Validar que a aplicação compila corretamente com `npm run build`.
+## Prioridade 1: Segurança e integridade
 
-### 2. Front-end e design das telas principais
-- [x] Implementar a página inicial com seleção de esportes em `src/pages/Home.jsx`.
-- [x] Criar a navegação por query string para filtrar quadras por esporte.
-- [x] Implementar a página `Quadras` com estado visual para ausência de dados.
-- [x] Criar a página de login com formulário visual em `src/pages/Login.jsx`.
-- [x] Criar a página de cadastro com validação visual básica em `src/pages/Cadastro.jsx`.
-- [x] Definir o estilo visual do projeto em CSS puro por página e por componente.
+- [ ] Remover de `src/pages/Detalhes.jsx` o fallback de reserva para o primeiro usuário ou para o ID `1`; exigir sessão válida e relacionar a reserva somente ao usuário autenticado.
+- [ ] Proteger as rotas e ações de perfil, cadastro de quadra e reserva, redirecionando usuários sem sessão. A verificação de login no envio do formulário de quadra não substitui a proteção da rota.
+- [ ] Validar no servidor/banco a disponibilidade do horário e impedir reservas duplicadas de forma atômica; a consulta seguida de `insert` no cliente permite concorrência.
+- [ ] Fazer a data escolhida corresponder ao dia da semana selecionado e aos dias/horários de funcionamento da quadra; hoje `diaSemana` não é usado para validar a data nem a hora.
+- [ ] Confirmar e documentar o esquema e as chaves de `usuarios`, `quadras` e `reservas`, incluindo o nome atual da coluna `horaio`, antes de alterar consultas ou criar migrações.
+- [ ] Definir políticas RLS e permissões adequadas antes de disponibilizar dados de usuários, quadras e reservas em produção. A arquitetura registra que o RLS está desligado.
 
-### 3. Busca e exibição de dados reais
-- [x] Conectar a página `Quadras` ao Supabase para buscar registros reais.
-- [x] Filtrar os resultados pelo parâmetro `esporte` recebido pela URL.
-- [x] Exibir estados de carregamento, vazio e erro na tela de quadras.
-- [ ] Definir a estrutura da tabela de quadras com campos como esporte, nome, endereço e disponibilidade.
-- [ ] Garantir que a tela inicial e a etapa de seleção de esporte reflitam os dados reais do banco.
+## Prioridade 2: Fechar os fluxos principais
 
-### 4. Autenticação e usuários (Tarefas da Ana)
-- [x] Implementar login com `supabase.auth.signInWithPassword`.
-- [x] Criar usuários no Supabase Auth e associar perfil pela coluna `email` em `usuarios`.
-- [x] Guardar dados da sessão do usuário no `localStorage` no login e no cadastro.
-- [x] Criar tela de perfil em `src/pages/Perfil.jsx` exibindo dados do usuário, próxima partida e botão de logout (conforme protótipo).
-- [x] Implementar fluxo de logout com limpeza de sessão e controle dinâmico de avatar no `MenuSuperior`.
-- [x] Redesenhar as telas de Login e Cadastro fiéis às páginas 11 e 12 do protótipo `laranja-protótipo.pdf`.
-- [ ] Validar e proteger rotas que exigem login estrito (ex: `/cadastrar-quadra`).
+### Quadras e descoberta
+- [x] Buscar quadras no Supabase em `src/pages/Quadras.jsx`.
+- [x] Filtrar por esporte e pelo termo de busca na URL (nome, descrição e modalidade).
+- [x] Exibir carregamento, lista e estado sem resultados.
+- [ ] Separar erro de consulta do estado sem resultados; atualmente a falha é registrada no console e apresentada como lista vazia.
+- [ ] Ligar as modalidades de `src/pages/Home.jsx` aos dados disponíveis no banco ou documentar que a seleção é uma lista fixa intencional.
+- [ ] Implementar filtros por cidade, bairro e disponibilidade somente após confirmar os campos existentes no esquema.
+- [ ] Remover o ID padrão `23` de `src/pages/Detalhes.jsx`; mostrar estado de identificação ausente quando a URL não trouxer ID.
+- [ ] Conferir os campos de endereço, capacidade e cobertura exibidos em detalhes contra o esquema real; esses campos não são preenchidos pelo formulário atual de cadastro.
 
-### 5. Cadastro e gestão de quadras
-- [x] Implementar `src/pages/CriarQuadra.jsx` com formulário de dados principais, dias/horários de funcionamento e comodidades.
-- [x] Conectar o formulário ao Supabase usando `id_usuario`, `nome`, `tipo_jogo`, `descricao`, `preco`, `imagem`, `funcionamento_seg` a `funcionamento_dom`, `horario_inicio`, `horario_fim` e `outros`.
-- [x] Validar os campos obrigatórios e horários do formulário.
-- [ ] Criar a lógica de atualização e remoção de quadras, se necessário.
-- [x] Adicionar acesso ao cadastro de quadra na página `Quadras`.
+### Cadastro, login e perfil
+- [x] Criar conta com Supabase Auth e salvar/consultar dados complementares em `usuarios`.
+- [x] Entrar com `signInWithPassword` e atualizar os dados usados pelo avatar do menu.
+- [x] Exibir perfil, permitir edição de nome e encerrar sessão via Supabase Auth.
+- [ ] Tratar erros retornados ao atualizar o perfil e ao salvar dados complementares; não considerar a operação concluída quando o Supabase retorna erro.
+- [ ] Garantir que o perfil seja carregado da sessão autenticada, em vez de depender exclusivamente do valor salvo no `localStorage`.
+- [ ] Remover a declaração duplicada da rota `/perfil` em `src/App.jsx`.
 
-### 6. Melhorias de experiência e regras de negócio
-- [ ] Adicionar filtros por cidade, bairro, esporte e disponibilidade.
-- [ ] Trabalhar na usabilidade das telas de listagem e cadastro.
-- [ ] Ajustar espaçamentos, textos e acessibilidade dos componentes.
-- [ ] Melhorar mensagens e feedbacks para o usuário.
+### Cadastro de quadra
+- [x] Cadastrar quadra no Supabase com proprietário, modalidade, preço, imagem, dias/horários e campo `outros`.
+- [x] Validar campos obrigatórios, ao menos um dia aberto e horário final posterior ao inicial.
+- [x] Verificar sessão e localizar o perfil do proprietário antes de inserir.
+- [ ] Exibir e tratar os erros do cadastro de forma consistente; conferir também os erros retornados nas consultas de sessão e proprietário.
+- [ ] Implementar edição e remoção de quadras próprias, se essas operações fizerem parte do escopo final.
 
-### 7. Testes, validação e publicação
-- [ ] Testar os fluxos principais: login, cadastro, busca de quadras e cadastro de quadra.
-- [ ] Validar regras de negócio e comportamento em cenários de erro.
-- [ ] Rodar ajustes finais e revisão de build.
-- [ ] Preparar o projeto para publicação.
+### Reserva e pagamento
+- [x] Buscar detalhes da quadra pelo ID e oferecer formulário de solicitação de reserva.
+- [x] Consultar reservas existentes e inserir reserva na tabela `reservas`.
+- [ ] Ligar reserva e pagamento em um único fluxo, levando quadra, data, horário e preço selecionados para a tela de pagamento.
+- [ ] Substituir o resumo fixo de `src/pages/Pagamento.jsx` por dados da reserva. A confirmação atual só exibe um alerta e não registra pagamento nem confirma uma reserva real.
+- [ ] Definir integração e regras de pagamento. A tela informa corretamente que não processa cobranças; não coletar nem armazenar dados de cartão sem uma solução de pagamento aprovada.
 
-### 8. Página de contato
-- [x] Exibir seis contatos demonstrativos da equipe com funções, telefone e e-mail.
-- [ ] Trocar os dados demonstrativos pelos contatos reais do local antes da publicação.
+## Prioridade 3: Conteúdo e acabamento
 
-### 9. Página sobre
-- [x] Apresentar o objetivo do Sport In City e seus públicos em `src/pages/Sobre.jsx`.
-- [x] Manter os estilos da página isolados em `src/pages/Sobre.css`.
-- [x] Conectar a rota `/sobre` e o link "Sobre nós" do rodapé.
+- [x] Criar páginas de contato e sobre e conectar navegação do rodapé.
+- [x] Aplicar CSS próprio às telas e componentes existentes.
+- [ ] Substituir os contatos demonstrativos por contatos autorizados e conferir associação correta entre nome, telefone e e-mail.
+- [ ] Substituir a próxima partida fixa exibida no perfil por reservas reais ou remover essa informação até existir dado real.
+- [ ] Revisar acessibilidade, mensagens e comportamento responsivo dos fluxos de busca, cadastro e reserva.
 
-## Observações importantes da revisão de código
+## Validação e publicação
 
-- O projeto já está com a base visual funcional, mas ainda está no estágio 1 do desenvolvimento definido em `docs/arquitetura.md`.
-- As páginas de formulário e a seleção de esporte não estão conectadas a dados reais de banco.
-- A tela `CriarQuadra` cadastra os dados da quadra, os dias e horários de funcionamento e a descrição `outros` via Supabase; falhas de banco são exibidas somente no console.
-- Cadastro e login usam Supabase Auth e relacionam o perfil pela coluna `email`; ainda falta proteção global de rotas e logout.
-- Rota raiz `/` configurada para apontar diretamente para a página inicial em conjunto com `/pagina-inicial`.
+- [x] `npm.cmd run build` passou em 28/09/2026; o Vite mostrou aviso de bundle acima de 500 kB.
+- [ ] Corrigir `npm.cmd run lint`: `src/pages/Perfil.jsx` falha em `react-hooks/set-state-in-effect` ao chamar `setUsuario` e `setNomeEditado` durante a inicialização do efeito; executar o lint novamente após o ajuste.
+- [ ] Testar com Supabase configurado: cadastro, login, logout, busca, cadastro de quadra, detalhes, reserva concorrente e erros de rede/banco.
+- [ ] Testar rotas protegidas com sessão ausente, expirada e válida.
+- [ ] Confirmar variáveis de ambiente, esquema, chaves estrangeiras, índices e políticas RLS no ambiente de publicação.
+- [ ] Fazer revisão final de build e preparar publicação.
+
+## Referência de rotas
+
+- `/` e `/pagina-inicial`: seleção fixa de esportes.
+- `/quadras`: busca Supabase, filtro por modalidade e termo.
+- `/detalhes/:id` ou `/detalhes?id=...`: detalhes e formulário de reserva.
+- `/login`, `/cadastro` e `/perfil`: autenticação e perfil.
+- `/cadastrar-quadra`: cadastro Supabase com verificação de usuário no envio.
+- `/pagamento`: protótipo visual sem vínculo com uma reserva real.
+- `/contato` e `/sobre`: páginas informativas.
 
 ## Próximo passo recomendado
 
-- Priorizar a etapa de busca real no Supabase e a autenticação, porque elas são a base para que as quadras, usuários e cadastros passem a funcionar de forma real e integrada.
+Priorizar a segurança e integridade da reserva: exigir usuário autenticado, remover o fallback para usuário padrão e validar data/horário contra o funcionamento da quadra. Em seguida, confirmar o esquema no Supabase e conectar o pagamento apenas quando os dados da reserva estiverem sendo transportados de ponta a ponta.
