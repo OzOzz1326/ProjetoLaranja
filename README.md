@@ -5,7 +5,7 @@
 - **Caio**
     - Tela inicial do sistema (menu superior e rodape) ✓
     - Tela de quadras: Buscar no banco todas as quadras e mostrar na tela ✓
-    - Cadastrar uma nova quadra ✓
+    - Cadastrar uma nova quadra ✓✖
 - **Nickolas**
     - Tela de contato
     - Tela de pagamento
