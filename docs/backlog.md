@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-Revisado em 28/09/2026 com base no código de `src/` e nas migrações disponíveis. O projeto tem navegação e telas principais implementadas, autenticação Supabase, consulta/cadastro de quadras e gravação de reservas. Isso ainda não representa um fluxo pronto para produção: a página inicial e o pagamento usam dados fixos, as rotas não são protegidas e a reserva tem um fallback que pode atribuir a ação a outro usuário.
+Revisado em 29/09/2026 com base no código de `src/` e nas migrações disponíveis. O projeto tem navegação e telas principais implementadas, autenticação Supabase, consulta/cadastro de quadras e gravação de reservas. Isso ainda não representa um fluxo pronto para produção: a página inicial e o pagamento usam dados fixos, as rotas não são protegidas e a reserva tem um fallback que pode atribuir a ação a outro usuário.
 
 O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`. A migração versionada disponível só remove `usuarios.senha`; o esquema completo esperado pelo app e as regras do banco precisam ser confirmados no projeto Supabase.
 
@@ -31,8 +31,8 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Criar conta com Supabase Auth e salvar/consultar dados complementares em `usuarios`.
 - [x] Entrar com `signInWithPassword` e atualizar os dados usados pelo avatar do menu.
 - [x] Exibir perfil, permitir edição de nome e encerrar sessão via Supabase Auth.
-- [ ] Tratar erros retornados ao atualizar o perfil e ao salvar dados complementares; não considerar a operação concluída quando o Supabase retorna erro.
-- [ ] Garantir que o perfil seja carregado da sessão autenticada, em vez de depender exclusivamente do valor salvo no `localStorage`.
+- [x] Tratar erros retornados ao atualizar o perfil e ao salvar dados complementares; não considerar a operação concluída quando o Supabase retorna erro.
+- [x] Garantir que o perfil e o menu sejam carregados da sessão autenticada, em vez de depender exclusivamente do valor salvo no `localStorage`.
 - [ ] Remover a declaração duplicada da rota `/perfil` em `src/App.jsx`.
 
 ### Cadastro de quadra
@@ -59,8 +59,8 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 
 ## Validação e publicação
 
-- [x] `npm.cmd run build` passou em 28/09/2026; o Vite mostrou aviso de bundle acima de 500 kB.
-- [ ] Corrigir `npm.cmd run lint`: `src/pages/Perfil.jsx` falha em `react-hooks/set-state-in-effect` ao chamar `setUsuario` e `setNomeEditado` durante a inicialização do efeito; executar o lint novamente após o ajuste.
+- [ ] Build: a validação local de 29/09/2026 não conseguiu resolver `react-router-dom`, embora o pacote esteja declarado em `package.json`; `node_modules/react-router-dom` está ausente. Reinstalar dependências e repetir o build quando autorizado.
+- [x] `npm.cmd run lint` passou em 29/09/2026 após corrigir a inicialização do estado do perfil.
 - [ ] Testar com Supabase configurado: cadastro, login, logout, busca, cadastro de quadra, detalhes, reserva concorrente e erros de rede/banco.
 - [ ] Testar rotas protegidas com sessão ausente, expirada e válida.
 - [ ] Confirmar variáveis de ambiente, esquema, chaves estrangeiras, índices e políticas RLS no ambiente de publicação.

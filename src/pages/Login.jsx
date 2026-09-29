@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from "../supabase";
+import { carregarPerfilUsuario, dadosBasicosUsuario, supabase } from "../supabase";
 import "./Login.css";
 
 function Login() {
@@ -31,26 +31,14 @@ function Login() {
                 return;
             }
 
-            // Busca os dados completos do usuário na tabela 'usuarios'
-            const { data: perfil, error: erroPerfil } = await supabase
-                .from("usuarios")
-                .select("*")
-                .eq("email", data.user.email)
-                .maybeSingle();
-
-            if (erroPerfil) {
-                console.warn("Aviso ao buscar perfil adicional:", erroPerfil);
+            let dadosUsuario;
+            try {
+                dadosUsuario = await carregarPerfilUsuario(data.user);
+            } catch (erroPerfil) {
+                console.error("Erro ao buscar perfil adicional:", erroPerfil);
+                dadosUsuario = dadosBasicosUsuario(data.user);
             }
 
-            // Objeto do usuário com fallback para metadata do Auth
-            const dadosUsuario = perfil || {
-                id: data.user.id,
-                email: data.user.email,
-                nome: data.user.user_metadata?.nome || data.user.email.split("@")[0],
-                data_nascimento: data.user.user_metadata?.data_nascimento || "",
-            };
-
-            // Guarda os dados da sessão do usuário no localStorage
             localStorage.setItem("usuario", JSON.stringify(dadosUsuario));
 
             alert(`Login realizado com sucesso! Bem-vindo(a), ${dadosUsuario.nome || "ao SportInCity"}!`);
