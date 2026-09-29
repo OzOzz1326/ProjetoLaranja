@@ -9,7 +9,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 ## Prioridade 1: Segurança e integridade
 
 - [ ] Remover de `src/pages/Detalhes.jsx` o fallback de reserva para o primeiro usuário ou para o ID `1`; exigir sessão válida e relacionar a reserva somente ao usuário autenticado.
-- [ ] Proteger as rotas e ações de perfil, cadastro de quadra e reserva, redirecionando usuários sem sessão. A verificação de login no envio do formulário de quadra não substitui a proteção da rota.
+- [ ] Proteger as rotas e ações de perfil, cadastro de quadra e reserva, redirecionando usuários sem sessão. A tela e o envio do cadastro de quadra agora verificam a sessão; perfil e reserva ainda precisam de guarda.
 - [ ] Validar no servidor/banco a disponibilidade do horário e impedir reservas duplicadas de forma atômica; a consulta seguida de `insert` no cliente permite concorrência.
 - [ ] Fazer a data escolhida corresponder ao dia da semana selecionado e aos dias/horários de funcionamento da quadra; hoje `diaSemana` não é usado para validar a data nem a hora.
 - [ ] Confirmar e documentar o esquema e as chaves de `usuarios`, `quadras` e `reservas`, incluindo o nome atual da coluna `horaio`, antes de alterar consultas ou criar migrações.
@@ -33,6 +33,12 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Exibir perfil, permitir edição de nome e encerrar sessão via Supabase Auth.
 - [x] Tratar erros retornados ao atualizar o perfil e ao salvar dados complementares; não considerar a operação concluída quando o Supabase retorna erro.
 - [x] Garantir que o perfil e o menu sejam carregados da sessão autenticada, em vez de depender exclusivamente do valor salvo no `localStorage`.
+- [x] Checklist Ana: cadastro grava os dados complementares em `usuarios`; login já navega para a página inicial sem recarga integral do navegador; cadastro de quadra valida sessão no acesso e no envio; o perfil consulta a próxima reserva futura do usuário; removidas mensagens de sucesso redundantes.
+- [x] Mostrar no perfil a próxima reserva futura do usuário, ordenada por data e hora em `reservas` e relacionada à quadra.
+- [x] Remover alerts de sucesso redundantes de login, cadastro, salvamento de nome, logout e cadastro de quadra; erros e confirmações importantes continuam visíveis.
+- [x] Exibir orientação de cadastro junto ao erro genérico de credenciais inválidas, sem revelar se um e-mail específico existe; explicar o limite temporário de envio de e-mails quando o Supabase retornar rate limit.
+- [x] Permitir selecionar uma foto JPG, PNG ou WebP de até 5 MB e salvar no bucket público `avatars`, com URL nos metadados do Auth.
+- [ ] Executar `docs/migracoes/supabase-avatar-storage.sql` no SQL Editor do Supabase para criar o bucket e as políticas necessárias ao upload da foto.
 - [ ] Remover a declaração duplicada da rota `/perfil` em `src/App.jsx`.
 
 ### Cadastro de quadra
@@ -62,8 +68,9 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 
 ## Validação e publicação
 
-- [ ] Build: a validação local de 29/09/2026 não conseguiu resolver `react-router-dom`, embora o pacote esteja declarado em `package.json`; `node_modules/react-router-dom` está ausente. Reinstalar dependências e repetir o build quando autorizado.
+- [x] `npm.cmd run build` passou em 29/09/2026 após a implementação da checklist; Vite ainda avisa que o bundle JavaScript ultrapassa 500 kB.
 - [x] `npm.cmd run lint` passou em 29/09/2026 após corrigir a inicialização do estado do perfil.
+- [x] `npm.cmd run lint` e `npm.cmd run build` passaram após implementar consulta de próxima reserva, upload de avatar e proteção da tela de cadastro de quadra.
 - [ ] Testar com Supabase configurado: cadastro, login, logout, busca, cadastro de quadra, detalhes, reserva concorrente e erros de rede/banco.
 - [ ] Testar rotas protegidas com sessão ausente, expirada e válida.
 - [ ] Confirmar variáveis de ambiente, esquema, chaves estrangeiras, índices e políticas RLS no ambiente de publicação.

@@ -1,7 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { carregarPerfilUsuario, dadosBasicosUsuario, supabase } from "../supabase";
 import "./Perfil.css";
+
+async function buscarProximaReserva(idUsuario) {
+    const agora = new Date();
+    const dataHoje = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, "0")}-${String(agora.getDate()).padStart(2, "0")}`;
+    const horaAtual = `${String(agora.getHours()).padStart(2, "0")}:${String(agora.getMinutes()).padStart(2, "0")}`;
+    const { data: reservas, error } = await supabase
+        .from("reservas")
+        .select("dia_reserva,horaio,id_quadra")
+        .eq("id_usuario", idUsuario)
+        .gte("dia_reserva", dataHoje)
+        .order("dia_reserva", { ascending: true })
+        .order("horaio", { ascending: true });
+
+    if (error) throw error;
+
+    const reserva = (reservas || []).find((item) => (
+        item.dia_reserva > dataHoje || item.horaio >= horaAtual
+    ));
+
+    if (!reserva?.id_quadra) return reserva || null;
+
+    const { data: quadra, error: erroQuadra } = await supabase
+        .from("quadras")
+        .select("nome,tipo_jogo")
+        .eq("id", reserva.id_quadra)
+        .maybeSingle();
+
+    if (erroQuadra) throw erroQuadra;
+
+    return { ...reserva, quadra };
+}
 
 function Perfil() {
     const navigate = useNavigate();
@@ -10,6 +41,10 @@ function Perfil() {
     const [nomeEditado, setNomeEditado] = useState("");
     const [salvando, setSalvando] = useState(false);
     const [carregando, setCarregando] = useState(true);
+    const [proximaReserva, setProximaReserva] = useState(null);
+    const [erroReserva, setErroReserva] = useState(false);
+    const [atualizandoFoto, setAtualizandoFoto] = useState(false);
+    const inputFotoRef = useRef(null);
 
     useEffect(() => {
         let ativo = true;
@@ -22,7 +57,11 @@ function Perfil() {
 
             try {
                 const { data, error } = await supabase.auth.getUser();
-
+                if (error?.name === "AuthSessionMissingError") {
+                    localStorage.removeItem("usuario");
+                    if (ativo) setUsuario(null);
+                    return;
+                }
                 if (error) throw error;
 
                 if (!data.user) {
@@ -42,6 +81,16 @@ function Perfil() {
                 if (ativo) {
                     setUsuario(dados);
                     setNomeEditado(dados.nome || "");
+                }
+
+                if (dados.perfil_id) {
+                    try {
+                        const reserva = await buscarProximaReserva(dados.perfil_id);
+                        if (ativo) setProximaReserva(reserva);
+                    } catch (erroReserva) {
+                        console.error("Erro ao carregar próxima reserva:", erroReserva);
+                        if (ativo) setErroReserva(true);
+                    }
                 }
             } catch (error) {
                 console.error("Erro ao carregar sessão do usuário:", error);
@@ -96,14 +145,75 @@ function Perfil() {
             if (erroAuth) {
                 console.error("Erro ao atualizar o nome nos dados do Auth:", erroAuth);
                 alert("Nome atualizado no perfil, mas não foi possível sincronizar os dados da conta.");
-            } else {
-                alert("Nome atualizado com sucesso!");
             }
         } catch (error) {
             console.error("Erro ao atualizar nome:", error);
             alert(`Erro ao atualizar o nome: ${error.message || "verifique a conexão com o banco."}`);
         } finally {
             setSalvando(false);
+        }
+    }
+
+    async function trocarFoto(evento) {
+        const arquivo = evento.target.files?.[0];
+        evento.target.value = "";
+
+        if (!arquivo) return;
+
+        const extensoes = {
+            "image/jpeg": "jpg",
+            "image/png": "png",
+            "image/webp": "webp",
+        };
+
+        if (!extensoes[arquivo.type]) {
+            alert("Escolha uma imagem JPG, PNG ou WebP.");
+            return;
+        }
+
+        if (arquivo.size > 5 * 1024 * 1024) {
+            alert("A imagem deve ter no máximo 5 MB.");
+            return;
+        }
+
+        setAtualizandoFoto(true);
+        let caminhoImagem;
+
+        try {
+            const { data: sessao, error: erroSessao } = await supabase.auth.getUser();
+            if (erroSessao) throw erroSessao;
+            if (!sessao.user) throw new Error("Entre novamente para trocar sua foto.");
+
+            caminhoImagem = `${sessao.user.id}/perfil-${Date.now()}.${extensoes[arquivo.type]}`;
+            const { error: erroUpload } = await supabase.storage
+                .from("avatars")
+                .upload(caminhoImagem, arquivo, {
+                    cacheControl: "3600",
+                    contentType: arquivo.type,
+                    upsert: false,
+                });
+
+            if (erroUpload) throw erroUpload;
+
+            const { data: arquivoPublico } = supabase.storage.from("avatars").getPublicUrl(caminhoImagem);
+            const avatarUrl = `${arquivoPublico.publicUrl}?v=${Date.now()}`;
+            const { data, error: erroAuth } = await supabase.auth.updateUser({
+                data: { avatar_url: avatarUrl },
+            });
+
+            if (erroAuth) {
+                await supabase.storage.from("avatars").remove([caminhoImagem]);
+                throw erroAuth;
+            }
+
+            const novoUsuario = { ...usuario, avatar_url: data.user.user_metadata.avatar_url };
+            localStorage.setItem("usuario", JSON.stringify(novoUsuario));
+            setUsuario(novoUsuario);
+        } catch (error) {
+            console.error("Erro ao atualizar foto do perfil:", error);
+            alert(`Não foi possível atualizar a foto: ${error.message || "verifique a configuração do Storage."}`);
+        } finally {
+            setAtualizandoFoto(false);
         }
     }
 
@@ -118,7 +228,6 @@ function Perfil() {
             if (error) throw error;
 
             localStorage.removeItem("usuario");
-            alert("Você saiu da sua conta.");
             navigate("/login");
         } catch (error) {
             console.error("Erro ao deslogar:", error);
@@ -164,8 +273,29 @@ function Perfil() {
                 {/* Lado Esquerdo / Principal: Foto, Nome e Próxima Partida (Conforme protótipo Página 13) */}
                 <section className="painel-principal-perfil">
                     <div className="cabecalho-usuario">
-                        <div className="foto-perfil">
-                            <span>{iniciais}</span>
+                        <div className="area-foto-perfil">
+                            <div className="foto-perfil">
+                                {usuario.avatar_url ? (
+                                    <img src={usuario.avatar_url} alt={`Foto de perfil de ${usuario.nome}`} />
+                                ) : (
+                                    <span>{iniciais}</span>
+                                )}
+                            </div>
+                            <button
+                                type="button"
+                                className="btn-trocar-foto"
+                                onClick={() => inputFotoRef.current?.click()}
+                                disabled={atualizandoFoto}
+                            >
+                                {atualizandoFoto ? "Enviando..." : "Trocar foto"}
+                            </button>
+                            <input
+                                ref={inputFotoRef}
+                                className="input-foto-perfil"
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp"
+                                onChange={trocarFoto}
+                            />
                         </div>
 
                         <div className="info-nome-usuario">
@@ -201,19 +331,29 @@ function Perfil() {
                         </div>
                     </div>
 
-                    {/* Card de Próxima Partida conforme Página 13 do protótipo */}
+                    {/* Próxima reserva futura deste usuário */}
                     <div className="card-proxima-partida">
                         <div className="logo-partida">
                             <img src="/logosfundo.png" alt="SportInCity" />
                         </div>
                         <div className="detalhes-partida">
-                            <h2>Próxima Partida</h2>
-                            <p className="item-partida">
-                                <span className="check-verde">☑</span> Segunda-Feira
-                            </p>
-                            <p className="item-partida">
-                                <span className="check-verde">☑</span> 19:00 Horas
-                            </p>
+                            <h2>Próxima reserva</h2>
+                            {erroReserva ? (
+                                <p className="item-partida">Não foi possível carregar suas reservas.</p>
+                            ) : proximaReserva ? (
+                                <>
+                                    <p className="item-partida">
+                                        {proximaReserva.dia_reserva.split("-").reverse().join("/")} às {proximaReserva.horaio}
+                                    </p>
+                                    {proximaReserva.quadra && (
+                                        <p className="item-partida">
+                                            {proximaReserva.quadra.nome} · {proximaReserva.quadra.tipo_jogo}
+                                        </p>
+                                    )}
+                                </>
+                            ) : (
+                                <p className="item-partida">Você não tem reservas futuras.</p>
+                            )}
                         </div>
                     </div>
 

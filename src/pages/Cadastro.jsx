@@ -46,7 +46,14 @@ function Cadastro() {
 
             if (error) {
                 console.error("Erro ao cadastrar usuário no Supabase Auth:", error);
-                alert(`Não foi possível cadastrar o usuário: ${error.message}`);
+                const limiteDeEmail = error.status === 429
+                    || /rate.?limit|too many requests/i.test(error.message || "");
+
+                if (limiteDeEmail) {
+                    alert("O Supabase limitou temporariamente o envio de e-mails de cadastro. Aguarde antes de tentar novamente. Para evitar esse limite durante testes, configure um SMTP próprio em Authentication > SMTP Settings.");
+                } else {
+                    alert(`Não foi possível cadastrar o usuário: ${error.message}`);
+                }
                 return;
             }
 
@@ -92,7 +99,6 @@ function Cadastro() {
 
             localStorage.setItem("usuario", JSON.stringify(dadosUsuario));
 
-            alert("Cadastro realizado com sucesso! Bem-vindo(a) ao SportInCity!");
             navigate("/perfil");
         } catch (error) {
             console.error("Erro inesperado ao cadastrar usuário:", error);

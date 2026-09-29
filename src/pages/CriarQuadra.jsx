@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../supabase";
 import "./CriarQuadra.css";
@@ -37,6 +37,37 @@ function CriarQuadra() {
     const [horarioInicio, setHorarioInicio] = useState("08:00");
     const [horarioFim, setHorarioFim] = useState("22:00");
     const [salvando, setSalvando] = useState(false);
+    const [verificandoSessao, setVerificandoSessao] = useState(true);
+
+    useEffect(() => {
+        let ativo = true;
+
+        async function verificarSessao() {
+            if (!supabase) {
+                navigate("/login", { replace: true });
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase.auth.getUser();
+
+                if (error || !data.user) {
+                    navigate("/login", { replace: true });
+                    return;
+                }
+
+                if (ativo) setVerificandoSessao(false);
+            } catch {
+                navigate("/login", { replace: true });
+            }
+        }
+
+        verificarSessao();
+
+        return () => {
+            ativo = false;
+        };
+    }, [navigate]);
 
     function atualizaFuncionamento(dia, aberto) {
         setFuncionamento((atual) => ({
@@ -117,7 +148,6 @@ function CriarQuadra() {
                 return;
             }
 
-            window.alert("Quadra cadastrada com sucesso!");
             navigate("/quadras");
         } catch (error) {
             console.error("Erro inesperado ao cadastrar a quadra:", error);
@@ -125,6 +155,14 @@ function CriarQuadra() {
         } finally {
             setSalvando(false);
         }
+    }
+
+    if (verificandoSessao) {
+        return (
+            <main id="pagina-criar-quadra" className="pagina-criar-quadra">
+                <p>Verificando sua sessão...</p>
+            </main>
+        );
     }
 
     return (

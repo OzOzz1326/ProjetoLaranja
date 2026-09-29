@@ -27,7 +27,14 @@ function Login() {
 
             if (error) {
                 console.error("Erro ao fazer login:", error);
-                alert(`Não foi possível entrar: ${error.message}`);
+                const credenciaisInvalidas = error.code === "invalid_credentials"
+                    || error.message?.toLowerCase().includes("invalid login credentials");
+
+                if (credenciaisInvalidas) {
+                    alert("E-mail ou senha incorretos. Se você ainda não tem uma conta, cadastre-se para fazer login.");
+                } else {
+                    alert(`Não foi possível entrar: ${error.message}`);
+                }
                 return;
             }
 
@@ -41,7 +48,6 @@ function Login() {
 
             localStorage.setItem("usuario", JSON.stringify(dadosUsuario));
 
-            alert(`Login realizado com sucesso! Bem-vindo(a), ${dadosUsuario.nome || "ao SportInCity"}!`);
             navigate("/pagina-inicial");
         } catch (error) {
             console.error("Erro inesperado ao fazer login:", error);
@@ -89,7 +95,7 @@ function Login() {
 
                     <div className="esqueci-senha">
                         <a href="#" onClick={(e) => { e.preventDefault(); alert("Entre em contato com o suporte para redefinir sua senha."); }}>
-                            Esqueci minha senha.
+                            Esqueci minha senha
                         </a>
                     </div>
 

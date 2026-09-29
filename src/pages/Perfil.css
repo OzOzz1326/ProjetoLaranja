@@ -39,6 +39,14 @@
     gap: 22px;
 }
 
+#pagina-perfil .area-foto-perfil {
+    display: flex;
+    flex: 0 0 90px;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
 #pagina-perfil .foto-perfil {
     width: 90px;
     height: 90px;
@@ -52,7 +60,43 @@
     font-weight: 700;
     color: #ffffff;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-    flex-shrink: 0;
+    overflow: hidden;
+}
+
+#pagina-perfil .foto-perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#pagina-perfil .btn-trocar-foto {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #d9f7e7;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#pagina-perfil .btn-trocar-foto:hover:not(:disabled) {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+#pagina-perfil .btn-trocar-foto:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+#pagina-perfil .input-foto-perfil {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
 }
 
 #pagina-perfil .info-nome-usuario {

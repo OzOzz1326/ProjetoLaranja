@@ -14,6 +14,7 @@ export function dadosBasicosUsuario(usuarioAuth) {
 		nome: usuarioAuth.user_metadata?.nome || usuarioAuth.email?.split('@')[0] || 'Usuário',
 		email: usuarioAuth.email || '',
 		data_nascimento: usuarioAuth.user_metadata?.data_nascimento || '',
+		avatar_url: usuarioAuth.user_metadata?.avatar_url || '',
 	}
 }
 
@@ -39,5 +40,7 @@ export async function carregarPerfilUsuario(usuarioAuth) {
 		...data,
 		auth_id: usuarioAuth.id,
 		email: usuarioAuth.email,
+		avatar_url: usuarioAuth.user_metadata?.avatar_url || '',
+		perfil_id: data?.id || null,
 	}
 }
