@@ -51,9 +51,9 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 
 ## Prioridade 3: Conteúdo e acabamento
 
-- [x] Criar páginas de contato e sobre e conectar navegação do rodapé.
+- [x] Criar página de contato com formulário responsivo, seleção de assunto com foco automático na descrição e foto de campo ao lado, além da página sobre e navegação do rodapé.
 - [x] Aplicar CSS próprio às telas e componentes existentes.
-- [ ] Substituir os contatos demonstrativos por contatos autorizados e conferir associação correta entre nome, telefone e e-mail.
+- [ ] Integrar o formulário de contato a um canal de atendimento, validar os dados enviados e confirmar como as preferências de atualização serão usadas.
 - [ ] Substituir a próxima partida fixa exibida no perfil por reservas reais ou remover essa informação até existir dado real.
 - [ ] Revisar acessibilidade, mensagens e comportamento responsivo dos fluxos de busca, cadastro e reserva.
 
