@@ -28,7 +28,10 @@ const funcionamentoInicial = Object.fromEntries(
 function CriarQuadra() {
     const navigate = useNavigate();
     const [nome, setNome] = useState("");
+    const [endereco, setEndereco] = useState("");
     const [esporte, setEsporte] = useState("");
+    const [capacidade, setCapacidade] = useState("");
+    const [cobertura, setCobertura] = useState("");
     const [descricao, setDescricao] = useState("");
     const [outros, setOutros] = useState("");
     const [preco, setPreco] = useState("");
@@ -126,7 +129,10 @@ function CriarQuadra() {
             const { error } = await supabase.from("quadras").insert({
                 id_usuario: usuario.id,
                 nome,
+                endereco: endereco.trim(),
                 tipo_jogo: esporte,
+                capacidade: Number(capacidade),
+                cobertura: cobertura === "true",
                 descricao,
                 preco: Number(preco),
                 imagem: imagem || null,
@@ -186,12 +192,44 @@ function CriarQuadra() {
                 </label>
 
                 <label className="campo-quadra">
+                    <span>Endereço</span>
+                    <input
+                        value={endereco}
+                        onChange={(evento) => setEndereco(evento.target.value)}
+                        placeholder="Ex.: Rua das Flores, 123 - Centro"
+                        required
+                    />
+                </label>
+
+                <label className="campo-quadra">
                     <span>Esporte</span>
                     <select value={esporte} onChange={(evento) => setEsporte(evento.target.value)} required>
                         <option value="">Selecione o esporte</option>
                         {esportesDisponiveis.map((opcao) => (
                             <option value={opcao.valor} key={opcao.valor}>{opcao.nome}</option>
                         ))}
+                    </select>
+                </label>
+
+                <label className="campo-quadra">
+                    <span>Capacidade de pessoas</span>
+                    <input
+                        type="number"
+                        min="1"
+                        step="1"
+                        value={capacidade}
+                        onChange={(evento) => setCapacidade(evento.target.value)}
+                        placeholder="Ex.: 22"
+                        required
+                    />
+                </label>
+
+                <label className="campo-quadra">
+                    <span>Cobertura</span>
+                    <select value={cobertura} onChange={(evento) => setCobertura(evento.target.value)} required>
+                        <option value="">Selecione uma opção</option>
+                        <option value="true">Coberta</option>
+                        <option value="false">Descoberta</option>
                     </select>
                 </label>
 

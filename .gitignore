@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 .env
 .env.examples
+.supabase_auth.sql
+.supabase-avatar-storage.sql

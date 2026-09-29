@@ -25,7 +25,8 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [ ] Ligar as modalidades de `src/pages/Home.jsx` aos dados disponíveis no banco ou documentar que a seleção é uma lista fixa intencional.
 - [ ] Implementar filtros por cidade, bairro e disponibilidade somente após confirmar os campos existentes no esquema.
 - [ ] Remover o ID padrão `23` de `src/pages/Detalhes.jsx`; mostrar estado de identificação ausente quando a URL não trouxer ID.
-- [ ] Conferir os campos de endereço, capacidade e cobertura exibidos em detalhes contra o esquema real; esses campos não são preenchidos pelo formulário atual de cadastro.
+- [x] Incluir endereço, capacidade e cobertura no formulário de cadastro, pois são exibidos nos detalhes da quadra.
+- [ ] Confirmar no esquema remoto todos os campos `NOT NULL`, tipos, defaults e chaves de `quadras`; a definição SQL completa ainda não está versionada neste repositório.
 
 ### Cadastro, login e perfil
 - [x] Criar conta com Supabase Auth e salvar/consultar dados complementares em `usuarios`.
@@ -45,6 +46,8 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Cadastrar quadra no Supabase com proprietário, modalidade, preço, imagem, dias/horários e campo `outros`.
 - [x] Validar campos obrigatórios, ao menos um dia aberto e horário final posterior ao inicial.
 - [x] Verificar sessão e localizar o perfil do proprietário antes de inserir.
+- [x] Coletar o endereço obrigatório da quadra e enviá-lo à coluna `quadras.endereco`.
+- [x] Coletar capacidade e cobertura e enviá-las como número e booleano ao cadastrar a quadra.
 - [ ] Exibir e tratar os erros do cadastro de forma consistente; conferir também os erros retornados nas consultas de sessão e proprietário.
 - [ ] Implementar edição e remoção de quadras próprias, se essas operações fizerem parte do escopo final.
 
