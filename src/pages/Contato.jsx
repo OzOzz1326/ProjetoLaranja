@@ -74,7 +74,7 @@ function Contato() {
                 </form>
 
                 <aside className="imagem-campo-contato">
-                    <img src="/estadio.jpg" alt="Campo de futebol preparado para a prática esportiva" />
+                    <img src="../quadracontato.jpg" alt="Campo de futebol preparado para a prática esportiva" />
                     <div className="legenda-campo-contato">
                         <span>SPORT IN CITY</span>
                         <h2>Seu próximo jogo começa aqui.</h2>
