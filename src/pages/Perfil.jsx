@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from "../supabase";
+import { carregarPerfilUsuario, dadosBasicosUsuario, supabase } from "../supabase";
 import "./Perfil.css";
 
 function Perfil() {
@@ -9,18 +9,54 @@ function Perfil() {
     const [editando, setEditando] = useState(false);
     const [nomeEditado, setNomeEditado] = useState("");
     const [salvando, setSalvando] = useState(false);
+    const [carregando, setCarregando] = useState(true);
 
     useEffect(() => {
-        const salvo = localStorage.getItem("usuario");
-        if (salvo) {
+        let ativo = true;
+
+        async function carregarUsuario() {
+            if (!supabase) {
+                setCarregando(false);
+                return;
+            }
+
             try {
-                const dados = JSON.parse(salvo);
-                setUsuario(dados);
-                setNomeEditado(dados.nome || "");
-            } catch {
-                setUsuario(null);
+                const { data, error } = await supabase.auth.getUser();
+
+                if (error) throw error;
+
+                if (!data.user) {
+                    localStorage.removeItem("usuario");
+                    return;
+                }
+
+                let dados;
+                try {
+                    dados = await carregarPerfilUsuario(data.user);
+                } catch (erroPerfil) {
+                    console.error("Erro ao buscar perfil adicional:", erroPerfil);
+                    dados = dadosBasicosUsuario(data.user);
+                }
+
+                localStorage.setItem("usuario", JSON.stringify(dados));
+                if (ativo) {
+                    setUsuario(dados);
+                    setNomeEditado(dados.nome || "");
+                }
+            } catch (error) {
+                console.error("Erro ao carregar sessão do usuário:", error);
+                localStorage.removeItem("usuario");
+                if (ativo) setUsuario(null);
+            } finally {
+                if (ativo) setCarregando(false);
             }
         }
+
+        carregarUsuario();
+
+        return () => {
+            ativo = false;
+        };
     }, []);
 
     async function salvarEdicaoNome() {
@@ -29,24 +65,43 @@ function Perfil() {
             return;
         }
 
+        if (!supabase || !usuario?.email) {
+            alert("Não foi possível conectar ao Supabase para atualizar o perfil.");
+            return;
+        }
+
         setSalvando(true);
         try {
-            const novoUsuario = { ...usuario, nome: nomeEditado.trim() };
+            const { data: perfilAtualizado, error: erroPerfil } = await supabase
+                .from("usuarios")
+                .update({ nome: nomeEditado.trim() })
+                .eq("email", usuario.email)
+                .select("id")
+                .maybeSingle();
 
-            if (supabase && usuario?.email) {
-                await supabase
-                    .from("usuarios")
-                    .update({ nome: nomeEditado.trim() })
-                    .eq("email", usuario.email);
+            if (erroPerfil) throw erroPerfil;
+            if (!perfilAtualizado) {
+                throw new Error("Perfil não encontrado na tabela usuarios.");
             }
 
+            const { error: erroAuth } = await supabase.auth.updateUser({
+                data: { nome: nomeEditado.trim() },
+            });
+
+            const novoUsuario = { ...usuario, nome: nomeEditado.trim() };
             localStorage.setItem("usuario", JSON.stringify(novoUsuario));
             setUsuario(novoUsuario);
             setEditando(false);
-            alert("Nome atualizado com sucesso!");
+
+            if (erroAuth) {
+                console.error("Erro ao atualizar o nome nos dados do Auth:", erroAuth);
+                alert("Nome atualizado no perfil, mas não foi possível sincronizar os dados da conta.");
+            } else {
+                alert("Nome atualizado com sucesso!");
+            }
         } catch (error) {
             console.error("Erro ao atualizar nome:", error);
-            alert("Erro ao atualizar o nome.");
+            alert(`Erro ao atualizar o nome: ${error.message || "verifique a conexão com o banco."}`);
         } finally {
             setSalvando(false);
         }
@@ -57,16 +112,28 @@ function Perfil() {
         if (!confirmar) return;
 
         try {
-            if (supabase) {
-                await supabase.auth.signOut();
-            }
-        } catch (error) {
-            console.error("Erro ao deslogar:", error);
-        } finally {
+            if (!supabase) throw new Error("Não foi possível conectar ao Supabase.");
+
+            const { error } = await supabase.auth.signOut();
+            if (error) throw error;
+
             localStorage.removeItem("usuario");
             alert("Você saiu da sua conta.");
             navigate("/login");
+        } catch (error) {
+            console.error("Erro ao deslogar:", error);
+            alert(`Não foi possível encerrar a sessão: ${error.message}`);
         }
+    }
+
+    if (carregando) {
+        return (
+            <main id="pagina-perfil" className="pagina-perfil">
+                <div className="card-sem-sessao">
+                    <h2>Carregando perfil...</h2>
+                </div>
+            </main>
+        );
     }
 
     if (!usuario) {

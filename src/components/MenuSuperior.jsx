@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { supabase } from '../supabase';
+import { carregarPerfilUsuario, dadosBasicosUsuario, supabase } from '../supabase';
 import './MenuSuperior.css';
 
 function MenuSuperior() {
@@ -9,36 +9,52 @@ function MenuSuperior() {
     const [usuarioLogado, setUsuarioLogado] = useState(null);
 
     useEffect(() => {
-        function carregaUsuario() {
-            const salvo = localStorage.getItem("usuario");
-            if (salvo) {
-                try {
-                    setUsuarioLogado(JSON.parse(salvo));
-                } catch {
-                    setUsuarioLogado(null);
-                }
-            } else {
+        let ativo = true;
+
+        function atualizarUsuario(session) {
+            if (!session?.user) {
+                localStorage.removeItem("usuario");
                 setUsuarioLogado(null);
+                return;
             }
+
+            const dadosBasicos = dadosBasicosUsuario(session.user);
+            localStorage.setItem("usuario", JSON.stringify(dadosBasicos));
+
+            carregarPerfilUsuario(session.user)
+                .then((dados) => {
+                    if (!ativo) return;
+                    setUsuarioLogado(dados);
+                    localStorage.setItem("usuario", JSON.stringify(dados));
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar o perfil do menu:", error);
+                });
         }
 
-        carregaUsuario();
-
-        // Ouve mudanças de auth caso o Supabase esteja disponível
-        if (supabase) {
-            const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-                if (session?.user) {
-                    carregaUsuario();
-                } else {
-                    localStorage.removeItem("usuario");
-                    setUsuarioLogado(null);
-                }
-            });
-
-            return () => {
-                listener?.subscription?.unsubscribe();
-            };
+        if (!supabase) {
+            localStorage.removeItem("usuario");
+            return;
         }
+
+        const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+            queueMicrotask(() => atualizarUsuario(session));
+        });
+
+        supabase.auth.getSession().then(({ data, error }) => {
+            if (!ativo) return;
+            if (error) {
+                console.error("Erro ao recuperar a sessão do menu:", error);
+                atualizarUsuario(null);
+                return;
+            }
+            atualizarUsuario(data.session);
+        });
+
+        return () => {
+            ativo = false;
+            listener?.subscription?.unsubscribe();
+        };
     }, []);
 
     function realizarBusca(evento) {

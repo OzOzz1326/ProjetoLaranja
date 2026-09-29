@@ -50,12 +50,17 @@ function Cadastro() {
                 return;
             }
 
-            // Insere ou atualiza o perfil na tabela 'usuarios'
-            const { data: perfilExistente } = await supabase
+            const { data: perfilExistente, error: erroBuscaPerfil } = await supabase
                 .from("usuarios")
                 .select("id")
                 .eq("email", email.trim())
                 .maybeSingle();
+
+            if (erroBuscaPerfil) {
+                console.error("Erro ao verificar o perfil na tabela usuarios:", erroBuscaPerfil);
+                alert("A conta foi criada, mas não foi possível verificar os dados do perfil. Tente entrar e confira a conexão com o banco.");
+                return;
+            }
 
             if (!perfilExistente) {
                 const { error: erroPerfil } = await supabase.from("usuarios").insert({
@@ -65,18 +70,26 @@ function Cadastro() {
                 });
 
                 if (erroPerfil) {
-                    console.warn("Aviso ao salvar na tabela usuarios:", erroPerfil);
+                    console.error("Erro ao salvar o perfil na tabela usuarios:", erroPerfil);
+                    alert(`A conta foi criada, mas não foi possível salvar o perfil: ${erroPerfil.message}`);
+                    return;
                 }
             }
 
+            if (!data.session) {
+                alert("Cadastro iniciado! Confira seu e-mail para confirmar a conta e depois faça login.");
+                navigate("/login");
+                return;
+            }
+
             const dadosUsuario = {
-                id: data.user?.id || Date.now(),
+                id: data.user.id,
+                auth_id: data.user.id,
                 nome: nome.trim(),
                 email: email.trim(),
                 data_nascimento: dataNascimento,
             };
 
-            // Guarda os dados da sessão do usuário no localStorage
             localStorage.setItem("usuario", JSON.stringify(dadosUsuario));
 
             alert("Cadastro realizado com sucesso! Bem-vindo(a) ao SportInCity!");
