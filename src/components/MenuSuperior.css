@@ -92,6 +92,21 @@
     width: 100%;
 }
 
+.controle-pagamento-teste {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #c8dccb;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.controle-pagamento-teste input {
+    width: 16px;
+    height: 16px;
+    accent-color: #57c785;
+}
+
 .search-container {
     display: flex;
     align-items: center;
@@ -237,6 +252,7 @@
     .nav-actions {
         justify-content: center;
         width: 100%;
+        flex-wrap: wrap;
     }
 }
 

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { supabase } from "../supabase";
 import "./Detalhes.css";
 
 function Detalhes() {
+    const navigate = useNavigate();
     // =========================================================================
     // 1. OBTENÇÃO DO ID DA QUADRA
     // =========================================================================
@@ -40,70 +41,20 @@ function Detalhes() {
         setLoadingReserva(true);
 
         try {
-            // 1. Obter o id do usuário (obrigatório pois a coluna id_usuario no Supabase não aceita null)
-            let idUsuario = null;
-            const { data: sessao } = await supabase.auth.getUser();
-
-            if (sessao?.user) {
-                const { data: usuario } = await supabase
-                    .from("usuarios")
-                    .select("id")
-                    .eq("email", sessao.user.email)
-                    .maybeSingle();
-
-                if (usuario) {
-                    idUsuario = usuario.id;
-                }
-            }
-
-            // Se o usuário não estiver logado durante os testes, busca o primeiro usuário cadastrado para evitar erro de chave estrangeira
-            if (!idUsuario) {
-                const { data: usuarioPadrao } = await supabase
-                    .from("usuarios")
-                    .select("id")
-                    .limit(1)
-                    .maybeSingle();
-
-                idUsuario = usuarioPadrao ? usuarioPadrao.id : 1;
-            }
-
-            // 2. Verifica no supabase se a quadra está disponível nesse dia e horário
-            // NOTA: A tabela no Supabase se chama 'reservas' (no plural) e a coluna está 'horaio'
-            const { data: reservasExistentes, error: erroBusca } = await supabase
-                .from("reservas")
-                .select("*")
-                .eq("id_quadra", quadra.id)
-                .eq("dia_reserva", dataReserva)
-                .eq("horaio", horarioReserva);
-
-            if (erroBusca) throw erroBusca;
-
-            if (reservasExistentes && reservasExistentes.length > 0) {
-                alert("A quadra já está reservada para este dia e horário!");
-                setLoadingReserva(false);
-                return;
-            }
-
-            // 3. Se estiver disponível, registra a reserva no Supabase
-            const { error: erroInsert } = await supabase
-                .from("reservas")
-                .insert([
-                    {
-                        id_usuario: idUsuario, // Id do usuário que realizou a reserva
-                        id_quadra: quadra.id, // Id da quadra
-                        dia_reserva: dataReserva, // Data selecionada no calendário
-                        horaio: horarioReserva, // Horário selecionado (nomeado como 'horaio' no banco)
-                        quantidade_participantes: Number(participantes), // Quantidade de pessoas
-                    }
-                ]);
-
-            if (erroInsert) throw erroInsert;
-
-            alert("Reserva realizada com sucesso!");
-            setIsModalOpen(false); // Fecha o modal após sucesso
+            sessionStorage.setItem("reservaPendente", JSON.stringify({
+                quadraId: quadra.id,
+                quadraNome: quadra.nome,
+                tipoJogo: quadra.tipo_jogo,
+                dataReserva,
+                horarioReserva,
+                participantes: Number(participantes),
+                preco: Number(quadra.preco),
+            }));
+            setIsModalOpen(false);
+            navigate("/pagamento");
         } catch (error) {
-            console.error("Erro ao realizar reserva:", error);
-            alert("Erro ao realizar a reserva: " + (error.message || JSON.stringify(error)));
+            console.error("Erro ao preparar a reserva:", error);
+            alert("Não foi possível continuar para o pagamento. Confira os dados e tente novamente.");
         } finally {
             setLoadingReserva(false);
         }
@@ -312,9 +263,8 @@ function Detalhes() {
                             <div className="modal-actions">
                                 {/* Botão para fechar o modal sem salvar */}
                                 <button type="button" className="btn-cancelar" onClick={() => setIsModalOpen(false)}>Cancelar</button>
-                                {/* Botão para confirmar e registrar no supabase */}
                                 <button type="submit" className="btn-confirmar" disabled={loadingReserva}>
-                                    {loadingReserva ? "Verificando..." : "Confirmar Reserva"}
+                                    {loadingReserva ? "Continuando..." : "Continuar para pagamento"}
                                 </button>
                             </div>
                         </form>

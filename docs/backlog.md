@@ -46,7 +46,10 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Buscar detalhes da quadra pelo ID e oferecer formulário de solicitação de reserva.
 - [x] Consultar reservas existentes e inserir reserva na tabela `reservas`.
 - [ ] Ligar reserva e pagamento em um único fluxo, levando quadra, data, horário e preço selecionados para a tela de pagamento.
-- [ ] Substituir o resumo fixo de `src/pages/Pagamento.jsx` por dados da reserva. A confirmação atual só exibe um alerta e não registra pagamento nem confirma uma reserva real.
+- [x] Ligar a seleção da reserva à tela de pagamento de teste; gravar a reserva em `reservas` somente após a confirmação simulada e bloquear horário já reservado.
+- [x] Exibir no pagamento o resumo dinâmico da quadra, data, horário, participantes e preço.
+- [ ] Validar com Supabase configurado a confirmação simulada e o bloqueio do horário em outra sessão; RLS e prevenção atômica de concorrência continuam pendentes.
+- [x] Adicionar controle do modo de pagamento de teste para o e-mail definido em `VITE_ADMIN_EMAIL`; a preferência do toggle vale somente para o navegador atual.
 - [ ] Definir integração e regras de pagamento. A tela informa corretamente que não processa cobranças; não coletar nem armazenar dados de cartão sem uma solução de pagamento aprovada.
 
 ## Prioridade 3: Conteúdo e acabamento
@@ -73,7 +76,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - `/detalhes/:id` ou `/detalhes?id=...`: detalhes e formulário de reserva.
 - `/login`, `/cadastro` e `/perfil`: autenticação e perfil.
 - `/cadastrar-quadra`: cadastro Supabase com verificação de usuário no envio.
-- `/pagamento`: protótipo visual sem vínculo com uma reserva real.
+- `/pagamento`: confirmação simulada que cria uma reserva no banco; ativação geral controlada por `VITE_PAGAMENTO_TESTE_ATIVO` e toggle local visível ao e-mail `VITE_ADMIN_EMAIL`.
 - `/contato` e `/sobre`: páginas informativas.
 
 ## Próximo passo recomendado

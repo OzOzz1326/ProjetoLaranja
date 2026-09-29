@@ -13,6 +13,9 @@ const nomesEsportes = {
     beachtenis: "Beach Tênis",
 };
 
+const ITENS_POR_PAGINA = 10;
+const PAGINAS_MINIMAS = 4;
+
 function normalizarTipoJogo(valor) {
     if (valor === null || valor === undefined) return "";
 
@@ -54,9 +57,19 @@ function Quadras(){
     const esporteSelecionado = parametros.get("esporte");
     const termoBusca = (parametros.get("busca") || "").trim().toLowerCase();
     const nomeEsporte = nomesEsportes[esporteSelecionado] || "esporte";
+    const chaveFiltros = `${esporteSelecionado || ""}|${termoBusca}`;
 
     const [quadras, setQuadras] = useState([]);
     const [carregando, setCarregando] = useState(true);
+    const [paginaSelecionada, setPaginaSelecionada] = useState({ chaveFiltros, numero: 1 });
+    const paginaAtual = paginaSelecionada.chaveFiltros === chaveFiltros
+        ? paginaSelecionada.numero
+        : 1;
+    const totalPaginas = Math.max(PAGINAS_MINIMAS, Math.ceil(quadras.length / ITENS_POR_PAGINA));
+    const quadrasDaPagina = quadras.slice(
+        (paginaAtual - 1) * ITENS_POR_PAGINA,
+        paginaAtual * ITENS_POR_PAGINA
+    );
 
     useEffect(() => {
         async function buscaQuadras() {
@@ -124,9 +137,14 @@ function Quadras(){
                     <p>As quadras estarão disponíveis assim que forem cadastradas.</p>
                     <Link className="botao-voltar" to="/pagina-inicial">Voltar para esportes</Link>
                 </div>
+            ) : quadrasDaPagina.length === 0 ? (
+                <div className="estado-vazio">
+                    <h2>Nenhuma quadra nesta página</h2>
+                    <p>Escolha outra página para continuar navegando.</p>
+                </div>
             ) : (
                 <div className="lista-quadras">
-                    {quadras.map((quadra) => {
+                    {quadrasDaPagina.map((quadra) => {
                         const tipos = listarTiposJogo(quadra.tipo_jogo)
                             .map((tipo) => nomeEsporteEmTexto(tipo));
 
@@ -146,7 +164,12 @@ function Quadras(){
 
                                     <div className="imagem-card-quadra">
                                         {quadra.imagem ? (
-                                            <img src={quadra.imagem} alt={quadra.nome} />
+                                            <img
+                                                src={quadra.imagem}
+                                                alt={quadra.nome}
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
                                         ) : (
                                             <div className="imagem-placeholder">Imagem da quadra</div>
                                         )}
@@ -156,6 +179,39 @@ function Quadras(){
                         );
                     })}
                 </div>
+            )}
+
+            {!carregando && (
+                <nav className="paginacao-quadras" aria-label="Paginação das quadras">
+                    <button
+                        className="botao-pagina-quadras"
+                        type="button"
+                        onClick={() => setPaginaSelecionada({ chaveFiltros, numero: paginaAtual - 1 })}
+                        disabled={paginaAtual === 1}
+                    >
+                        Anterior
+                    </button>
+                    {Array.from({ length: totalPaginas }, (_, indice) => indice + 1).map((pagina) => (
+                        <button
+                            className={`botao-pagina-quadras${pagina === paginaAtual ? " ativa" : ""}`}
+                            type="button"
+                            key={pagina}
+                            onClick={() => setPaginaSelecionada({ chaveFiltros, numero: pagina })}
+                            aria-label={`Página ${pagina}`}
+                            aria-current={pagina === paginaAtual ? "page" : undefined}
+                        >
+                            {pagina}
+                        </button>
+                    ))}
+                    <button
+                        className="botao-pagina-quadras"
+                        type="button"
+                        onClick={() => setPaginaSelecionada({ chaveFiltros, numero: paginaAtual + 1 })}
+                        disabled={paginaAtual === totalPaginas}
+                    >
+                        Próxima
+                    </button>
+                </nav>
             )}
         </main>
     );

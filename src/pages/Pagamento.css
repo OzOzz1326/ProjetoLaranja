@@ -352,6 +352,32 @@
 	text-align: center;
 }
 
+#pagina-pagamento .resultado-pagamento {
+	width: 100%;
+	max-width: 620px;
+	margin: 0 auto;
+	padding: 28px;
+	border: 1px solid #255b35;
+	border-radius: 8px;
+	background: rgba(13, 43, 23, 0.9);
+	color: #d6e7d9;
+	text-align: center;
+}
+
+#pagina-pagamento .resultado-pagamento h2 {
+	margin-bottom: 12px;
+}
+
+#pagina-pagamento .resultado-pagamento p:not(.etiqueta-pagamento) {
+	line-height: 1.6;
+}
+
+#pagina-pagamento .resultado-pagamento .botao-confirmar-pagamento {
+	max-width: 280px;
+	margin: 24px auto 0;
+	text-decoration: none;
+}
+
 @media (max-width: 720px) {
 	#pagina-pagamento {
 		padding: 36px 18px 72px;

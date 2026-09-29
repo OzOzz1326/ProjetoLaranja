@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { carregarPerfilUsuario, dadosBasicosUsuario, supabase } from '../supabase';
+import { definirPagamentoTesteAtivo, lerPagamentoTesteAtivo, usuarioEhAdministrador } from '../configuracaoAdmin';
 import './MenuSuperior.css';
 
 function MenuSuperior() {
     const navigate = useNavigate();
     const [termoBusca, setTermoBusca] = useState("");
     const [usuarioLogado, setUsuarioLogado] = useState(null);
+    const [pagamentoTesteAtivo, setPagamentoTesteAtivo] = useState(lerPagamentoTesteAtivo);
 
     useEffect(() => {
         let ativo = true;
@@ -69,6 +71,12 @@ function MenuSuperior() {
         navigate('/quadras');
     }
 
+    function alterarPagamentoTeste(evento) {
+        const ativo = evento.target.checked;
+        definirPagamentoTesteAtivo(ativo);
+        setPagamentoTesteAtivo(ativo);
+    }
+
     return (
         <header className="navbar-container">
             <nav className="navbar">
@@ -85,6 +93,17 @@ function MenuSuperior() {
                 </ul>
 
                 <div className="nav-actions">
+                    {usuarioEhAdministrador(usuarioLogado?.email) && (
+                        <label className="controle-pagamento-teste">
+                            <input
+                                type="checkbox"
+                                checked={pagamentoTesteAtivo}
+                                onChange={alterarPagamentoTeste}
+                                disabled={import.meta.env.VITE_PAGAMENTO_TESTE_ATIVO === "false"}
+                            />
+                            <span>Pagamento de teste</span>
+                        </label>
+                    )}
                     <form className="search-container" onSubmit={realizarBusca}>
                         <input
                             type="text"

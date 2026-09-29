@@ -65,6 +65,7 @@
 
 #pagina-quadras .lista-quadras {
 	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 16px;
 }
 
@@ -202,6 +203,40 @@
 #pagina-quadras .botao-voltar {
 	display: inline-block;
 	text-decoration: none;
+}
+
+#pagina-quadras .paginacao-quadras {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	max-width: 940px;
+	margin: 28px auto 0;
+}
+
+#pagina-quadras .botao-pagina-quadras {
+	min-width: 40px;
+	height: 40px;
+	padding: 0 10px;
+	border: 1px solid #477252;
+	border-radius: 5px;
+	background: #102b19;
+	color: #e5f1e8;
+	font: inherit;
+	cursor: pointer;
+}
+
+#pagina-quadras .botao-pagina-quadras:hover,
+#pagina-quadras .botao-pagina-quadras.ativa {
+	border-color: #57c785;
+	background: #57c785;
+	color: #07190c;
+}
+
+#pagina-quadras .botao-pagina-quadras:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 
 @media (max-width: 650px) {
