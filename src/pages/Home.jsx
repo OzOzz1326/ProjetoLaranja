@@ -12,19 +12,19 @@ function Home() {
     {
       nome: "Futsal",
       descricao: "Quadras de areia prontas para o seu próximo jogo.",
-      icone: "🏐",
+      icone: "🥅",
       valor: "futsal",
     },
     {
       nome: "Basquete",
       descricao: "Escolha uma quadra e reserve seu horário.",
-      icone: "🎾",
+      icone: "🏀",
       valor: "basquete",
     },
     {
       nome: "Vôlei",
       descricao: "Pratique na areia com quem você gosta.",
-      icone: "🏖️",
+      icone: "🏐",
       valor: "vôlei",
     },
   ];

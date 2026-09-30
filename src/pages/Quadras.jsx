@@ -56,7 +56,7 @@ function Quadras(){
     const [parametros] = useSearchParams();
     const esporteSelecionado = parametros.get("esporte");
     const termoBusca = (parametros.get("busca") || "").trim().toLowerCase();
-    const nomeEsporte = nomesEsportes[esporteSelecionado] || "esporte";
+    const nomeEsporte = nomesEsportes[normalizarTipoJogo(esporteSelecionado)] || "esporte";
     const chaveFiltros = `${esporteSelecionado || ""}|${termoBusca}`;
 
     const [quadras, setQuadras] = useState([]);

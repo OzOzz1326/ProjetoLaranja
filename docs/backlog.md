@@ -31,6 +31,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 ### Cadastro, login e perfil
 - [x] Criar conta com Supabase Auth e salvar/consultar dados complementares em `usuarios`.
 - [x] Entrar com `signInWithPassword` e atualizar os dados usados pelo avatar do menu.
+- [x] Bloquear o login quando o usuário autenticado no Supabase não tiver perfil em `usuarios`; encerrar a sessão local quando o perfil estiver ausente ou não puder ser verificado.
 - [x] Exibir perfil, permitir edição de nome e encerrar sessão via Supabase Auth.
 - [x] Tratar erros retornados ao atualizar o perfil e ao salvar dados complementares; não considerar a operação concluída quando o Supabase retorna erro.
 - [x] Garantir que o perfil e o menu sejam carregados da sessão autenticada, em vez de depender exclusivamente do valor salvo no `localStorage`.

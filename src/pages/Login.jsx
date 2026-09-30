@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { carregarPerfilUsuario, dadosBasicosUsuario, supabase } from "../supabase";
+import { carregarPerfilUsuario, supabase } from "../supabase";
 import "./Login.css";
 
 function Login() {
@@ -44,7 +44,17 @@ function Login() {
                 dadosUsuario = await carregarPerfilUsuario(data.user);
             } catch (erroPerfil) {
                 console.error("Erro ao buscar perfil adicional:", erroPerfil);
-                dadosUsuario = dadosBasicosUsuario(data.user);
+                await supabase.auth.signOut({ scope: "local" });
+                localStorage.removeItem("usuario");
+                alert("Não foi possível verificar seu cadastro no banco. Tente novamente mais tarde.");
+                return;
+            }
+
+            if (!dadosUsuario.perfil_id) {
+                await supabase.auth.signOut({ scope: "local" });
+                localStorage.removeItem("usuario");
+                alert("Seu cadastro não está ativo no sistema. Cadastre-se novamente para entrar.");
+                return;
             }
 
             localStorage.setItem("usuario", JSON.stringify(dadosUsuario));
