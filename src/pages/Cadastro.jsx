@@ -48,6 +48,68 @@ function Cadastro() {
 
             if (error) {
                 console.error("Erro ao cadastrar usuário no Supabase Auth:", error);
+                const usuarioJaCadastrado = error.code === "user_already_exists"
+                    || /user already registered/i.test(error.message || "");
+
+                if (usuarioJaCadastrado) {
+                    const { data: dadosLogin, error: erroLogin } = await supabase.auth.signInWithPassword({
+                        email: email.trim(),
+                        password: senha,
+                    });
+
+                    if (erroLogin) {
+                        alert("Este e-mail já está cadastrado. Para continuar, informe a senha correta ou faça login com sua conta.");
+                        return;
+                    }
+
+                    const { data: perfilExistente, error: erroBuscaPerfil } = await supabase
+                        .from("usuarios")
+                        .select("id,nome,email,data_nascimento")
+                        .eq("email", email.trim())
+                        .maybeSingle();
+
+                    if (erroBuscaPerfil) {
+                        await supabase.auth.signOut({ scope: "local" });
+                        alert("Sua senha foi confirmada, mas não foi possível verificar seu perfil. Tente novamente mais tarde.");
+                        return;
+                    }
+
+                    let perfilUsuario = perfilExistente;
+                    if (!perfilUsuario) {
+                        const { data: perfilCriado, error: erroPerfil } = await supabase
+                            .from("usuarios")
+                            .insert({
+                                nome: nome.trim(),
+                                email: email.trim(),
+                                data_nascimento: dataNascimento,
+                            })
+                            .select("id,nome,email,data_nascimento")
+                            .single();
+
+                        if (erroPerfil) {
+                            await supabase.auth.signOut({ scope: "local" });
+                            console.error("Erro ao restaurar perfil do usuário:", erroPerfil);
+                            alert(`Sua senha foi confirmada, mas não foi possível restaurar o perfil: ${erroPerfil.message}`);
+                            return;
+                        }
+
+                        perfilUsuario = perfilCriado;
+                    }
+
+                    const dadosUsuario = {
+                        id: dadosLogin.user.id,
+                        auth_id: dadosLogin.user.id,
+                        perfil_id: perfilUsuario.id,
+                        nome: perfilUsuario.nome || nome.trim(),
+                        email: dadosLogin.user.email || email.trim(),
+                        data_nascimento: perfilUsuario.data_nascimento || dataNascimento,
+                    };
+
+                    localStorage.setItem("usuario", JSON.stringify(dadosUsuario));
+                    navigate("/perfil");
+                    return;
+                }
+
                 const limiteDeEmail = error.status === 429
                     || /rate.?limit|too many requests/i.test(error.message || "");
 

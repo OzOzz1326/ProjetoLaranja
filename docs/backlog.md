@@ -10,8 +10,9 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 
 - [ ] Remover de `src/pages/Detalhes.jsx` o fallback de reserva para o primeiro usuário ou para o ID `1`; exigir sessão válida e relacionar a reserva somente ao usuário autenticado.
 - [ ] Proteger as rotas e ações de perfil, cadastro de quadra e reserva, redirecionando usuários sem sessão. A tela e o envio do cadastro de quadra agora verificam a sessão; perfil e reserva ainda precisam de guarda.
-- [ ] Validar no servidor/banco a disponibilidade do horário e impedir reservas duplicadas de forma atômica; a consulta seguida de `insert` no cliente permite concorrência.
-- [ ] Fazer a data escolhida corresponder ao dia da semana selecionado e aos dias/horários de funcionamento da quadra; hoje `diaSemana` não é usado para validar a data nem a hora.
+- [x] Inserir todos os blocos horários do intervalo em uma única operação e tratar conflitos simultâneos com índice único por quadra, data e horário (requer executar a migração SQL).
+- [x] Mostrar calendário apenas com os dias futuros em que a quadra funciona, selecionar início e término em blocos de uma hora e calcular o preço pela duração.
+- [ ] Executar `docs/migracoes/supabase-reservas-horarios.sql` para agrupar horas da mesma reserva e impedir conflitos simultâneos por quadra, data e horário.
 - [ ] Confirmar e documentar o esquema e as chaves de `usuarios`, `quadras` e `reservas`, incluindo o nome atual da coluna `horaio`, antes de alterar consultas ou criar migrações.
 - [ ] Definir políticas RLS e permissões adequadas antes de disponibilizar dados de usuários, quadras e reservas em produção. A arquitetura registra que o RLS está desligado.
 
@@ -30,6 +31,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 
 ### Cadastro, login e perfil
 - [x] Criar conta com Supabase Auth e salvar/consultar dados complementares em `usuarios`.
+- [x] Se a conta Auth já existir, validar a senha e restaurar o perfil ausente em `usuarios` antes de continuar para o perfil.
 - [x] Entrar com `signInWithPassword` e atualizar os dados usados pelo avatar do menu.
 - [x] Bloquear o login quando o usuário autenticado no Supabase não tiver perfil em `usuarios`; encerrar a sessão local quando o perfil estiver ausente ou não puder ser verificado.
 - [x] Exibir perfil, permitir edição de nome e encerrar sessão via Supabase Auth.
@@ -58,7 +60,9 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Consultar reservas existentes e inserir reserva na tabela `reservas`.
 - [ ] Ligar reserva e pagamento em um único fluxo, levando quadra, data, horário e preço selecionados para a tela de pagamento.
 - [x] Ligar a seleção da reserva à tela de pagamento de teste; gravar a reserva em `reservas` somente após a confirmação simulada e bloquear horário já reservado.
+- [x] Permitir cancelar a próxima reserva pelo perfil, removendo somente a reserva do usuário autenticado e liberando o horário.
 - [x] Exibir no pagamento o resumo dinâmico da quadra, data, horário, participantes e preço.
+- [x] Calcular o total pelo número de horas reservadas e limitar participantes à capacidade cadastrada da quadra.
 - [ ] Validar com Supabase configurado a confirmação simulada e o bloqueio do horário em outra sessão; RLS e prevenção atômica de concorrência continuam pendentes.
 - [x] Adicionar controle do modo de pagamento de teste para o e-mail definido em `VITE_ADMIN_EMAIL`; a preferência do toggle vale somente para o navegador atual.
 - [ ] Definir integração e regras de pagamento. A tela informa corretamente que não processa cobranças; não coletar nem armazenar dados de cartão sem uma solução de pagamento aprovada.
@@ -67,6 +71,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 
 - [x] Criar página de contato com formulário responsivo, seleção de assunto com foco automático na descrição e foto de campo ao lado, além da página sobre e navegação do rodapé.
 - [x] Aplicar CSS próprio às telas e componentes existentes.
+- [x] Exibir a foto cadastrada da quadra no cartão da próxima reserva do perfil, usando `public/quadracontato.jpg` quando a imagem estiver ausente ou indisponível.
 - [ ] Integrar o formulário de contato a um canal de atendimento, validar os dados enviados e confirmar como as preferências de atualização serão usadas.
 - [ ] Substituir a próxima partida fixa exibida no perfil por reservas reais ou remover essa informação até existir dado real.
 - [ ] Revisar acessibilidade, mensagens e comportamento responsivo dos fluxos de busca, cadastro e reserva.

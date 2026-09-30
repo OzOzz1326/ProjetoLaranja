@@ -13,6 +13,17 @@ function carregarReservaPendente() {
     }
 }
 
+function converterHorarioEmMinutos(horario) {
+    const [hora, minuto] = String(horario || "").split(":").map(Number);
+    return hora * 60 + minuto;
+}
+
+function formatarMinutosEmHorario(minutos) {
+    const hora = String(Math.floor(minutos / 60)).padStart(2, "0");
+    const minuto = String(minutos % 60).padStart(2, "0");
+    return `${hora}:${minuto}`;
+}
+
 function Pagamento() {
     const navigate = useNavigate();
     const [metodo, setMetodo] = useState("credito");
@@ -62,28 +73,75 @@ function Pagamento() {
             if (erroUsuario) throw erroUsuario;
             if (!usuario) throw new Error("Não foi possível localizar seu perfil de usuário.");
 
-            const { data: reservaExistente, error: erroBusca } = await supabase
-                .from("reservas")
-                .select("id_quadra")
-                .eq("id_quadra", reserva.quadraId)
-                .eq("dia_reserva", reserva.dataReserva)
-                .eq("horaio", reserva.horarioReserva)
-                .limit(1)
-                .maybeSingle();
+            const { data: quadra, error: erroQuadra } = await supabase
+                .from("quadras")
+                .select("capacidade,horario_inicio,horario_fim,funcionamento_dom,funcionamento_seg,funcionamento_ter,funcionamento_qua,funcionamento_qui,funcionamento_sex,funcionamento_sab")
+                .eq("id", reserva.quadraId)
+                .single();
 
-            if (erroBusca) throw erroBusca;
-            if (reservaExistente) {
-                throw new Error("Este horário já foi reservado. Escolha outro horário.");
+            if (erroQuadra) throw erroQuadra;
+
+            if (!reserva.dataReserva || !reserva.horarioInicioReserva || !reserva.horarioFimReserva) {
+                throw new Error("A data e o intervalo da reserva estão incompletos. Volte à quadra e selecione novamente.");
             }
 
-            const { error: erroInsert } = await supabase.from("reservas").insert({
+            const [ano, mes, dia] = reserva.dataReserva.split("-").map(Number);
+            const diaSemana = new Date(ano, mes - 1, dia).getDay();
+            const camposDia = [
+                "funcionamento_dom",
+                "funcionamento_seg",
+                "funcionamento_ter",
+                "funcionamento_qua",
+                "funcionamento_qui",
+                "funcionamento_sex",
+                "funcionamento_sab",
+            ];
+
+            if (!quadra[camposDia[diaSemana]]) {
+                throw new Error("A quadra não funciona nesse dia. Escolha outra data.");
+            }
+
+            const inicioMinutos = converterHorarioEmMinutos(reserva.horarioInicioReserva);
+            const fimMinutos = converterHorarioEmMinutos(reserva.horarioFimReserva);
+            const aberturaMinutos = converterHorarioEmMinutos(quadra.horario_inicio);
+            const fechamentoMinutos = converterHorarioEmMinutos(quadra.horario_fim);
+            const horariosEsperados = [];
+
+            for (let horario = inicioMinutos; horario < fimMinutos; horario += 60) {
+                horariosEsperados.push(formatarMinutosEmHorario(horario));
+            }
+
+            if (
+                !horariosEsperados.length
+                || inicioMinutos < aberturaMinutos
+                || fimMinutos > fechamentoMinutos
+                || fimMinutos <= inicioMinutos
+                || (inicioMinutos - aberturaMinutos) % 60 !== 0
+                || (fimMinutos - inicioMinutos) % 60 !== 0
+                || horariosEsperados.join(",") !== (reserva.horariosReserva || []).join(",")
+            ) {
+                throw new Error("O intervalo escolhido não corresponde ao horário de funcionamento da quadra.");
+            }
+
+            if (Number(reserva.participantes) < 1 || Number(reserva.participantes) > Number(quadra.capacidade)) {
+                throw new Error(`Esta quadra permite no máximo ${quadra.capacidade} participantes.`);
+            }
+
+            const grupoReserva = crypto.randomUUID();
+            const reservasDoIntervalo = horariosEsperados.map((horario) => ({
+                grupo_reserva: grupoReserva,
                 id_usuario: usuario.id,
                 id_quadra: reserva.quadraId,
                 dia_reserva: reserva.dataReserva,
-                horaio: reserva.horarioReserva,
+                horaio: horario,
                 quantidade_participantes: Number(reserva.participantes),
-            });
+            }));
 
+            const { error: erroInsert } = await supabase.from("reservas").insert(reservasDoIntervalo);
+
+            if (erroInsert?.code === "23505") {
+                throw new Error("Um ou mais horários desse intervalo acabaram de ser reservados. Escolha outro horário.");
+            }
             if (erroInsert) throw erroInsert;
 
             sessionStorage.removeItem("reservaPendente");
@@ -97,6 +155,8 @@ function Pagamento() {
     }
 
     const preco = Number(reserva?.preco) || 0;
+    const duracaoHoras = Number(reserva?.duracaoHoras || reserva?.horariosReserva?.length) || 0;
+    const precoTotal = preco * duracaoHoras;
     const dataFormatada = reserva?.dataReserva
         ? new Date(`${reserva.dataReserva}T00:00:00`).toLocaleDateString("pt-BR")
         : "";
@@ -120,7 +180,7 @@ function Pagamento() {
                 <section className="resultado-pagamento" role="status">
                     <p className="etiqueta-pagamento">PAGAMENTO DE TESTE</p>
                     <h2>Pagamento realizado com sucesso</h2>
-                    <p>A quadra <strong>{reserva.quadraNome}</strong> está reservada para {dataFormatada}, às {reserva.horarioReserva}.</p>
+                    <p>A quadra <strong>{reserva.quadraNome}</strong> está reservada para {dataFormatada}, das {reserva.horarioInicioReserva} às {reserva.horarioFimReserva}.</p>
                     <Link className="botao-confirmar-pagamento" to={`/detalhes?id=${encodeURIComponent(reserva.quadraId)}`}>
                         Ver reserva <span aria-hidden="true">→</span>
                     </Link>
@@ -181,14 +241,15 @@ function Pagamento() {
 
                     <dl className="linhas-resumo-pagamento">
                         <div><dt>Data</dt><dd>{dataFormatada}</dd></div>
-                        <div><dt>Horário</dt><dd>{reserva.horarioReserva}</dd></div>
+                        <div><dt>Horário</dt><dd>{reserva.horarioInicioReserva} às {reserva.horarioFimReserva}</dd></div>
+                        <div><dt>Duração</dt><dd>{duracaoHoras} {duracaoHoras === 1 ? "hora" : "horas"}</dd></div>
                         <div><dt>Participantes</dt><dd>{reserva.participantes}</dd></div>
-                        <div><dt>Quadra · 1h</dt><dd>{preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</dd></div>
+                        <div><dt>Preço por hora</dt><dd>{preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</dd></div>
                     </dl>
 
                     <div className="total-pagamento">
                         <span>Total</span>
-                        <strong>{preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</strong>
+                        <strong>{precoTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</strong>
                     </div>
 
                     <button className="botao-confirmar-pagamento" type="submit" disabled={!pagamentoTesteAtivo || confirmando}>

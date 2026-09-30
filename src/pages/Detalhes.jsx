@@ -3,6 +3,49 @@ import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { supabase } from "../supabase";
 import "./Detalhes.css";
 
+const diasDaSemana = [
+    { campo: "funcionamento_dom", nome: "Domingo", dia: 0 },
+    { campo: "funcionamento_seg", nome: "Segunda", dia: 1 },
+    { campo: "funcionamento_ter", nome: "Terça", dia: 2 },
+    { campo: "funcionamento_qua", nome: "Quarta", dia: 3 },
+    { campo: "funcionamento_qui", nome: "Quinta", dia: 4 },
+    { campo: "funcionamento_sex", nome: "Sexta", dia: 5 },
+    { campo: "funcionamento_sab", nome: "Sábado", dia: 6 },
+];
+
+function formatarDataLocal(data) {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const dia = String(data.getDate()).padStart(2, "0");
+    return `${ano}-${mes}-${dia}`;
+}
+
+function converterHorarioEmMinutos(horario) {
+    const [hora, minuto] = String(horario || "").split(":").map(Number);
+    return hora * 60 + minuto;
+}
+
+function formatarMinutosEmHorario(minutos) {
+    const hora = String(Math.floor(minutos / 60)).padStart(2, "0");
+    const minuto = String(minutos % 60).padStart(2, "0");
+    return `${hora}:${minuto}`;
+}
+
+function criarFaixasDeHorario(horarioInicio, horarioFim) {
+    const inicio = converterHorarioEmMinutos(horarioInicio);
+    const fim = converterHorarioEmMinutos(horarioFim);
+    const faixas = [];
+
+    for (let minuto = inicio; minuto + 60 <= fim; minuto += 60) {
+        faixas.push({
+            inicio: formatarMinutosEmHorario(minuto),
+            fim: formatarMinutosEmHorario(minuto + 60),
+        });
+    }
+
+    return faixas;
+}
+
 function Detalhes() {
     const navigate = useNavigate();
     // =========================================================================
@@ -26,11 +69,57 @@ function Detalhes() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     
     // Variáveis (estados) que guardam o que o usuário digita/seleciona no formulário de reserva
-    const [diaSemana, setDiaSemana] = useState("");
     const [dataReserva, setDataReserva] = useState("");
-    const [horarioReserva, setHorarioReserva] = useState("");
-    const [participantes, setParticipantes] = useState(1);
+    const [horarioInicioReserva, setHorarioInicioReserva] = useState("");
+    const [horarioFimReserva, setHorarioFimReserva] = useState("");
+    const [participantes, setParticipantes] = useState("");
+    const [mesCalendario, setMesCalendario] = useState(() => {
+        const hoje = new Date();
+        return new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+    });
+    const [horariosOcupados, setHorariosOcupados] = useState([]);
+    const [carregandoHorarios, setCarregandoHorarios] = useState(false);
+    const [erroHorarios, setErroHorarios] = useState("");
     const [loadingReserva, setLoadingReserva] = useState(false); // Efeito de carregando do botão "Confirmar Reserva"
+
+    useEffect(() => {
+        let ativo = true;
+
+        async function buscarHorariosOcupados() {
+            if (!dataReserva || !quadra?.id) {
+                setHorariosOcupados([]);
+                setErroHorarios("");
+                return;
+            }
+
+            setCarregandoHorarios(true);
+            setErroHorarios("");
+
+            const { data, error } = await supabase
+                .from("reservas")
+                .select("horaio")
+                .eq("id_quadra", quadra.id)
+                .eq("dia_reserva", dataReserva);
+
+            if (!ativo) return;
+
+            if (error) {
+                console.error("Erro ao buscar horários ocupados:", error);
+                setErroHorarios("Não foi possível consultar a disponibilidade. Tente novamente.");
+                setHorariosOcupados([]);
+            } else {
+                setHorariosOcupados((data || []).map((reserva) => String(reserva.horaio).slice(0, 5)));
+            }
+
+            setCarregandoHorarios(false);
+        }
+
+        buscarHorariosOcupados();
+
+        return () => {
+            ativo = false;
+        };
+    }, [dataReserva, quadra?.id]);
 
     // =========================================================================
     // 3. FUNÇÃO QUE SALVA A RESERVA NO BANCO (SUPABASE)
@@ -38,6 +127,20 @@ function Detalhes() {
     // Essa função é chamada quando o formulário do modal é enviado (botão de confirmar)
     const handleReserva = async (e) => {
         e.preventDefault();
+        const inicioEmMinutos = converterHorarioEmMinutos(horarioInicioReserva);
+        const fimEmMinutos = converterHorarioEmMinutos(horarioFimReserva);
+        const horariosReserva = criarFaixasDeHorario(quadra.horario_inicio, quadra.horario_fim)
+            .filter((faixa) => (
+                converterHorarioEmMinutos(faixa.inicio) >= inicioEmMinutos
+                && converterHorarioEmMinutos(faixa.fim) <= fimEmMinutos
+            ))
+            .map((faixa) => faixa.inicio);
+
+        if (!horariosReserva.length || horariosReserva.some((horario) => horariosOcupados.includes(horario))) {
+            alert("Este intervalo não está mais disponível. Escolha outros horários.");
+            return;
+        }
+
         setLoadingReserva(true);
 
         try {
@@ -46,8 +149,12 @@ function Detalhes() {
                 quadraNome: quadra.nome,
                 tipoJogo: quadra.tipo_jogo,
                 dataReserva,
-                horarioReserva,
+                horarioInicioReserva,
+                horarioFimReserva,
+                horariosReserva,
+                duracaoHoras: horariosReserva.length,
                 participantes: Number(participantes),
+                capacidade: Number(quadra.capacidade),
                 preco: Number(quadra.preco),
             }));
             setIsModalOpen(false);
@@ -119,10 +226,57 @@ function Detalhes() {
             { campo: "funcionamento_dom", nome: "Domingo" },
         ];
         const diasAtivos = mapaDias.filter(d => quadra[d.campo]).map(d => d.nome);
-        return diasAtivos.length > 0 
-            ? diasAtivos 
-            : (quadra.dias_funcionamento || ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]);
+        const diasConfigurados = diasDaSemana.some((dia) => Object.prototype.hasOwnProperty.call(quadra, dia.campo));
+
+        if (diasAtivos.length) return diasAtivos;
+        if (diasConfigurados) return [];
+        return Array.isArray(quadra.dias_funcionamento) ? quadra.dias_funcionamento : [];
     })();
+    const diasOperacionais = diasDaSemana.filter((dia) => diasDisponiveis.includes(dia.nome));
+    const faixasDeHorario = criarFaixasDeHorario(quadra.horario_inicio, quadra.horario_fim);
+    const horariosOcupadosSet = new Set(horariosOcupados);
+    const horariosInicioDisponiveis = faixasDeHorario.filter((faixa) => !horariosOcupadosSet.has(faixa.inicio));
+    const indiceInicioSelecionado = faixasDeHorario.findIndex((faixa) => faixa.inicio === horarioInicioReserva);
+    const horariosFimDisponiveis = [];
+
+    if (indiceInicioSelecionado >= 0) {
+        for (let indice = indiceInicioSelecionado; indice < faixasDeHorario.length; indice += 1) {
+            const faixa = faixasDeHorario[indice];
+            if (horariosOcupadosSet.has(faixa.inicio)) break;
+            horariosFimDisponiveis.push(faixa.fim);
+        }
+    }
+
+    const indiceFimSelecionado = faixasDeHorario.findIndex((faixa) => faixa.fim === horarioFimReserva);
+    const duracaoHoras = indiceInicioSelecionado >= 0 && indiceFimSelecionado >= indiceInicioSelecionado
+        ? indiceFimSelecionado - indiceInicioSelecionado + 1
+        : 0;
+    const precoTotal = duracaoHoras * Number(quadra.preco || 0);
+    const anoCalendario = mesCalendario.getFullYear();
+    const mesCalendarioNumero = mesCalendario.getMonth();
+    const quantidadeDiasMes = new Date(anoCalendario, mesCalendarioNumero + 1, 0).getDate();
+    const primeiroDiaMes = new Date(anoCalendario, mesCalendarioNumero, 1).getDay();
+    const hojeFormatado = formatarDataLocal(new Date());
+    const diasDoCalendario = [
+        ...Array.from({ length: primeiroDiaMes }, () => null),
+        ...Array.from({ length: quantidadeDiasMes }, (_, indice) => indice + 1),
+    ];
+    const dataReservaFormatada = dataReserva
+        ? new Date(`${dataReserva}T12:00:00`).toLocaleDateString("pt-BR", { dateStyle: "full" })
+        : "";
+
+    function selecionarDataReserva(data) {
+        setDataReserva(data);
+        setHorarioInicioReserva("");
+        setHorarioFimReserva("");
+    }
+
+    function selecionarHorarioInicio(horario) {
+        setHorarioInicioReserva(horario);
+        const indice = faixasDeHorario.findIndex((faixa) => faixa.inicio === horario);
+        const primeiraFaixaLivre = faixasDeHorario.slice(indice).find((faixa) => !horariosOcupadosSet.has(faixa.inicio));
+        setHorarioFimReserva(primeiraFaixaLivre?.fim || "");
+    }
 
     // =========================================================================
     // 6. RENDERIZAÇÃO (TELA VISUAL HTML/JSX)
@@ -192,9 +346,12 @@ function Detalhes() {
                         <div className="dias-funcionamento">
                             <h4>Dias de Funcionamento</h4>
                             <div className="dias-grid">
-                                {diasDisponiveis.map((dia, index) => (
-                                    <span key={index} className="dia-badge">{dia}</span>
+                                {diasOperacionais.map((dia) => (
+                                    <span key={dia.campo} className="dia-badge">
+                                        {dia.nome} · {String(quadra.horario_inicio).slice(0, 5)} às {String(quadra.horario_fim).slice(0, 5)}
+                                    </span>
                                 ))}
+                                {!diasOperacionais.length && <p>A quadra não tem dias de funcionamento cadastrados.</p>}
                             </div>
                         </div>
                         
@@ -211,41 +368,93 @@ function Detalhes() {
                     <div className="modal-content">
                         <h2>Solicitar Reserva</h2>
                         <form onSubmit={handleReserva}>
-                            {/* Campo para selecionar o dia da semana disponível (novo) */}
                             <div className="form-group">
-                                <label>Dia da Semana Disponível</label>
-                                <select 
-                                    value={diaSemana} 
-                                    onChange={(e) => setDiaSemana(e.target.value)} 
+                                <label>Data da Reserva</label>
+                                <div className="calendario-reserva">
+                                    <p className="horario-funcionamento-reserva">
+                                        Funcionamento: {diasOperacionais.map((dia) => dia.nome).join(", ") || "dias não cadastrados"}
+                                        {diasOperacionais.length > 0 && ` · ${String(quadra.horario_inicio).slice(0, 5)} às ${String(quadra.horario_fim).slice(0, 5)}`}
+                                    </p>
+                                    <div className="cabecalho-calendario-reserva">
+                                        <button
+                                            type="button"
+                                            aria-label="Mês anterior"
+                                            onClick={() => setMesCalendario(new Date(anoCalendario, mesCalendarioNumero - 1, 1))}
+                                        >
+                                            ‹
+                                        </button>
+                                        <strong>{mesCalendario.toLocaleDateString("pt-BR", { month: "long", year: "numeric" })}</strong>
+                                        <button
+                                            type="button"
+                                            aria-label="Próximo mês"
+                                            onClick={() => setMesCalendario(new Date(anoCalendario, mesCalendarioNumero + 1, 1))}
+                                        >
+                                            ›
+                                        </button>
+                                    </div>
+                                    <div className="grade-calendario-reserva" aria-label="Calendário de disponibilidade">
+                                        {["D", "S", "T", "Q", "Q", "S", "S"].map((dia, indice) => (
+                                            <span className="dia-semana-calendario" key={`${dia}-${indice}`}>{dia}</span>
+                                        ))}
+                                        {diasDoCalendario.map((dia, indice) => {
+                                            if (!dia) {
+                                                return <span className="dia-vazio-calendario" key={`vazio-${indice}`} />;
+                                            }
+
+                                            const data = new Date(anoCalendario, mesCalendarioNumero, dia);
+                                            const dataFormatada = formatarDataLocal(data);
+                                            const diaFuncionamento = diasOperacionais.some((item) => item.dia === data.getDay());
+                                            const habilitado = dataFormatada >= hojeFormatado && diaFuncionamento;
+
+                                            return (
+                                                <button
+                                                    className={`dia-calendario-reserva${dataReserva === dataFormatada ? " selecionado" : ""}`}
+                                                    type="button"
+                                                    key={dataFormatada}
+                                                    disabled={!habilitado}
+                                                    aria-pressed={dataReserva === dataFormatada}
+                                                    aria-label={`${data.toLocaleDateString("pt-BR", { dateStyle: "full" })}${diaFuncionamento ? " disponível" : " indisponível"}`}
+                                                    onClick={() => selecionarDataReserva(dataFormatada)}
+                                                >
+                                                    {dia}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                    <p className="legenda-calendario-reserva">Os dias ativos seguem o funcionamento cadastrado para esta quadra.</p>
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Horário de início</label>
+                                <select
+                                    value={horarioInicioReserva}
+                                    onChange={(e) => selecionarHorarioInicio(e.target.value)}
                                     required
+                                    disabled={!dataReserva || carregandoHorarios || Boolean(erroHorarios)}
                                 >
-                                    <option value="">Selecione um dia disponível</option>
-                                    {diasDisponiveis.map((dia, index) => (
-                                        <option key={index} value={dia}>{dia}</option>
+                                    <option value="">
+                                        {carregandoHorarios ? "Verificando horários..." : "Selecione o início"}
+                                    </option>
+                                    {horariosInicioDisponiveis.map((faixa) => (
+                                        <option key={faixa.inicio} value={faixa.inicio}>{faixa.inicio}</option>
                                     ))}
                                 </select>
                             </div>
 
-                            {/* Campo para selecionar a data no calendário */}
                             <div className="form-group">
-                                <label>Data da Reserva</label>
-                                <input 
-                                    type="date" 
-                                    value={dataReserva} 
-                                    onChange={(e) => setDataReserva(e.target.value)} 
-                                    required 
-                                />
-                            </div>
-                            
-                            {/* Campo para o horário */}
-                            <div className="form-group">
-                                <label>Horário</label>
-                                <input 
-                                    type="time" 
-                                    value={horarioReserva} 
-                                    onChange={(e) => setHorarioReserva(e.target.value)} 
-                                    required 
-                                />
+                                <label>Horário de término</label>
+                                <select
+                                    value={horarioFimReserva}
+                                    onChange={(e) => setHorarioFimReserva(e.target.value)}
+                                    required
+                                    disabled={!horarioInicioReserva || carregandoHorarios || Boolean(erroHorarios)}
+                                >
+                                    <option value="">Selecione o término</option>
+                                    {horariosFimDisponiveis.map((horario) => (
+                                        <option key={horario} value={horario}>{horario}</option>
+                                    ))}
+                                </select>
                             </div>
 
                             {/* Campo para quantidade de participantes */}
@@ -254,16 +463,30 @@ function Detalhes() {
                                 <input 
                                     type="number" 
                                     min="1" 
+                                    max={quadra.capacidade || undefined}
                                     value={participantes} 
                                     onChange={(e) => setParticipantes(e.target.value)} 
+                                    placeholder={`Máximo: ${quadra.capacidade} participantes`}
                                     required 
                                 />
                             </div>
 
+                            {erroHorarios && <p className="erro-horarios-reserva" role="alert">{erroHorarios}</p>}
+                            {dataReservaFormatada && (
+                                <p className="resumo-valor-reserva">
+                                    {dataReservaFormatada} · {duracaoHoras} {duracaoHoras === 1 ? "hora" : "horas"}
+                                    <strong>{precoTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</strong>
+                                </p>
+                            )}
+
                             <div className="modal-actions">
                                 {/* Botão para fechar o modal sem salvar */}
                                 <button type="button" className="btn-cancelar" onClick={() => setIsModalOpen(false)}>Cancelar</button>
-                                <button type="submit" className="btn-confirmar" disabled={loadingReserva}>
+                                <button
+                                    type="submit"
+                                    className="btn-confirmar"
+                                    disabled={loadingReserva || carregandoHorarios || Boolean(erroHorarios) || !duracaoHoras || !participantes || Number(participantes) > Number(quadra.capacidade)}
+                                >
                                     {loadingReserva ? "Continuando..." : "Continuar para pagamento"}
                                 </button>
                             </div>
