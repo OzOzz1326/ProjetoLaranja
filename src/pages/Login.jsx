@@ -7,6 +7,7 @@ function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [mostrarSenha, setMostrarSenha] = useState(false);
     const [entrando, setEntrando] = useState(false);
 
     async function entrar(evento) {
@@ -83,14 +84,25 @@ function Login() {
 
                     <div className="campo-login">
                         <label htmlFor="login-senha">Senha:</label>
-                        <input
-                            id="login-senha"
-                            type="password"
-                            placeholder="Sua senha"
-                            value={senha}
-                            onChange={(evento) => setSenha(evento.target.value)}
-                            required
-                        />
+                        <div className="campo-senha-login">
+                            <input
+                                id="login-senha"
+                                type={mostrarSenha ? "text" : "password"}
+                                placeholder="Sua senha"
+                                value={senha}
+                                onChange={(evento) => setSenha(evento.target.value)}
+                                required
+                            />
+                            <button
+                                type="button"
+                                className="botao-mostrar-senha-login"
+                                aria-label={mostrarSenha ? "Ocultar senha" : "Mostrar senha"}
+                                aria-pressed={mostrarSenha}
+                                onClick={() => setMostrarSenha(!mostrarSenha)}
+                            >
+                                {mostrarSenha ? "Ocultar" : "Mostrar"}
+                            </button>
+                        </div>
                     </div>
 
                     <div className="esqueci-senha">

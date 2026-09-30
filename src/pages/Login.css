@@ -87,6 +87,39 @@
     color: #888888;
 }
 
+#pagina-login .campo-senha-login,
+#pagina-login .campo-senha-login input {
+    width: 100%;
+}
+
+#pagina-login .campo-senha-login {
+    position: relative;
+}
+
+#pagina-login .campo-senha-login input {
+    padding-right: 78px;
+}
+
+#pagina-login .botao-mostrar-senha-login {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    padding: 4px;
+    color: #176b37;
+    background: transparent;
+    border: 0;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#pagina-login .botao-mostrar-senha-login:focus-visible {
+    outline: 2px solid #176b37;
+    outline-offset: 2px;
+}
+
 #pagina-login .esqueci-senha {
     text-align: right;
     margin-top: -4px;

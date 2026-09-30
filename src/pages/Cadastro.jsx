@@ -10,6 +10,8 @@ function Cadastro() {
     const [email, alteraEmail] = useState("");
     const [senha, alteraSenha] = useState("");
     const [confirmaSenha, alteraConfirmaSenha] = useState("");
+    const [mostrarSenha, alteraMostrarSenha] = useState(false);
+    const [mostrarConfirmaSenha, alteraMostrarConfirmaSenha] = useState(false);
     const [salvando, alteraSalvando] = useState(false);
 
     async function inserirUsuario(evento) {
@@ -156,28 +158,50 @@ function Cadastro() {
 
                     <div className="campo-cadastro">
                         <label htmlFor="cad-senha">Crie uma senha:</label>
-                        <input
-                            id="cad-senha"
-                            type="password"
-                            placeholder="Mínimo 6 caracteres"
-                            required
-                            minLength={6}
-                            value={senha}
-                            onChange={(e) => alteraSenha(e.target.value)}
-                        />
+                        <div className="campo-senha-cadastro">
+                            <input
+                                id="cad-senha"
+                                type={mostrarSenha ? "text" : "password"}
+                                placeholder="Mínimo 6 caracteres"
+                                required
+                                minLength={6}
+                                value={senha}
+                                onChange={(e) => alteraSenha(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                className="botao-mostrar-senha-cadastro"
+                                aria-label={mostrarSenha ? "Ocultar senha" : "Mostrar senha"}
+                                aria-pressed={mostrarSenha}
+                                onClick={() => alteraMostrarSenha(!mostrarSenha)}
+                            >
+                                {mostrarSenha ? "Ocultar" : "Mostrar"}
+                            </button>
+                        </div>
                     </div>
 
                     <div className="campo-cadastro">
                         <label htmlFor="cad-confirma">Confirme sua senha:</label>
-                        <input
-                            id="cad-confirma"
-                            type="password"
-                            placeholder="Digite novamente a senha"
-                            required
-                            minLength={6}
-                            value={confirmaSenha}
-                            onChange={(e) => alteraConfirmaSenha(e.target.value)}
-                        />
+                        <div className="campo-senha-cadastro">
+                            <input
+                                id="cad-confirma"
+                                type={mostrarConfirmaSenha ? "text" : "password"}
+                                placeholder="Digite novamente a senha"
+                                required
+                                minLength={6}
+                                value={confirmaSenha}
+                                onChange={(e) => alteraConfirmaSenha(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                className="botao-mostrar-senha-cadastro"
+                                aria-label={mostrarConfirmaSenha ? "Ocultar confirmação de senha" : "Mostrar confirmação de senha"}
+                                aria-pressed={mostrarConfirmaSenha}
+                                onClick={() => alteraMostrarConfirmaSenha(!mostrarConfirmaSenha)}
+                            >
+                                {mostrarConfirmaSenha ? "Ocultar" : "Mostrar"}
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" className="btn-salvar-cadastro" disabled={salvando}>

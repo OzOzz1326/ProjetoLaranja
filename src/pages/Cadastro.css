@@ -83,6 +83,39 @@
     color: #888888;
 }
 
+#pagina-cadastro .campo-senha-cadastro,
+#pagina-cadastro .campo-senha-cadastro input {
+    width: 100%;
+}
+
+#pagina-cadastro .campo-senha-cadastro {
+    position: relative;
+}
+
+#pagina-cadastro .campo-senha-cadastro input {
+    padding-right: 78px;
+}
+
+#pagina-cadastro .botao-mostrar-senha-cadastro {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    padding: 4px;
+    color: #176b37;
+    background: transparent;
+    border: 0;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#pagina-cadastro .botao-mostrar-senha-cadastro:focus-visible {
+    outline: 2px solid #176b37;
+    outline-offset: 2px;
+}
+
 #pagina-cadastro .btn-salvar-cadastro {
     width: 100%;
     margin-top: 12px;

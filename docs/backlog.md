@@ -39,6 +39,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Remover alerts de sucesso redundantes de login, cadastro, salvamento de nome, logout e cadastro de quadra; erros e confirmações importantes continuam visíveis.
 - [x] Exibir orientação de cadastro junto ao erro genérico de credenciais inválidas, sem revelar se um e-mail específico existe; explicar o limite temporário de envio de e-mails quando o Supabase retornar rate limit.
 - [x] Permitir selecionar uma foto JPG, PNG ou WebP de até 5 MB e salvar no bucket público `avatars`, com URL nos metadados do Auth.
+- [x] Adicionar controles independentes para mostrar/ocultar senha no login e nos campos de senha e confirmação do cadastro.
 - [ ] Executar `docs/migracoes/supabase-avatar-storage.sql` no SQL Editor do Supabase para criar o bucket e as políticas necessárias ao upload da foto.
 - [ ] Remover a declaração duplicada da rota `/perfil` em `src/App.jsx`.
 
