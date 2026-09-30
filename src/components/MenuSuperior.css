@@ -76,11 +76,13 @@
     transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nav-links li a:hover {
+.nav-links li a:hover,
+.nav-links li a.active {
     color: #57C785;
 }
 
-.nav-links li a:hover::after {
+.nav-links li a:hover::after,
+.nav-links li a.active::after {
     width: 100%;
 }
 

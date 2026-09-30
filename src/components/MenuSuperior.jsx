@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { carregarPerfilUsuario, dadosBasicosUsuario, supabase } from '../supabase';
 import { definirPagamentoTesteAtivo, lerPagamentoTesteAtivo, usuarioEhAdministrador } from '../configuracaoAdmin';
 import './MenuSuperior.css';
@@ -87,9 +87,9 @@ function MenuSuperior() {
                 </div>
 
                 <ul className="nav-links">
-                    <li><Link to="/pagina-inicial">Início</Link></li>
-                    <li><Link to="/quadras">Quadras</Link></li>
-                    <li><Link to="/contato">Contato</Link></li>
+                    <li><NavLink to="/pagina-inicial">Início</NavLink></li>
+                    <li><NavLink to="/quadras">Quadras</NavLink></li>
+                    <li><NavLink to="/contato">Contato</NavLink></li>
                 </ul>
 
                 <div className="nav-actions">
