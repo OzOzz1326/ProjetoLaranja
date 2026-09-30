@@ -59,9 +59,22 @@ function CriarQuadra() {
                     return;
                 }
 
+                const { data: usuario, error: erroUsuario } = await supabase
+                    .from("usuarios")
+                    .select("socio")
+                    .eq("email", data.user.email)
+                    .maybeSingle();
+
+                if (erroUsuario) throw erroUsuario;
+
+                if (usuario?.socio !== true) {
+                    navigate("/contato", { replace: true });
+                    return;
+                }
+
                 if (ativo) setVerificandoSessao(false);
             } catch {
-                navigate("/login", { replace: true });
+                navigate("/quadras", { replace: true });
             }
         }
 
@@ -116,13 +129,19 @@ function CriarQuadra() {
 
             const { data: usuario, error: erroUsuario } = await supabase
                 .from("usuarios")
-                .select("id")
+                .select("id,socio")
                 .eq("email", sessao.user.email)
                 .maybeSingle();
 
             if (erroUsuario || !usuario) {
                 console.error("Não foi possível localizar o perfil do proprietário:", erroUsuario);
                 window.alert("Não foi possível localizar seu perfil de usuário. Entre novamente ou refaça o cadastro.");
+                return;
+            }
+
+            if (usuario.socio !== true) {
+                window.alert("O cadastro de quadras é exclusivo para sócios. Entre em contato conosco para se tornar sócio.");
+                navigate("/contato");
                 return;
             }
 

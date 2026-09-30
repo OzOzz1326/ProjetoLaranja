@@ -50,6 +50,8 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Cadastrar quadra no Supabase com proprietário, modalidade, preço, imagem, dias/horários e campo `outros`.
 - [x] Validar campos obrigatórios, ao menos um dia aberto e horário final posterior ao inicial.
 - [x] Verificar sessão e localizar o perfil do proprietário antes de inserir.
+- [x] Restringir botões, acesso à rota e envio do cadastro de quadras a perfis com `usuarios.socio === true`; novos cadastros recebem `socio: false` e não sócios são encaminhados à página de contato.
+- [ ] Executar `docs/migracoes/supabase-socios-quadras.sql` no Supabase para aplicar a mesma restrição de sócio no banco, preservando a consulta pública de quadras.
 - [x] Coletar o endereço obrigatório da quadra e enviá-lo à coluna `quadras.endereco`.
 - [x] Coletar capacidade e cobertura e enviá-las como número e booleano ao cadastrar a quadra.
 - [ ] Exibir e tratar os erros do cadastro de forma consistente; conferir também os erros retornados nas consultas de sessão e proprietário.

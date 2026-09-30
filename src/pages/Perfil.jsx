@@ -384,7 +384,7 @@ function Perfil() {
                                     </button>
                                 </div>
                             )}
-                            <p className="subtitulo-perfil">Membro SportInCity</p>
+                            <p className="subtitulo-perfil">Membro Sport In City</p>
                         </div>
                     </div>
 
@@ -467,7 +467,9 @@ function Perfil() {
                     <div className="card-atalhos-perfil">
                         <h3>Acesso Rápido</h3>
                         <Link to="/quadras" className="btn-atalho">Ver Quadras Disponíveis →</Link>
-                        <Link to="/cadastrar-quadra" className="btn-atalho">Cadastrar Nova Quadra →</Link>
+                        {usuario.socio === true && (
+                            <Link to="/cadastrar-quadra" className="btn-atalho">Cadastrar Nova Quadra →</Link>
+                        )}
                     </div>
                 </section>
             </div>

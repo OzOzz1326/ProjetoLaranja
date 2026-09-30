@@ -61,6 +61,7 @@ function Quadras(){
 
     const [quadras, setQuadras] = useState([]);
     const [carregando, setCarregando] = useState(true);
+    const [ehSocio, setEhSocio] = useState(false);
     const [paginaSelecionada, setPaginaSelecionada] = useState({ chaveFiltros, numero: 1 });
     const paginaAtual = paginaSelecionada.chaveFiltros === chaveFiltros
         ? paginaSelecionada.numero
@@ -70,6 +71,44 @@ function Quadras(){
         (paginaAtual - 1) * ITENS_POR_PAGINA,
         paginaAtual * ITENS_POR_PAGINA
     );
+
+    useEffect(() => {
+        let ativo = true;
+
+        async function verificarSocio(usuarioAuth) {
+            if (!supabase || !usuarioAuth?.email) {
+                if (ativo) setEhSocio(false);
+                return;
+            }
+
+            const { data, error } = await supabase
+                .from("usuarios")
+                .select("socio")
+                .eq("email", usuarioAuth.email)
+                .maybeSingle();
+
+            if (ativo) setEhSocio(!error && data?.socio === true);
+        }
+
+        if (!supabase) return undefined;
+
+        const { data: listener } = supabase.auth.onAuthStateChange((_evento, sessao) => {
+            queueMicrotask(() => verificarSocio(sessao?.user));
+        });
+
+        supabase.auth.getUser().then(({ data, error }) => {
+            if (error) {
+                if (ativo) setEhSocio(false);
+                return;
+            }
+            verificarSocio(data.user);
+        });
+
+        return () => {
+            ativo = false;
+            listener?.subscription?.unsubscribe();
+        };
+    }, []);
 
     useEffect(() => {
         async function buscaQuadras() {
@@ -124,7 +163,11 @@ function Quadras(){
                 <p className="etiqueta-quadras">QUADRAS DISPONÍVEIS</p>
                 <h1>{esporteSelecionado ? `Quadras de ${nomeEsporte}` : "Encontre sua quadra"}</h1>
                 <p>Veja os locais e escolha o melhor horário para jogar.</p>
-                <Link className="botao-cadastrar-quadra" to="/cadastrar-quadra">Cadastrar nova quadra</Link>
+                {ehSocio && (
+                    <Link className="botao-cadastrar-quadra" to="/cadastrar-quadra">
+                        Cadastrar nova quadra
+                    </Link>
+                )}
             </div>
 
             {carregando ? (

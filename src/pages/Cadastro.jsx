@@ -82,6 +82,7 @@ function Cadastro() {
                                 nome: nome.trim(),
                                 email: email.trim(),
                                 data_nascimento: dataNascimento,
+                                socio: false,
                             })
                             .select("id,nome,email,data_nascimento")
                             .single();
@@ -138,6 +139,7 @@ function Cadastro() {
                     nome: nome.trim(),
                     email: email.trim(),
                     data_nascimento: dataNascimento,
+                    socio: false,
                 });
 
                 if (erroPerfil) {
