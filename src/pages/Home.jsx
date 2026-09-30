@@ -11,7 +11,7 @@ function Home() {
     },
     {
       nome: "Futsal",
-      descricao: "Quadras de areia prontas para o seu próximo jogo.",
+      descricao: "Quadras de salão prontas para seu próximo jogo.",
       icone: "🥅",
       valor: "futsal",
     },
