@@ -65,7 +65,7 @@ function Cadastro() {
                     const { data: perfilExistente, error: erroBuscaPerfil } = await supabase
                         .from("usuarios")
                         .select("id,nome,email,data_nascimento")
-                        .eq("email", email.trim())
+                        .ilike("email", email.trim())
                         .maybeSingle();
 
                     if (erroBuscaPerfil) {
@@ -125,7 +125,7 @@ function Cadastro() {
             const { data: perfilExistente, error: erroBuscaPerfil } = await supabase
                 .from("usuarios")
                 .select("id")
-                .eq("email", email.trim())
+                .ilike("email", email.trim())
                 .maybeSingle();
 
             if (erroBuscaPerfil) {

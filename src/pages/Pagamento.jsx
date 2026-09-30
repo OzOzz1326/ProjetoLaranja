@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { eventoPagamentoTeste, lerPagamentoTesteAtivo } from "../configuracaoAdmin";
-import { supabase } from "../supabase";
+import { carregarPerfilUsuario, supabase } from "../supabase";
 import "./Pagamento.css";
 
 function carregarReservaPendente() {
@@ -64,14 +64,10 @@ function Pagamento() {
                 return;
             }
 
-            const { data: usuario, error: erroUsuario } = await supabase
-                .from("usuarios")
-                .select("id")
-                .eq("email", sessao.user.email)
-                .maybeSingle();
-
-            if (erroUsuario) throw erroUsuario;
-            if (!usuario) throw new Error("Não foi possível localizar seu perfil de usuário.");
+            const usuario = await carregarPerfilUsuario(sessao.user);
+            if (usuario.perfil_id === null || usuario.perfil_id === undefined) {
+                throw new Error("Não foi possível localizar seu perfil de usuário.");
+            }
 
             const { data: quadra, error: erroQuadra } = await supabase
                 .from("quadras")
@@ -130,7 +126,7 @@ function Pagamento() {
             const grupoReserva = crypto.randomUUID();
             const reservasDoIntervalo = horariosEsperados.map((horario) => ({
                 grupo_reserva: grupoReserva,
-                id_usuario: usuario.id,
+                id_usuario: usuario.perfil_id,
                 id_quadra: reserva.quadraId,
                 dia_reserva: reserva.dataReserva,
                 horaio: horario,

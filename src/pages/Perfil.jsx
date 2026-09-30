@@ -181,7 +181,7 @@ function Perfil() {
             const { data: perfilAtualizado, error: erroPerfil } = await supabase
                 .from("usuarios")
                 .update({ nome: nomeEditado.trim() })
-                .eq("email", usuario.email)
+                .ilike("email", usuario.email.trim())
                 .select("id")
                 .maybeSingle();
 

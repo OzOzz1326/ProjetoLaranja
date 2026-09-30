@@ -84,7 +84,7 @@ function Quadras(){
             const { data, error } = await supabase
                 .from("usuarios")
                 .select("socio")
-                .eq("email", usuarioAuth.email)
+                .ilike("email", usuarioAuth.email.trim())
                 .maybeSingle();
 
             if (ativo) setEhSocio(!error && data?.socio === true);

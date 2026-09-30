@@ -50,7 +50,7 @@ function Login() {
                 return;
             }
 
-            if (!dadosUsuario.perfil_id) {
+            if (dadosUsuario.perfil_id === null || dadosUsuario.perfil_id === undefined) {
                 await supabase.auth.signOut({ scope: "local" });
                 localStorage.removeItem("usuario");
                 alert("Seu cadastro não está ativo no sistema. Cadastre-se novamente para entrar.");

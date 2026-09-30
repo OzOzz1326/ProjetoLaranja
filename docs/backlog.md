@@ -33,7 +33,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Criar conta com Supabase Auth e salvar/consultar dados complementares em `usuarios`.
 - [x] Se a conta Auth já existir, validar a senha e restaurar o perfil ausente em `usuarios` antes de continuar para o perfil.
 - [x] Entrar com `signInWithPassword` e atualizar os dados usados pelo avatar do menu.
-- [x] Bloquear o login quando o usuário autenticado no Supabase não tiver perfil em `usuarios`; encerrar a sessão local quando o perfil estiver ausente ou não puder ser verificado.
+- [x] Bloquear o login quando o usuário autenticado no Supabase não tiver perfil em `usuarios`; localizar o perfil sem diferenciar maiúsculas no e-mail e encerrar a sessão local quando não houver correspondência ou ela não puder ser verificada.
 - [x] Exibir perfil, permitir edição de nome e encerrar sessão via Supabase Auth.
 - [x] Tratar erros retornados ao atualizar o perfil e ao salvar dados complementares; não considerar a operação concluída quando o Supabase retorna erro.
 - [x] Garantir que o perfil e o menu sejam carregados da sessão autenticada, em vez de depender exclusivamente do valor salvo no `localStorage`.
@@ -64,6 +64,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Ligar a seleção da reserva à tela de pagamento de teste; gravar a reserva em `reservas` somente após a confirmação simulada e bloquear horário já reservado.
 - [x] Permitir cancelar a próxima reserva pelo perfil, removendo somente a reserva do usuário autenticado e liberando o horário.
 - [x] Exibir no pagamento o resumo dinâmico da quadra, data, horário, participantes e preço.
+- [x] Resolver o perfil do pagador pela mesma busca case-insensitive usada no login, evitando falha de correspondência por caixa do e-mail.
 - [x] Calcular o total pelo número de horas reservadas e limitar participantes à capacidade cadastrada da quadra.
 - [ ] Validar com Supabase configurado a confirmação simulada e o bloqueio do horário em outra sessão; RLS e prevenção atômica de concorrência continuam pendentes.
 - [x] Adicionar controle do modo de pagamento de teste para o e-mail definido em `VITE_ADMIN_EMAIL`; a preferência do toggle vale somente para o navegador atual.

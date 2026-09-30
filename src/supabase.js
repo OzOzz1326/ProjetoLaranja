@@ -28,7 +28,7 @@ export async function carregarPerfilUsuario(usuarioAuth) {
 	const { data, error } = await supabase
 		.from('usuarios')
 		.select('*')
-		.eq('email', usuarioAuth.email)
+			.ilike('email', usuarioAuth.email.trim())
 		.maybeSingle()
 
 	if (error) {
@@ -41,6 +41,6 @@ export async function carregarPerfilUsuario(usuarioAuth) {
 		auth_id: usuarioAuth.id,
 		email: usuarioAuth.email,
 		avatar_url: usuarioAuth.user_metadata?.avatar_url || '',
-		perfil_id: data?.id || null,
+		perfil_id: data?.id ?? null,
 	}
 }

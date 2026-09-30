@@ -62,7 +62,7 @@ function CriarQuadra() {
                 const { data: usuario, error: erroUsuario } = await supabase
                     .from("usuarios")
                     .select("socio")
-                    .eq("email", data.user.email)
+                    .ilike("email", data.user.email.trim())
                     .maybeSingle();
 
                 if (erroUsuario) throw erroUsuario;
@@ -130,7 +130,7 @@ function CriarQuadra() {
             const { data: usuario, error: erroUsuario } = await supabase
                 .from("usuarios")
                 .select("id,socio")
-                .eq("email", sessao.user.email)
+                .ilike("email", sessao.user.email.trim())
                 .maybeSingle();
 
             if (erroUsuario || !usuario) {
