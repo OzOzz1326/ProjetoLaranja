@@ -26,6 +26,61 @@ function normalizarTipoJogo(valor) {
         .trim();
 }
 
+function temUmaDiferenca(termo, palavra) {
+    if (termo === palavra) return true;
+    if (Math.min(termo.length, palavra.length) < 4 || Math.abs(termo.length - palavra.length) > 1) {
+        return false;
+    }
+
+    let indiceTermo = 0;
+    let indicePalavra = 0;
+    let diferencas = 0;
+
+    while (indiceTermo < termo.length && indicePalavra < palavra.length) {
+        if (termo[indiceTermo] === palavra[indicePalavra]) {
+            indiceTermo += 1;
+            indicePalavra += 1;
+            continue;
+        }
+
+        diferencas += 1;
+        if (diferencas > 1) return false;
+
+        if (
+            termo.length === palavra.length
+            && termo[indiceTermo] === palavra[indicePalavra + 1]
+            && termo[indiceTermo + 1] === palavra[indicePalavra]
+        ) {
+            indiceTermo += 2;
+            indicePalavra += 2;
+        } else if (termo.length > palavra.length) {
+            indiceTermo += 1;
+        } else if (termo.length < palavra.length) {
+            indicePalavra += 1;
+        } else {
+            indiceTermo += 1;
+            indicePalavra += 1;
+        }
+    }
+
+    return diferencas
+        + (termo.length - indiceTermo)
+        + (palavra.length - indicePalavra) <= 1;
+}
+
+function correspondeBusca(valor, termoBusca) {
+    const texto = normalizarTipoJogo(valor);
+    if (!texto) return false;
+    if (texto.includes(termoBusca)) return true;
+
+    const palavras = texto.split(/[^a-z0-9]+/).filter(Boolean);
+    const termos = termoBusca.split(/\s+/).filter(Boolean);
+
+    return termos.every((termo) => palavras.some((palavra) => (
+        palavra.includes(termo) || temUmaDiferenca(termo, palavra)
+    )));
+}
+
 function listarTiposJogo(valor) {
     if (Array.isArray(valor)) {
         return valor.flatMap((item) => String(item).split(","));
@@ -55,7 +110,7 @@ function nomeEsporteEmTexto(valor) {
 function Quadras(){
     const [parametros] = useSearchParams();
     const esporteSelecionado = parametros.get("esporte");
-    const termoBusca = (parametros.get("busca") || "").trim().toLowerCase();
+    const termoBusca = normalizarTipoJogo(parametros.get("busca"));
     const nomeEsporte = nomesEsportes[normalizarTipoJogo(esporteSelecionado)] || "esporte";
     const chaveFiltros = `${esporteSelecionado || ""}|${termoBusca}`;
 
@@ -140,12 +195,10 @@ function Quadras(){
                     const tipos = listarTiposJogo(quadra.tipo_jogo)
                         .map((tipo) => nomeEsporteEmTexto(tipo));
                     const valoresEsportes = tipos.join(" ").toLowerCase();
-                    const nomeQuadra = (quadra.nome || "").toLowerCase();
-                    const descricaoQuadra = (quadra.descricao || "").toLowerCase();
 
-                    return nomeQuadra.includes(termoBusca)
-                        || descricaoQuadra.includes(termoBusca)
-                        || valoresEsportes.includes(termoBusca);
+                    return correspondeBusca(quadra.nome, termoBusca)
+                        || correspondeBusca(quadra.descricao, termoBusca)
+                        || correspondeBusca(valoresEsportes, termoBusca);
                 });
             }
 

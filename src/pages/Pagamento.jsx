@@ -24,6 +24,14 @@ function formatarMinutosEmHorario(minutos) {
     return `${hora}:${minuto}`;
 }
 
+function horarioJaPassou(data, horario, agora = new Date()) {
+    const hoje = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, "0")}-${String(agora.getDate()).padStart(2, "0")}`;
+    if (data < hoje) return true;
+    if (data > hoje) return false;
+
+    return converterHorarioEmMinutos(horario) <= agora.getHours() * 60 + agora.getMinutes();
+}
+
 function Pagamento() {
     const navigate = useNavigate();
     const [metodo, setMetodo] = useState("credito");
@@ -121,6 +129,10 @@ function Pagamento() {
 
             if (Number(reserva.participantes) < 1 || Number(reserva.participantes) > Number(quadra.capacidade)) {
                 throw new Error(`Esta quadra permite no máximo ${quadra.capacidade} participantes.`);
+            }
+
+            if (horarioJaPassou(reserva.dataReserva, reserva.horarioInicioReserva)) {
+                throw new Error("Esse horário já passou. Volte à quadra e escolha um horário futuro.");
             }
 
             const grupoReserva = crypto.randomUUID();
@@ -249,7 +261,7 @@ function Pagamento() {
                     </div>
 
                     <button className="botao-confirmar-pagamento" type="submit" disabled={!pagamentoTesteAtivo || confirmando}>
-                        {confirmando ? "Confirmando..." : pagamentoTesteAtivo ? "Confirmar pagamento de teste" : "Pagamento desativado"}
+                        {confirmando ? "Confirmando..." : pagamentoTesteAtivo ? "Confirmar pagamento" : "Indiponível"}
                         <span aria-hidden="true">→</span>
                     </button>
                     {mensagemErro && <p className="mensagem-pagamento" role="alert">{mensagemErro}</p>}

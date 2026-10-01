@@ -20,6 +20,13 @@ function formatarDataLocal(data) {
     return `${ano}-${mes}-${dia}`;
 }
 
+function horarioJaPassou(data, horario, agora = new Date()) {
+    if (data < formatarDataLocal(agora)) return true;
+    if (data > formatarDataLocal(agora)) return false;
+
+    return converterHorarioEmMinutos(horario) <= agora.getHours() * 60 + agora.getMinutes();
+}
+
 function converterHorarioEmMinutos(horario) {
     const [hora, minuto] = String(horario || "").split(":").map(Number);
     return hora * 60 + minuto;
@@ -73,6 +80,7 @@ function Detalhes() {
     const [horarioInicioReserva, setHorarioInicioReserva] = useState("");
     const [horarioFimReserva, setHorarioFimReserva] = useState("");
     const [participantes, setParticipantes] = useState("");
+    const [agora, setAgora] = useState(() => new Date());
     const [mesCalendario, setMesCalendario] = useState(() => {
         const hoje = new Date();
         return new Date(hoje.getFullYear(), hoje.getMonth(), 1);
@@ -81,6 +89,11 @@ function Detalhes() {
     const [carregandoHorarios, setCarregandoHorarios] = useState(false);
     const [erroHorarios, setErroHorarios] = useState("");
     const [loadingReserva, setLoadingReserva] = useState(false); // Efeito de carregando do botão "Confirmar Reserva"
+
+    useEffect(() => {
+        const intervalo = window.setInterval(() => setAgora(new Date()), 30000);
+        return () => window.clearInterval(intervalo);
+    }, []);
 
     useEffect(() => {
         let ativo = true;
@@ -127,6 +140,13 @@ function Detalhes() {
     // Essa função é chamada quando o formulário do modal é enviado (botão de confirmar)
     const handleReserva = async (e) => {
         e.preventDefault();
+        if (horarioJaPassou(dataReserva, horarioInicioReserva)) {
+            alert("Esse horário já passou. Escolha um horário futuro.");
+            setHorarioInicioReserva("");
+            setHorarioFimReserva("");
+            return;
+        }
+
         const inicioEmMinutos = converterHorarioEmMinutos(horarioInicioReserva);
         const fimEmMinutos = converterHorarioEmMinutos(horarioFimReserva);
         const horariosReserva = criarFaixasDeHorario(quadra.horario_inicio, quadra.horario_fim)
@@ -235,7 +255,10 @@ function Detalhes() {
     const diasOperacionais = diasDaSemana.filter((dia) => diasDisponiveis.includes(dia.nome));
     const faixasDeHorario = criarFaixasDeHorario(quadra.horario_inicio, quadra.horario_fim);
     const horariosOcupadosSet = new Set(horariosOcupados);
-    const horariosInicioDisponiveis = faixasDeHorario.filter((faixa) => !horariosOcupadosSet.has(faixa.inicio));
+    const horariosInicioDisponiveis = faixasDeHorario.filter((faixa) => (
+        !horariosOcupadosSet.has(faixa.inicio)
+        && !horarioJaPassou(dataReserva, faixa.inicio, agora)
+    ));
     const indiceInicioSelecionado = faixasDeHorario.findIndex((faixa) => faixa.inicio === horarioInicioReserva);
     const horariosFimDisponiveis = [];
 
