@@ -1,260 +1,590 @@
+/* =========================================================================
+   SISTEMA DE TEMAS E PALETAS DE CORES POR ESPORTE
+   ========================================================================= */
+
+/* Tema Padrão (Todos os Esportes) */
+.pagina-quadras.tema-todos {
+  --cor-primaria: #22c55e;
+  --cor-primaria-hover: #16a34a;
+  --cor-secundaria: #4ade80;
+  --cor-fundo-suave: rgba(34, 197, 94, 0.12);
+  --cor-borda: rgba(34, 197, 94, 0.28);
+  --cor-borda-hover: rgba(34, 197, 94, 0.7);
+  --cor-glow: rgba(34, 197, 94, 0.22);
+  --cor-botao-texto: #061e0e;
+}
+
+/* ⚽ Tema Futebol (Verde) */
+.pagina-quadras.tema-futebol {
+  --cor-primaria: #22c55e;
+  --cor-primaria-hover: #16a34a;
+  --cor-secundaria: #4ade80;
+  --cor-fundo-suave: rgba(34, 197, 94, 0.14);
+  --cor-borda: rgba(34, 197, 94, 0.32);
+  --cor-borda-hover: #22c55e;
+  --cor-glow: rgba(34, 197, 94, 0.26);
+  --cor-botao-texto: #061e0e;
+}
+
+/* 🎾 Tema Tennis (Azul) */
+.pagina-quadras.tema-tennis {
+  --cor-primaria: #38bdf8;
+  --cor-primaria-hover: #0ea5e9;
+  --cor-secundaria: #7dd3fc;
+  --cor-fundo-suave: rgba(56, 189, 248, 0.14);
+  --cor-borda: rgba(56, 189, 248, 0.35);
+  --cor-borda-hover: #38bdf8;
+  --cor-glow: rgba(56, 189, 248, 0.28);
+  --cor-botao-texto: #032135;
+}
+
+/* 🏐 Tema Fut-vôlei (Laranja) */
+.pagina-quadras.tema-futvolei {
+  --cor-primaria: #f97316;
+  --cor-primaria-hover: #ea580c;
+  --cor-secundaria: #fb923c;
+  --cor-fundo-suave: rgba(249, 115, 22, 0.15);
+  --cor-borda: rgba(249, 115, 22, 0.36);
+  --cor-borda-hover: #f97316;
+  --cor-glow: rgba(249, 115, 22, 0.28);
+  --cor-botao-texto: #2a0e03;
+}
+
+/* 🏖️ Tema Beach Tennis (Amarelo) */
+.pagina-quadras.tema-beachtennis {
+  --cor-primaria: #facc15;
+  --cor-primaria-hover: #eab308;
+  --cor-secundaria: #fde047;
+  --cor-fundo-suave: rgba(250, 204, 21, 0.15);
+  --cor-borda: rgba(250, 204, 21, 0.38);
+  --cor-borda-hover: #facc15;
+  --cor-glow: rgba(250, 204, 21, 0.28);
+  --cor-botao-texto: #261e01;
+}
+
+/* =========================================================================
+   ESTRUTURA GERAL DA PÁGINA
+   ========================================================================= */
 #pagina-quadras {
-	min-height: calc(100vh - 142px);
-	padding: 52px 24px 96px;
-	background: transparent;
-	color: #f0f0f0;
+  min-height: calc(100vh - 120px);
+  padding: 40px 24px 80px;
+  background: transparent;
+  color: #f0f0f0;
+  transition: all 0.3s ease;
 }
 
-#pagina-quadras .cabecalho-quadras,
-#pagina-quadras .lista-quadras,
-#pagina-quadras .estado-vazio {
-	max-width: 940px;
-	margin-right: auto;
-	margin-left: auto;
+.cabecalho-quadras {
+  max-width: 1300px;
+  margin: 0 auto 36px auto;
 }
 
-#pagina-quadras .voltar-quadras {
-	display: inline-block;
-	margin-bottom: 42px;
-	color: #a9c4ae;
-	font-size: 14px;
-	text-decoration: none;
+.voltar-quadras {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  color: #a7caa5;
+  font-size: 0.9rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
-#pagina-quadras .voltar-quadras:hover {
-	color: #57c785;
+.voltar-quadras:hover {
+  color: var(--cor-secundaria);
+  transform: translateX(-3px);
 }
 
-#pagina-quadras .etiqueta-quadras {
-	margin: 0 0 12px;
-	color: #57c785;
-	font-size: 12px;
-	font-weight: 700;
-	letter-spacing: 3px;
+.cabecalho-principal {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.etiqueta-quadras {
+  margin: 0 0 8px;
+  color: var(--cor-secundaria);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
 }
 
 #pagina-quadras h1 {
-	margin: 0;
-	color: #f4fff6;
-	font-size: clamp(30px, 5vw, 48px);
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.15;
 }
 
-#pagina-quadras .cabecalho-quadras > p:last-child {
-	margin: 14px 0 38px;
-	color: #a9c4ae;
-	font-size: 16px;
+.subtitulo-quadras {
+  margin: 10px 0 0;
+  color: #cbd5e1;
+  font-size: 1rem;
+  max-width: 650px;
 }
 
-#pagina-quadras .botao-cadastrar-quadra {
-	display: inline-block;
-	margin: 0 0 24px;
-	padding: 10px 14px;
-	border: 1px solid #57c785;
-	border-radius: 5px;
-	background: #57c785;
-	color: #07190c;
-	font-size: 14px;
-	font-weight: 700;
-	text-decoration: none;
+.botao-cadastrar-quadra {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: var(--cor-primaria);
+  color: var(--cor-botao-texto);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px var(--cor-glow);
 }
 
-#pagina-quadras .botao-cadastrar-quadra:hover {
-	background: transparent;
-	color: #57c785;
+.botao-cadastrar-quadra:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  color: #051509;
 }
 
-#pagina-quadras .lista-quadras {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 16px;
+/* =========================================================================
+   BARRA DE FILTROS DE ESPORTE COM CORES DINÂMICAS
+   ========================================================================= */
+.filtros-esportes-barra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(10, 30, 18, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
-#pagina-quadras .card-quadra {
-	padding: 24px;
-	border: 1px solid #255b35;
-	border-radius: 12px;
-	background: rgba(13, 43, 23, 0.86);
+.filtro-esporte-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-#pagina-quadras .conteudo-card-quadra {
-	display: grid;
-	grid-template-columns: minmax(0, 1.5fr) minmax(180px, 0.8fr);
-	gap: 20px;
-	align-items: center;
+.filtro-esporte-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
 }
 
-#pagina-quadras .info-card-quadra {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
+/* Estilo do botão ativo para cada esporte */
+.filtro-esporte-btn.tema-todos.ativo {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #051e0f;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
 }
 
-#pagina-quadras .imagem-card-quadra {
-	width: 100%;
-	height: 220px;
-	border-radius: 10px;
-	overflow: hidden;
-	background: rgba(87, 199, 133, 0.08);
-	border: 1px solid rgba(87, 199, 133, 0.25);
+.filtro-esporte-btn.tema-futebol.ativo {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #051e0f;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
 }
 
-#pagina-quadras .imagem-card-quadra img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	display: block;
+.filtro-esporte-btn.tema-tennis.ativo {
+  background: #38bdf8;
+  border-color: #38bdf8;
+  color: #042135;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45);
 }
 
-#pagina-quadras .imagem-placeholder {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 100%;
-	color: #a9c4ae;
-	font-size: 14px;
-	text-align: center;
+.filtro-esporte-btn.tema-futvolei.ativo {
+  background: #f97316;
+  border-color: #f97316;
+  color: #2b0c01;
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.45);
 }
 
-#pagina-quadras .topo-quadra {
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
-	gap: 20px;
+.filtro-esporte-btn.tema-beachtennis.ativo {
+  background: #facc15;
+  border-color: #facc15;
+  color: #241a02;
+  box-shadow: 0 4px 16px rgba(250, 204, 21, 0.45);
 }
 
-#pagina-quadras h2 {
-	margin: 0;
-	color: #f4fff6;
-	font-size: 20px;
+.filtro-icone {
+  font-size: 1.1rem;
 }
 
-#pagina-quadras .topo-quadra p {
-	margin: 8px 0 0;
-	color: #a9c4ae;
-	font-size: 14px;
+/* =========================================================================
+   GRADE DE 4 COLUNAS MODERNA
+   ========================================================================= */
+.lista-quadras-grade {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
-#pagina-quadras .status-quadra {
-	padding: 6px 10px;
-	border-radius: 20px;
-	background: rgba(87, 199, 133, 0.14);
-	color: #57c785;
-	font-size: 12px;
-	font-weight: 700;
-	white-space: nowrap;
+/* =========================================================================
+   CARD DA QUADRA (SOMENTE: IMAGEM, ESPORTE, NOME, PREÇO E BOTÃO ALUGAR)
+   ========================================================================= */
+.card-quadra {
+  border-radius: 16px;
+  background: rgba(11, 28, 18, 0.85);
+  border: 1px solid var(--cor-borda);
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
 }
 
-#pagina-quadras .horarios-quadra {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 16px;
-	margin-top: 24px;
-	padding-top: 18px;
-	border-top: 1px solid rgba(87, 199, 133, 0.18);
+.card-quadra:hover {
+  transform: translateY(-6px);
+  border-color: var(--cor-borda-hover);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45), 0 0 24px var(--cor-glow);
 }
 
-#pagina-quadras .horarios-quadra > span {
-	color: #a9c4ae;
-	font-size: 13px;
+.card-quadra-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
 }
 
-#pagina-quadras .horarios-quadra > div {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px;
+/* Container de Imagem */
+.imagem-card-quadra {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-#pagina-quadras .horarios-quadra button,
-#pagina-quadras .botao-voltar {
-	padding: 9px 14px;
-	border: 1px solid #57c785;
-	border-radius: 6px;
-	background: transparent;
-	color: #57c785;
-	font-size: 13px;
-	font-weight: 700;
+.imagem-card-quadra img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
-#pagina-quadras .horarios-quadra button {
-	cursor: pointer;
+.card-quadra:hover .imagem-card-quadra img {
+  transform: scale(1.06);
 }
 
-#pagina-quadras .horarios-quadra button:hover,
-#pagina-quadras .botao-voltar:hover {
-	background: #57c785;
-	color: #07190c;
+.imagem-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.04);
 }
 
-#pagina-quadras .estado-vazio {
-	padding: 48px 24px;
-	border: 1px solid #255b35;
-	border-radius: 12px;
-	text-align: center;
-	background: rgba(13, 43, 23, 0.86);
+/* Badges de Esporte */
+.badge-esporte-card {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-#pagina-quadras .estado-vazio p {
-	margin: 12px 0 28px;
-	color: #a9c4ae;
+.badge-esporte-card.esporte-verde {
+  background: rgba(20, 83, 45, 0.88);
+  border: 1px solid rgba(74, 222, 128, 0.5);
+  color: #4ade80;
 }
 
-#pagina-quadras .botao-voltar {
-	display: inline-block;
-	text-decoration: none;
+.badge-esporte-card.esporte-azul {
+  background: rgba(7, 89, 133, 0.88);
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  color: #7dd3fc;
 }
 
-#pagina-quadras .paginacao-quadras {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-	gap: 8px;
-	max-width: 940px;
-	margin: 28px auto 0;
+.badge-esporte-card.esporte-laranja {
+  background: rgba(154, 52, 18, 0.88);
+  border: 1px solid rgba(251, 146, 60, 0.5);
+  color: #fdba74;
 }
 
-#pagina-quadras .botao-pagina-quadras {
-	min-width: 40px;
-	height: 40px;
-	padding: 0 10px;
-	border: 1px solid #477252;
-	border-radius: 5px;
-	background: #102b19;
-	color: #e5f1e8;
-	font: inherit;
-	cursor: pointer;
+.badge-esporte-card.esporte-amarelo {
+  background: rgba(133, 77, 14, 0.88);
+  border: 1px solid rgba(250, 204, 21, 0.5);
+  color: #fef08a;
 }
 
-#pagina-quadras .botao-pagina-quadras:hover,
-#pagina-quadras .botao-pagina-quadras.ativa {
-	border-color: #57c785;
-	background: #57c785;
-	color: #07190c;
+/* Conteúdo do Card */
+.conteudo-card-quadra {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  gap: 16px;
 }
 
-#pagina-quadras .botao-pagina-quadras:disabled {
-	opacity: 0.5;
-	cursor: not-allowed;
+.nome-quadra {
+  margin: 0;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.2s ease;
 }
 
-@media (max-width: 650px) {
-	#pagina-quadras {
-		padding: 36px 18px 72px;
-	}
+.card-quadra:hover .nome-quadra {
+  color: var(--cor-secundaria);
+}
 
-	#pagina-quadras .conteudo-card-quadra {
-		grid-template-columns: 1fr;
-	}
+/* Rodapé do Card: Preço e Botão de Alugar */
+.rodape-card-quadra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 12px;
+}
 
-	#pagina-quadras .imagem-card-quadra {
-		height: 180px;
-	}
+.preco-container {
+  display: flex;
+  flex-direction: column;
+}
 
-	#pagina-quadras .topo-quadra,
-	#pagina-quadras .horarios-quadra {
-		align-items: flex-start;
-		flex-direction: column;
-	}
+.preco-rotulo {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.preco-destaque strong {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--cor-secundaria);
+}
+
+.preco-periodo {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-left: 2px;
+}
+
+/* Botão Alugar dentro do Card */
+.botao-alugar-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--cor-primaria);
+  color: var(--cor-botao-texto);
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.botao-alugar-card span {
+  transition: transform 0.2s ease;
+}
+
+.card-quadra:hover .botao-alugar-card {
+  background: #ffffff;
+  color: #051509;
+}
+
+.card-quadra:hover .botao-alugar-card span {
+  transform: translateX(3px);
+}
+
+/* =========================================================================
+   ESTADOS DE CARREGANDO E VAZIO
+   ========================================================================= */
+.estado-vazio {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 48px 24px;
+  border-radius: 16px;
+  border: 1px solid var(--cor-borda);
+  background: rgba(11, 28, 18, 0.8);
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.estado-vazio h2 {
+  color: #ffffff;
+  font-size: 1.35rem;
+  margin: 0 0 10px;
+}
+
+.estado-vazio p {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  margin: 0 0 24px;
+}
+
+.botao-voltar-filtro {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--cor-primaria);
+  color: var(--cor-botao-texto);
+  font-weight: 700;
+  font-size: 0.92rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.botao-voltar-filtro:hover {
+  background: #ffffff;
+  color: #061e0e;
+  transform: translateY(-2px);
+}
+
+.spinner-carregando {
+  width: 42px;
+  height: 42px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--cor-primaria);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+  margin: 0 auto 18px auto;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================================
+   PAGINAÇÃO
+   ========================================================================= */
+.paginacao-quadras {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 1300px;
+  margin: 48px auto 0;
+}
+
+.botao-pagina-quadras {
+  min-width: 42px;
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  background: rgba(11, 28, 18, 0.85);
+  color: #e2e8f0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.botao-pagina-quadras:hover:not(:disabled) {
+  border-color: var(--cor-primaria);
+  color: var(--cor-secundaria);
+  transform: translateY(-2px);
+}
+
+.botao-pagina-quadras.ativa {
+  border-color: var(--cor-primaria);
+  background: var(--cor-primaria);
+  color: var(--cor-botao-texto);
+  font-weight: 800;
+  box-shadow: 0 4px 14px var(--cor-glow);
+}
+
+.botao-pagina-quadras:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* =========================================================================
+   RESPONSIVIDADE (BREAKPOINTS PARA GRADE)
+   ========================================================================= */
+
+/* Telas médias/grandes (até 1200px): 3 colunas */
+@media (max-width: 1200px) {
+  .lista-quadras-grade {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Tablets (até 880px): 2 colunas */
+@media (max-width: 880px) {
+  .lista-quadras-grade {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .filtros-esportes-barra {
+    justify-content: center;
+  }
+
+  .cabecalho-principal {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Celulares (até 540px): 1 coluna */
+@media (max-width: 540px) {
+  #pagina-quadras {
+    padding: 24px 16px 60px;
+  }
+
+  .lista-quadras-grade {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .filtros-esportes-barra {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .filtro-esporte-btn {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+  }
+
+  .conteudo-card-quadra {
+    padding: 14px;
+  }
 }
