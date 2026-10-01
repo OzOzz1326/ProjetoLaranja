@@ -1,491 +1,646 @@
-/* ==============================================================
-   1. ESTRUTURA GERAL DA PÁGINA E CONTAINER PRINCIPAL
-   ============================================================== */
+/* =========================================================================
+   1. SISTEMA DE TEMAS E CORES POR ESPORTE (FUTEBOL, TENNIS, FUT-VÔLEI, BEACH TENNIS)
+   ========================================================================= */
+
+/* ⚽ TEMA FUTEBOL (VERDE) */
+#pagina-detalhes.tema-futebol {
+  --cor-primaria: #22c55e;
+  --cor-primaria-hover: #16a34a;
+  --cor-secundaria: #4ade80;
+  --cor-fundo-pagina: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.24) 0%, rgba(6, 36, 18, 0.94) 45%, rgba(3, 18, 9, 0.98) 100%),
+                      linear-gradient(180deg, rgba(3, 18, 9, 0.9) 0%, rgba(3, 18, 9, 0.98) 100%);
+  --cor-card-bg: rgba(10, 38, 20, 0.84);
+  --cor-modal-bg: #061d10;
+  --cor-borda: rgba(34, 197, 94, 0.28);
+  --cor-borda-forte: #22c55e;
+  --cor-glow: rgba(34, 197, 94, 0.28);
+  --cor-texto-suave: #a7caa5;
+  --cor-texto-contraste: #051a0c;
+  --cor-badge-bg: rgba(34, 197, 94, 0.16);
+}
+
+/* 🎾 TEMA TENNIS (AZUL) */
+#pagina-detalhes.tema-tennis {
+  --cor-primaria: #38bdf8;
+  --cor-primaria-hover: #0ea5e9;
+  --cor-secundaria: #7dd3fc;
+  --cor-fundo-pagina: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.28) 0%, rgba(7, 34, 58, 0.94) 45%, rgba(2, 17, 30, 0.98) 100%),
+                      linear-gradient(180deg, rgba(2, 17, 30, 0.9) 0%, rgba(2, 17, 30, 0.98) 100%);
+  --cor-card-bg: rgba(9, 36, 60, 0.84);
+  --cor-modal-bg: #041c30;
+  --cor-borda: rgba(56, 189, 248, 0.3);
+  --cor-borda-forte: #38bdf8;
+  --cor-glow: rgba(56, 189, 248, 0.3);
+  --cor-texto-suave: #93c5fd;
+  --cor-texto-contraste: #031c30;
+  --cor-badge-bg: rgba(56, 189, 248, 0.16);
+}
+
+/* 🏐 TEMA FUT-VÔLEI (LARANJA) */
+#pagina-detalhes.tema-futvolei {
+  --cor-primaria: #f97316;
+  --cor-primaria-hover: #ea580c;
+  --cor-secundaria: #fb923c;
+  --cor-fundo-pagina: radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.26) 0%, rgba(48, 20, 7, 0.94) 45%, rgba(24, 9, 3, 0.98) 100%),
+                      linear-gradient(180deg, rgba(24, 9, 3, 0.9) 0%, rgba(24, 9, 3, 0.98) 100%);
+  --cor-card-bg: rgba(48, 20, 7, 0.84);
+  --cor-modal-bg: #1d0b04;
+  --cor-borda: rgba(249, 115, 22, 0.32);
+  --cor-borda-forte: #f97316;
+  --cor-glow: rgba(249, 115, 22, 0.3);
+  --cor-texto-suave: #fed7aa;
+  --cor-texto-contraste: #260c02;
+  --cor-badge-bg: rgba(249, 115, 22, 0.16);
+}
+
+/* 🏖️ TEMA BEACH TENNIS (AMARELO) */
+#pagina-detalhes.tema-beachtennis {
+  --cor-primaria: #facc15;
+  --cor-primaria-hover: #eab308;
+  --cor-secundaria: #fde047;
+  --cor-fundo-pagina: radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.26) 0%, rgba(46, 36, 6, 0.94) 45%, rgba(24, 18, 2, 0.98) 100%),
+                      linear-gradient(180deg, rgba(24, 18, 2, 0.9) 0%, rgba(24, 18, 2, 0.98) 100%);
+  --cor-card-bg: rgba(46, 36, 6, 0.84);
+  --cor-modal-bg: #1c1602;
+  --cor-borda: rgba(250, 204, 21, 0.32);
+  --cor-borda-forte: #facc15;
+  --cor-glow: rgba(250, 204, 21, 0.3);
+  --cor-texto-suave: #fef08a;
+  --cor-texto-contraste: #221901;
+  --cor-badge-bg: rgba(250, 204, 21, 0.16);
+}
+
+/* =========================================================================
+   2. ESTRUTURA GERAL DA PÁGINA COM FUNDO TEMÁTICO DINÂMICO
+   ========================================================================= */
 #pagina-detalhes {
-    min-height: calc(100vh - 142px);
-    padding: 52px 24px 96px;
-    background: transparent;
-    color: #f0f0f0;
-    font-family: inherit;
+  min-height: calc(100vh - 130px);
+  padding: 44px 24px 88px;
+  background: var(--cor-fundo-pagina);
+  color: #f1f5f9;
+  font-family: inherit;
+  transition: background 0.4s ease, color 0.3s ease;
+  position: relative;
 }
 
 #pagina-detalhes .detalhes-container {
-    max-width: 940px;
-    margin: 0 auto;
+  max-width: 1180px;
+  margin: 0 auto;
 }
 
 #pagina-detalhes .voltar-detalhes {
-    display: inline-block;
-    margin-bottom: 24px;
-    color: #a9c4ae;
-    font-size: 14px;
-    text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  color: var(--cor-texto-suave);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 #pagina-detalhes .voltar-detalhes:hover {
-    color: #57c785;
+  color: var(--cor-primaria);
+  transform: translateX(-4px);
 }
 
 #pagina-detalhes .detalhes-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 32px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid rgba(87, 199, 133, 0.18);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--cor-borda);
 }
 
 #pagina-detalhes .detalhes-header h1 {
-    margin: 0;
-    color: #f4fff6;
-    font-size: clamp(28px, 4vw, 42px);
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 #pagina-detalhes .tipo-jogo-badge {
-    padding: 6px 14px;
-    border-radius: 20px;
-    background: rgba(87, 199, 133, 0.14);
-    color: #57c785;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: 1px solid rgba(87, 199, 133, 0.3);
+  padding: 8px 18px;
+  border-radius: 9999px;
+  background: var(--cor-badge-bg);
+  color: var(--cor-primaria);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid var(--cor-borda);
+  box-shadow: 0 4px 14px var(--cor-glow);
+  backdrop-filter: blur(8px);
 }
 
-/* ==============================================================
-   2. LAYOUT PRINCIPAL (GRID) - IMAGEM E INFORMAÇÕES
-   ============================================================== 
-   O conteúdo é dividido em 2 colunas no desktop e 1 no mobile.
-*/
+/* =========================================================================
+   3. LAYOUT PRINCIPAL (COLUNA DE CONTEÚDO + SIDEBAR)
+   ========================================================================= */
 #pagina-detalhes .detalhes-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 32px;
+  display: grid;
+  grid-template-columns: 1.8fr 1.1fr;
+  gap: 32px;
+  align-items: start;
 }
 
-@media (max-width: 900px) {
-    #pagina-detalhes .detalhes-content {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 960px) {
+  #pagina-detalhes .detalhes-content {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
 }
 
+/* Container de Imagem */
 #pagina-detalhes .imagem-container {
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 24px;
-    background: rgba(87, 199, 133, 0.08);
-    border: 1px solid rgba(87, 199, 133, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 350px;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 28px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--cor-borda);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--cor-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+  aspect-ratio: 16 / 10;
 }
 
 #pagina-detalhes .quadra-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 #pagina-detalhes .imagem-placeholder {
-    color: #a9c4ae;
-    font-size: 16px;
-    font-weight: 500;
+  color: var(--cor-texto-suave);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
+/* Seção de Informações da Quadra */
 #pagina-detalhes .info-section h2 {
-    margin: 0 0 16px;
-    color: #f4fff6;
-    font-size: 24px;
+  margin: 0 0 14px;
+  color: #ffffff;
+  font-size: 1.45rem;
+  font-weight: 700;
 }
 
 #pagina-detalhes .descricao {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #a9c4ae;
-    margin-bottom: 32px;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #cbd5e1;
+  margin-bottom: 28px;
 }
 
 #pagina-detalhes .info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
-    margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
 #pagina-detalhes .info-item {
-    background: rgba(13, 43, 23, 0.86);
-    padding: 16px 20px;
-    border-radius: 10px;
-    border: 1px solid #255b35;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  background: var(--cor-card-bg);
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--cor-borda);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+#pagina-detalhes .info-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--cor-borda-forte);
 }
 
 #pagina-detalhes .info-item strong {
-    color: #57c785;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  color: var(--cor-secundaria);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
 #pagina-detalhes .info-item span {
-    font-size: 16px;
-    color: #f4fff6;
+  font-size: 1.02rem;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 #pagina-detalhes .outros-section {
-    background: rgba(13, 43, 23, 0.86);
-    padding: 24px;
-    border-radius: 10px;
-    border: 1px solid #255b35;
-    margin-top: 32px;
+  background: var(--cor-card-bg);
+  padding: 22px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--cor-borda);
+  backdrop-filter: blur(8px);
+  margin-top: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
 #pagina-detalhes .outros-section strong {
-    display: block;
-    margin-bottom: 12px;
-    color: #57c785;
-    font-size: 14px;
-    text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
+  color: var(--cor-secundaria);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 #pagina-detalhes .outros-section p {
-    margin: 0;
-    color: #a9c4ae;
-    line-height: 1.6;
-    font-size: 15px;
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.6;
+  font-size: 0.95rem;
 }
 
-/* ==============================================================
-   3. SIDEBAR E CARD DE "SOLICITAR RESERVA" LADO DIREITO
-   ============================================================== */
+/* =========================================================================
+   4. SIDEBAR E CARD DE RESERVA (DIREITA)
+   ========================================================================= */
 #pagina-detalhes .detalhes-sidebar {
-    position: sticky;
-    top: 32px;
-    height: fit-content;
+  position: sticky;
+  top: 32px;
 }
 
 #pagina-detalhes .reserva-card {
-    background: rgba(13, 43, 23, 0.86);
-    border-radius: 12px;
-    padding: 32px 24px;
-    border: 1px solid #255b35;
-    text-align: center;
+  background: var(--cor-card-bg);
+  border-radius: 16px;
+  padding: 32px 26px;
+  border: 1px solid var(--cor-borda);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45), 0 0 24px var(--cor-glow);
+  text-align: center;
 }
 
 #pagina-detalhes .reserva-card h3 {
-    margin: 0 0 24px;
-    font-size: 20px;
-    color: #f4fff6;
+  margin: 0 0 20px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 #pagina-detalhes .preco-container {
-    margin-bottom: 32px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid rgba(87, 199, 133, 0.18);
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--cor-borda);
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
 }
 
 #pagina-detalhes .preco-valor {
-    font-size: 36px;
-    font-weight: 700;
-    color: #57c785;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--cor-primaria);
+  letter-spacing: -0.5px;
 }
 
 #pagina-detalhes .preco-periodo {
-    font-size: 14px;
-    color: #a9c4ae;
-    margin-left: 6px;
+  font-size: 0.95rem;
+  color: var(--cor-texto-suave);
+  font-weight: 500;
 }
 
 #pagina-detalhes .dias-funcionamento {
-    margin-bottom: 32px;
-    text-align: left;
+  margin-bottom: 28px;
+  text-align: left;
 }
 
 #pagina-detalhes .dias-funcionamento h4 {
-    font-size: 14px;
-    margin: 0 0 16px;
-    color: #a9c4ae;
+  font-size: 0.85rem;
+  margin: 0 0 14px;
+  color: var(--cor-texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
 }
 
 #pagina-detalhes .dias-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 #pagina-detalhes .dia-badge {
-    background-color: transparent;
-    color: #a9c4ae;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    border: 1px solid rgba(87, 199, 133, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--cor-borda);
 }
 
 #pagina-detalhes .btn-reservar {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #57c785;
-    border-radius: 8px;
-    background: #57c785;
-    color: #07190c;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: var(--cor-primaria);
+  color: var(--cor-texto-contraste);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 20px var(--cor-glow);
+  letter-spacing: 0.3px;
 }
 
 #pagina-detalhes .btn-reservar:hover {
-    background: transparent;
-    color: #57c785;
+  background: #ffffff;
+  color: #031508;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.25);
 }
 
-#pagina-detalhes .loading-container, 
-#pagina-detalhes .error-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
-    color: #a9c4ae;
-}
-
-/* ==============================================================
-   4. ESTILOS DO MODAL (JANELA SOBREPOSTA) DE RESERVA
-   ============================================================== 
-   Controla a janela escura de fundo (overlay) e a caixa branca (modal-content).
-*/
+/* =========================================================================
+   5. MODAL DE RESERVA E CALENDÁRIO COM CORES DINÂMICAS
+   ========================================================================= */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
 }
 
 #pagina-detalhes .modal-content {
-    background: #07190c;
-    border: 1px solid #255b35;
-    border-radius: 12px;
-    padding: 32px;
-    width: min(100%, 440px);
-    max-height: calc(100vh - 32px);
-    overflow-y: auto;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  background: var(--cor-modal-bg);
+  border: 1px solid var(--cor-borda);
+  border-radius: 16px;
+  padding: 32px 28px;
+  width: min(100%, 480px);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--cor-glow);
 }
 
 .modal-content h2 {
-    margin-top: 0;
-    margin-bottom: 24px;
-    color: #57c785;
-    text-align: center;
+  margin-top: 0;
+  margin-bottom: 22px;
+  color: var(--cor-primaria);
+  text-align: center;
+  font-size: 1.45rem;
+  font-weight: 800;
 }
 
 .form-group {
-    margin-bottom: 16px;
-    display: flex;
-    flex-direction: column;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group label {
-    margin-bottom: 8px;
-    color: #a9c4ae;
-    font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--cor-texto-suave);
+  font-size: 0.88rem;
+  font-weight: 600;
 }
 
 .form-group input,
 .form-group select {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #255b35;
-    background: rgba(13, 43, 23, 0.86);
-    color: #f4fff6;
-    font-family: inherit;
-    font-size: 16px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--cor-borda);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-    outline: none;
-    border-color: #57c785;
+  outline: none;
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 10px var(--cor-glow);
 }
 
+/* Calendário */
 #pagina-detalhes .calendario-reserva {
-    padding: 12px;
-    border: 1px solid #255b35;
-    border-radius: 8px;
-    background: rgba(13, 43, 23, 0.86);
+  padding: 14px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.25);
 }
 
 #pagina-detalhes .horario-funcionamento-reserva {
-    margin: 0 0 10px;
-    color: #d6e7d9;
-    font-size: 12px;
-    line-height: 1.5;
+  margin: 0 0 10px;
+  color: #cbd5e1;
+  font-size: 0.8rem;
+  line-height: 1.4;
 }
 
 #pagina-detalhes .cabecalho-calendario-reserva {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 10px;
-    color: #f4fff6;
-    text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: capitalize;
 }
 
 #pagina-detalhes .cabecalho-calendario-reserva button {
-    width: 34px;
-    height: 34px;
-    border: 1px solid #255b35;
-    border-radius: 6px;
-    background: transparent;
-    color: #8be0aa;
-    font-size: 22px;
-    cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--cor-primaria);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 #pagina-detalhes .cabecalho-calendario-reserva button:hover {
-    background: rgba(87, 199, 133, 0.12);
+  background: var(--cor-badge-bg);
+  border-color: var(--cor-primaria);
 }
 
 #pagina-detalhes .grade-calendario-reserva {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 4px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
 }
 
 #pagina-detalhes .dia-semana-calendario,
 #pagina-detalhes .dia-vazio-calendario,
 #pagina-detalhes .dia-calendario-reserva {
-    display: grid;
-    min-width: 0;
-    aspect-ratio: 1;
-    place-items: center;
+  display: grid;
+  min-width: 0;
+  aspect-ratio: 1;
+  place-items: center;
 }
 
 #pagina-detalhes .dia-semana-calendario {
-    color: #a9c4ae;
-    font-size: 12px;
-    font-weight: 700;
+  color: var(--cor-texto-suave);
+  font-size: 0.76rem;
+  font-weight: 700;
 }
 
 #pagina-detalhes .dia-calendario-reserva {
-    padding: 0;
-    border: 1px solid transparent;
-    border-radius: 6px;
-    background: rgba(87, 199, 133, 0.16);
-    color: #f4fff6;
-    font: inherit;
-    cursor: pointer;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 #pagina-detalhes .dia-calendario-reserva:hover:not(:disabled),
 #pagina-detalhes .dia-calendario-reserva.selecionado {
-    border-color: #8be0aa;
-    background: #57c785;
-    color: #07190c;
-    font-weight: 700;
+  border-color: var(--cor-borda-forte);
+  background: var(--cor-primaria);
+  color: var(--cor-texto-contraste);
+  font-weight: 800;
+  box-shadow: 0 2px 8px var(--cor-glow);
 }
 
 #pagina-detalhes .dia-calendario-reserva:disabled {
-    background: transparent;
-    color: #64766a;
-    cursor: not-allowed;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.2);
+  cursor: not-allowed;
 }
 
-#pagina-detalhes .dia-calendario-reserva:focus-visible,
-#pagina-detalhes .cabecalho-calendario-reserva button:focus-visible {
-    outline: 2px solid #f4fff6;
-    outline-offset: 2px;
-}
-
-#pagina-detalhes .legenda-calendario-reserva,
-#pagina-detalhes .erro-horarios-reserva {
-    margin: 10px 0 0;
-    color: #a9c4ae;
-    font-size: 12px;
-    line-height: 1.5;
+#pagina-detalhes .legenda-calendario-reserva {
+  margin: 10px 0 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.78rem;
 }
 
 #pagina-detalhes .erro-horarios-reserva {
-    color: #ffd28a;
+  margin: 8px 0 0;
+  color: #fca5a5;
+  font-size: 0.85rem;
 }
 
 #pagina-detalhes .resumo-valor-reserva {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin: 8px 0 0;
-    color: #a9c4ae;
-    font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0 0;
+  color: #cbd5e1;
+  font-size: 0.9rem;
 }
 
 #pagina-detalhes .resumo-valor-reserva strong {
-    color: #8be0aa;
-    white-space: nowrap;
+  color: var(--cor-secundaria);
+  font-size: 1rem;
 }
 
 .modal-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 24px;
+  display: flex;
+  gap: 14px;
+  margin-top: 24px;
 }
 
 .btn-cancelar {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #255b35;
-    background: transparent;
-    color: #a9c4ae;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
+  flex: 1;
+  padding: 12px;
+  border: 1px solid var(--cor-borda);
+  background: transparent;
+  color: var(--cor-texto-suave);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .btn-cancelar:hover {
-    background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
 }
 
 .btn-confirmar {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    background: #57c785;
-    color: #07190c;
-    font-weight: 700;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
+  flex: 1.4;
+  padding: 12px;
+  border: none;
+  background: var(--cor-primaria);
+  color: var(--cor-texto-contraste);
+  font-weight: 800;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px var(--cor-glow);
 }
 
-.btn-confirmar:hover {
-    background: #4ab375;
+.btn-confirmar:hover:not(:disabled) {
+  background: #ffffff;
+  color: #031508;
+  transform: translateY(-2px);
 }
 
 .btn-confirmar:disabled {
-    background: #255b35;
-    color: #a9c4ae;
-    cursor: not-allowed;
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
-@media (max-width: 480px) {
-    #pagina-detalhes .modal-content {
-        padding: 22px 18px;
-    }
+/* =========================================================================
+   6. LOADING E ERROR CONTAINER
+   ========================================================================= */
+#pagina-detalhes .loading-container,
+#pagina-detalhes .error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  text-align: center;
+  gap: 14px;
+  color: #ffffff;
+}
 
-    .modal-actions {
-        gap: 10px;
-    }
+#pagina-detalhes .spinner-carregando {
+  width: 44px;
+  height: 44px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--cor-primaria);
+  border-radius: 50%;
+  animation: girarDetalhes 0.8s linear infinite;
+}
+
+@keyframes girarDetalhes {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  #pagina-detalhes {
+    padding: 24px 16px 60px;
+  }
+
+  #pagina-detalhes .imagem-container {
+    min-height: 240px;
+  }
+
+  #pagina-detalhes .reserva-card {
+    padding: 24px 18px;
+  }
+
+  #pagina-detalhes .preco-valor {
+    font-size: 1.8rem;
+  }
 }

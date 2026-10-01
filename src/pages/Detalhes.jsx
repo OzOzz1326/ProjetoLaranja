@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { supabase } from "../supabase";
-import { nomeDoEsporte } from "../esportes";
+import { chaveEsporte, nomeDoEsporte } from "../esportes";
 import "./Detalhes.css";
+
+function obterTemaEsporte(tipoJogo) {
+    const chave = chaveEsporte(tipoJogo);
+    if (chave === "tennis") return "tema-tennis";
+    if (chave === "futvolei") return "tema-futvolei";
+    if (chave === "beachtennis") return "tema-beachtennis";
+    return "tema-futebol";
+}
 
 const diasDaSemana = [
     { campo: "funcionamento_dom", nome: "Domingo", dia: 0 },
@@ -223,11 +231,25 @@ function Detalhes() {
     }, [quadraId]);
 
     if (loading) {
-        return <div className="loading-container"><h2>Carregando detalhes...</h2></div>;
+        return (
+            <div id="pagina-detalhes" className="pagina-detalhes tema-futebol">
+                <div className="loading-container">
+                    <div className="spinner-carregando" aria-hidden="true"></div>
+                    <h2>Carregando detalhes da quadra...</h2>
+                </div>
+            </div>
+        );
     }
 
     if (!quadra) {
-        return <div className="error-container"><h2>Quadra não encontrada!</h2></div>;
+        return (
+            <div id="pagina-detalhes" className="pagina-detalhes tema-futebol">
+                <div className="error-container">
+                    <h2>Quadra não encontrada!</h2>
+                    <Link to="/quadras" className="voltar-detalhes">← Voltar para quadras</Link>
+                </div>
+            </div>
+        );
     }
 
     // =========================================================================
@@ -306,8 +328,10 @@ function Detalhes() {
     // 6. RENDERIZAÇÃO (TELA VISUAL HTML/JSX)
     // =========================================================================
     // Aqui é retornado todo o código que o usuário vê na tela.
+    const temaEsporte = obterTemaEsporte(quadra.tipo_jogo);
+
     return (
-        <div id="pagina-detalhes">
+        <div id="pagina-detalhes" className={`pagina-detalhes ${temaEsporte}`}>
             <div className="detalhes-container">
                 <Link to="/quadras" className="voltar-detalhes">← Voltar para quadras</Link>
                 <div className="detalhes-header">
