@@ -2,7 +2,7 @@
    1. SISTEMA DE TEMAS E CORES POR ESPORTE (FUTEBOL, TENNIS, FUT-VÔLEI, BEACH TENNIS)
    ========================================================================= */
 
-/* ⚽ TEMA FUTEBOL (VERDE) */
+/* TEMA FUTEBOL (VERDE) */
 #pagina-detalhes.tema-futebol {
   --cor-primaria: #22c55e;
   --cor-primaria-hover: #16a34a;
@@ -19,7 +19,7 @@
   --cor-badge-bg: rgba(34, 197, 94, 0.16);
 }
 
-/* 🎾 TEMA TENNIS (AZUL) */
+/* TEMA TENNIS (AZUL) */
 #pagina-detalhes.tema-tennis {
   --cor-primaria: #38bdf8;
   --cor-primaria-hover: #0ea5e9;
@@ -36,7 +36,7 @@
   --cor-badge-bg: rgba(56, 189, 248, 0.16);
 }
 
-/* 🏐 TEMA FUT-VÔLEI (LARANJA) */
+/* TEMA FUT-VÔLEI (LARANJA) */
 #pagina-detalhes.tema-futvolei {
   --cor-primaria: #f97316;
   --cor-primaria-hover: #ea580c;
@@ -53,7 +53,7 @@
   --cor-badge-bg: rgba(249, 115, 22, 0.16);
 }
 
-/* 🏖️ TEMA BEACH TENNIS (AMARELO) */
+/* TEMA BEACH TENNIS (AMARELO) */
 #pagina-detalhes.tema-beachtennis {
   --cor-primaria: #facc15;
   --cor-primaria-hover: #eab308;

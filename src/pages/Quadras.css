@@ -14,7 +14,7 @@
   --cor-botao-texto: #061e0e;
 }
 
-/* ⚽ Tema Futebol (Verde) */
+/* Tema Futebol (Verde) */
 .pagina-quadras.tema-futebol {
   --cor-primaria: #22c55e;
   --cor-primaria-hover: #16a34a;
@@ -26,7 +26,7 @@
   --cor-botao-texto: #061e0e;
 }
 
-/* 🎾 Tema Tennis (Azul) */
+/* Tema Tennis (Azul) */
 .pagina-quadras.tema-tennis {
   --cor-primaria: #38bdf8;
   --cor-primaria-hover: #0ea5e9;
@@ -38,7 +38,7 @@
   --cor-botao-texto: #032135;
 }
 
-/* 🏐 Tema Fut-vôlei (Laranja) */
+/* Tema Fut-vôlei (Laranja) */
 .pagina-quadras.tema-futvolei {
   --cor-primaria: #f97316;
   --cor-primaria-hover: #ea580c;
@@ -50,7 +50,7 @@
   --cor-botao-texto: #2a0e03;
 }
 
-/* 🏖️ Tema Beach Tennis (Amarelo) */
+/* Tema Beach Tennis (Amarelo) */
 .pagina-quadras.tema-beachtennis {
   --cor-primaria: #facc15;
   --cor-primaria-hover: #eab308;

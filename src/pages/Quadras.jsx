@@ -9,11 +9,11 @@ const ITENS_POR_PAGINA = 12;
 const PAGINAS_MINIMAS = 1;
 
 const FILTROS_ESPORTES = [
-    { chave: "", nome: "Todos os Esportes", icone: "🏆", tema: "tema-todos" },
-    { chave: "futebol", nome: "Futebol", icone: "⚽", tema: "tema-futebol" },
-    { chave: "tennis", nome: "Tennis", icone: "🎾", tema: "tema-tennis" },
-    { chave: "futvolei", nome: "Fut-vôlei", icone: "🏐", tema: "tema-futvolei" },
-    { chave: "beachtennis", nome: "Beach Tennis", icone: "🏖️", tema: "tema-beachtennis" },
+    { chave: "", nome: "Todos os Esportes", tema: "tema-todos" },
+    { chave: "futebol", nome: "Futebol", tema: "tema-futebol" },
+    { chave: "tennis", nome: "Tennis", tema: "tema-tennis" },
+    { chave: "futvolei", nome: "Fut-vôlei", tema: "tema-futvolei" },
+    { chave: "beachtennis", nome: "Beach Tennis", tema: "tema-beachtennis" },
 ];
 
 function normalizarTipoJogo(valor) {
@@ -263,7 +263,6 @@ function Quadras() {
                                 className={`filtro-esporte-btn ${filtro.tema} ${ativa ? "ativo" : ""}`}
                                 onClick={() => alternarFiltroEsporte(filtro.chave)}
                             >
-                                <span className="filtro-icone">{filtro.icone}</span>
                                 <span className="filtro-nome">{filtro.nome}</span>
                             </button>
                         );
@@ -320,7 +319,7 @@ function Quadras() {
                                             />
                                         ) : (
                                             <div className="imagem-placeholder">
-                                                <span>🏟️ Sem imagem</span>
+                                                <span>Sem imagem</span>
                                             </div>
                                         )}
                                         <span className={`badge-esporte-card ${classeCorBadge}`}>
