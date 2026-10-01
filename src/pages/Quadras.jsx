@@ -87,6 +87,7 @@ function listarTiposJogo(valor) {
 function Quadras(){
     const [parametros] = useSearchParams();
     const esporteSelecionado = parametros.get("esporte");
+    const temaEsporte = esporteSelecionado ? ` tema-${chaveEsporte(esporteSelecionado)}` : "";
     const termoBusca = normalizarTipoJogo(parametros.get("busca"));
     const nomeEsporte = nomeDoEsporte(esporteSelecionado) || "esporte";
     const chaveFiltros = `${esporteSelecionado || ""}|${termoBusca}`;
@@ -187,7 +188,7 @@ function Quadras(){
     }, [esporteSelecionado, termoBusca]);
 
     return (
-        <main id="pagina-quadras" className="pagina-quadras">
+        <main id="pagina-quadras" className={`pagina-quadras${temaEsporte}`}>
             <div className="cabecalho-quadras">
                 <Link className="voltar-quadras" to="/pagina-inicial">← Escolher outro esporte</Link>
                 <p className="etiqueta-quadras">QUADRAS DISPONÍVEIS</p>

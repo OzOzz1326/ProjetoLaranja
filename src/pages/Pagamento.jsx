@@ -50,9 +50,9 @@ function Pagamento() {
     }, []);
 
     const opcoesPagamento = [
-        { id: "credito", titulo: "Cartão de crédito", detalhe: "Pagamentos parcelados", selo: "💳" },
-        { id: "debito", titulo: "Cartão de débito", detalhe: "Pagamento à vista", selo: "💸" },
-        { id: "pix", titulo: "Pix", detalhe: "Pagamento instantâneo", selo: "📱" },
+        { id: "credito", titulo: "Cartão de crédito", detalhe: "Pagamentos parcelados" },
+        { id: "debito", titulo: "Cartão de débito", detalhe: "Pagamento à vista" },
+        { id: "pix", titulo: "Pix", detalhe: "Pagamento instantâneo" },
     ];
 
     async function confirmarPagamento(evento) {
@@ -217,7 +217,6 @@ function Pagamento() {
                                     disabled={!pagamentoTesteAtivo}
                                 />
                                 <span className="indicador-pagamento" aria-hidden="true" />
-                                <span className="selo-pagamento" aria-hidden="true">{opcao.selo}</span>
                                 <span className="texto-opcao-pagamento">
                                     <strong>{opcao.titulo}</strong>
                                     <small>{opcao.detalhe}</small>

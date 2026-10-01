@@ -142,19 +142,6 @@
 	border: 5px solid #57c785;
 }
 
-#pagina-pagamento .selo-pagamento {
-	display: grid;
-	width: 42px;
-	height: 42px;
-	flex: 0 0 42px;
-	place-items: center;
-	border-radius: 6px;
-	background: rgba(87, 199, 133, 0.12);
-	color: #8be0aa;
-	font-size: 13px;
-	font-weight: 700;
-}
-
 #pagina-pagamento .texto-opcao-pagamento {
 	display: grid;
 	gap: 5px;
@@ -404,9 +391,4 @@
 		padding: 12px 10px;
 	}
 
-	#pagina-pagamento .selo-pagamento {
-		width: 36px;
-		height: 36px;
-		flex-basis: 36px;
-	}
 }

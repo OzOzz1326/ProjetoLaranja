@@ -2,30 +2,30 @@ export const esportes = [
     {
         nome: "Futebol",
         descricao: "Encontre campos e horários para montar sua partida.",
-        icone: "",
         valor: "futebol",
         aliases: [],
+        tema: "futebol",
     },
     {
         nome: "Fut-vôlei",
         descricao: "Jogue na areia usando os pés, a cabeça e muita habilidade.",
-        icone: "",
         valor: "futvolei",
         aliases: ["fut-vôlei", "fut volei"],
+        tema: "futvolei",
     },
     {
         nome: "Tennis",
         descricao: "Escolha uma quadra e reserve seu horário.",
-        icone: "",
         valor: "tennis",
         aliases: ["tênis", "tenis"],
+        tema: "tennis",
     },
     {
         nome: "BeachTennis",
         descricao: "Pratique na areia com quem você gosta.",
-        icone: "",
         valor: "beachtennis",
         aliases: ["beach tennis", "beach tênis", "beachtenis"],
+        tema: "beachtennis",
     },
 ];
 

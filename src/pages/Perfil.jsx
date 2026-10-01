@@ -377,11 +377,11 @@ function Perfil() {
                                     <h1>{usuario.nome || "Usuário"}</h1>
                                     <button
                                         type="button"
-                                        className="btn-icone-editar"
+                                        className="btn-editar-nome"
                                         onClick={() => setEditando(true)}
                                         title="Editar nome"
                                     >
-                                        ✏️
+                                        Editar
                                     </button>
                                 </div>
                             )}

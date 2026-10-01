@@ -10,11 +10,12 @@ function Home() {
         <div className="lista-esportes">
           {esportes.map((esporte) => (
             <Link
-              className="card-esporte"
+              className={`card-esporte card-esporte-${esporte.valor}`}
               key={esporte.valor}
               to={`/quadras?esporte=${encodeURIComponent(esporte.valor)}`}
             >
-              <span>{esporte.nome}</span>
+              <span className="nome-esporte">{esporte.nome}</span>
+              <span className="seta-esporte" aria-hidden="true">→</span>
             </Link>
           ))}
         </div>

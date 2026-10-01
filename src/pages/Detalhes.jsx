@@ -331,26 +331,26 @@ function Detalhes() {
                         
                         <div className="info-grid">
                             <div className="info-item">
-                                <strong>📍 Endereço:</strong>
+                                <strong>Endereço:</strong>
                                 <span>{quadra.endereco}</span>
                             </div>
                             <div className="info-item">
-                                <strong>👥 Capacidade:</strong>
+                                <strong>Capacidade:</strong>
                                 <span>{quadra.capacidade} pessoas</span>
                             </div>
                             <div className="info-item">
-                                <strong>☂️ Cobertura:</strong>
+                                <strong>Cobertura:</strong>
                                 <span>{quadra.cobertura ? "Coberta" : "Descoberta"}</span>
                             </div>
                             <div className="info-item">
-                                <strong>⏰ Horário:</strong>
+                                <strong>Horário:</strong>
                                 <span>{quadra.horario_inicio} às {quadra.horario_fim}</span>
                             </div>
                         </div>
 
                         {quadra.outros && (
                             <div className="outros-section">
-                                <strong>📌 Outros Detalhes:</strong>
+                                <strong>Outros detalhes:</strong>
                                 <p>{quadra.outros}</p>
                             </div>
                         )}

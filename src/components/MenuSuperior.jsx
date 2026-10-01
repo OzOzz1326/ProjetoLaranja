@@ -129,7 +129,7 @@ function MenuSuperior() {
                             value={termoBusca}
                             onChange={(evento) => setTermoBusca(evento.target.value)}
                         />
-                        <button type="submit" className="search-btn" aria-label="Buscar">🔍</button>
+                        <button type="submit" className="search-btn" aria-label="Buscar"></button>
                     </form>
 
                     {usuarioLogado ? (

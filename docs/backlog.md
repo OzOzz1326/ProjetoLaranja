@@ -25,6 +25,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Exibir carregamento, lista e estado sem resultados.
 - [ ] Separar erro de consulta do estado sem resultados; atualmente a falha é registrada no console e apresentada como lista vazia.
 - [x] Compartilhar entre Home, cadastro, filtros e detalhes os esportes Futebol, Fut-vôlei, Tennis e BeachTennis, com slugs canônicos e compatibilidade de leitura para valores antigos.
+- [x] Aplicar ao filtro de quadras a paleta do esporte selecionado: verde da marca para Futebol, amarelo para Fut-vôlei, azul para Tennis e laranja para BeachTennis.
 - [ ] Implementar filtros por cidade, bairro e disponibilidade somente após confirmar os campos existentes no esquema.
 - [ ] Remover o ID padrão `23` de `src/pages/Detalhes.jsx`; mostrar estado de identificação ausente quando a URL não trouxer ID.
 - [x] Incluir endereço, capacidade e cobertura no formulário de cadastro, pois são exibidos nos detalhes da quadra.
@@ -77,7 +78,8 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Criar página de contato com formulário responsivo, seleção de assunto com foco automático na descrição e foto de campo ao lado, além da página sobre e navegação do rodapé.
 - [x] Aplicar CSS próprio às telas e componentes existentes.
 - [x] Definir o título da aba do navegador como `Sport In City` e usar uma versão compacta e legível da marca como favicon.
-- [x] Exibir somente as quatro opções de esporte na primeira tela da Home, mostrar a seção Sobre ao rolar e revelar a navbar global após o início do scroll.
+- [x] Exibir somente quatro cards compactos de esporte na primeira tela da Home, mostrar a seção Sobre ao rolar e revelar a navbar global após o início do scroll.
+- [x] Remover emojis usados como ícones decorativos; manter rótulos textuais, controles claros e apenas símbolos simples quando apropriado.
 - [x] Exibir a foto cadastrada da quadra no cartão da próxima reserva do perfil, usando `public/quadracontato.jpg` quando a imagem estiver ausente ou indisponível.
 - [ ] Integrar o formulário de contato a um canal de atendimento, validar os dados enviados e confirmar como as preferências de atualização serão usadas.
 - [x] Substituir a próxima partida fixa no perfil pela próxima reserva real do usuário, com dados da quadra e opção de cancelamento.

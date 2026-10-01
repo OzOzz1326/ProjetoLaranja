@@ -258,3 +258,131 @@
 		flex-direction: column;
 	}
 }
+
+#pagina-quadras.tema-futebol {
+	--tema-principal: #57c785;
+	--tema-claro: #8be0aa;
+	--tema-borda: #255b35;
+	--tema-superficie: rgba(13, 43, 23, 0.88);
+	--tema-superficie-hover: rgba(21, 67, 35, 0.96);
+	--tema-suave: rgba(87, 199, 133, 0.14);
+	--tema-divisor: rgba(87, 199, 133, 0.25);
+	--tema-texto-suave: #a9c4ae;
+	--tema-contraste: #07190c;
+	--tema-brilho: rgba(87, 199, 133, 0.15);
+}
+
+#pagina-quadras.tema-futvolei {
+	--tema-principal: #d4a202;
+	--tema-claro: #ffd03a;
+	--tema-borda: #a98307;
+	--tema-superficie: rgba(48, 38, 8, 0.9);
+	--tema-superficie-hover: rgba(77, 60, 8, 0.96);
+	--tema-suave: rgba(239, 184, 7, 0.14);
+	--tema-divisor: rgba(253, 198, 22, 0.26);
+	--tema-texto-suave: #e7d99f;
+	--tema-contraste: #302506;
+	--tema-brilho: rgba(239, 184, 7, 0.2);
+}
+
+#pagina-quadras.tema-tennis {
+	--tema-principal: #326f9c;
+	--tema-claro: #a0cbe0;
+	--tema-borda: #17496f;
+	--tema-superficie: rgba(7, 35, 60, 0.9);
+	--tema-superficie-hover: rgba(19, 61, 94, 0.96);
+	--tema-suave: rgba(95, 153, 188, 0.15);
+	--tema-divisor: rgba(95, 153, 188, 0.28);
+	--tema-texto-suave: #b9d5e6;
+	--tema-contraste: #062443;
+	--tema-brilho: rgba(50, 111, 156, 0.22);
+}
+
+#pagina-quadras.tema-beachtennis {
+	--tema-principal: #ff9800;
+	--tema-claro: #ffc340;
+	--tema-borda: #8d4925;
+	--tema-superficie: rgba(54, 31, 15, 0.9);
+	--tema-superficie-hover: rgba(83, 46, 16, 0.96);
+	--tema-suave: rgba(255, 152, 0, 0.14);
+	--tema-divisor: rgba(185, 110, 72, 0.3);
+	--tema-texto-suave: #e6c4a6;
+	--tema-contraste: #3a210d;
+	--tema-brilho: rgba(226, 128, 0, 0.2);
+}
+
+#pagina-quadras[class*="tema-"] {
+	background: linear-gradient(180deg, var(--tema-brilho), transparent 460px);
+}
+
+#pagina-quadras[class*="tema-"] .voltar-quadras {
+	color: var(--tema-texto-suave);
+}
+
+#pagina-quadras[class*="tema-"] .voltar-quadras:hover,
+#pagina-quadras[class*="tema-"] .etiqueta-quadras {
+	color: var(--tema-principal);
+}
+
+#pagina-quadras[class*="tema-"] .cabecalho-quadras > p:last-child,
+#pagina-quadras[class*="tema-"] .imagem-placeholder,
+#pagina-quadras[class*="tema-"] .topo-quadra p,
+#pagina-quadras[class*="tema-"] .horarios-quadra > span,
+#pagina-quadras[class*="tema-"] .estado-vazio p {
+	color: var(--tema-texto-suave);
+}
+
+#pagina-quadras[class*="tema-"] .botao-cadastrar-quadra {
+	border-color: var(--tema-principal);
+	background: var(--tema-principal);
+	color: var(--tema-contraste);
+}
+
+#pagina-quadras[class*="tema-"] .botao-cadastrar-quadra:hover {
+	background: transparent;
+	color: var(--tema-claro);
+}
+
+#pagina-quadras[class*="tema-"] .card-quadra,
+#pagina-quadras[class*="tema-"] .estado-vazio {
+	border-color: var(--tema-borda);
+	background: var(--tema-superficie);
+}
+
+#pagina-quadras[class*="tema-"] .imagem-card-quadra {
+	border-color: var(--tema-divisor);
+	background: var(--tema-suave);
+}
+
+#pagina-quadras[class*="tema-"] .status-quadra {
+	background: var(--tema-suave);
+	color: var(--tema-claro);
+}
+
+#pagina-quadras[class*="tema-"] .horarios-quadra {
+	border-top-color: var(--tema-divisor);
+}
+
+#pagina-quadras[class*="tema-"] .horarios-quadra button,
+#pagina-quadras[class*="tema-"] .botao-voltar {
+	border-color: var(--tema-principal);
+	color: var(--tema-claro);
+}
+
+#pagina-quadras[class*="tema-"] .horarios-quadra button:hover,
+#pagina-quadras[class*="tema-"] .botao-voltar:hover {
+	background: var(--tema-principal);
+	color: var(--tema-contraste);
+}
+
+#pagina-quadras[class*="tema-"] .botao-pagina-quadras {
+	border-color: var(--tema-borda);
+	background: var(--tema-superficie);
+}
+
+#pagina-quadras[class*="tema-"] .botao-pagina-quadras:hover,
+#pagina-quadras[class*="tema-"] .botao-pagina-quadras.ativa {
+	border-color: var(--tema-principal);
+	background: var(--tema-principal);
+	color: var(--tema-contraste);
+}
