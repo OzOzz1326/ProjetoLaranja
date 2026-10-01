@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { supabase } from "../supabase";
 import { chaveEsporte, nomeDoEsporte } from "../esportes";
+import { useTema } from "../context/TemaContext";
 import "./Detalhes.css";
 
 function obterTemaEsporte(tipoJogo) {
@@ -64,6 +65,7 @@ function criarFaixasDeHorario(horarioInicio, horarioFim) {
 
 function Detalhes() {
     const navigate = useNavigate();
+    const { setTemaManual } = useTema();
     // =========================================================================
     // 1. OBTENÇÃO DO ID DA QUADRA
     // =========================================================================
@@ -229,6 +231,12 @@ function Detalhes() {
             fetchQuadra();
         }
     }, [quadraId]);
+
+    useEffect(() => {
+        if (quadra?.tipo_jogo) {
+            setTemaManual(quadra.tipo_jogo);
+        }
+    }, [quadra?.tipo_jogo, setTemaManual]);
 
     if (loading) {
         return (

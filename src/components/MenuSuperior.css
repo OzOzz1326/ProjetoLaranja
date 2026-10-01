@@ -1,8 +1,53 @@
+/* =========================================================================
+   1. SISTEMA DE TEMAS NO MENU SUPERIOR
+   ========================================================================= */
+
+.navbar-container.tema-futebol,
+.navbar-container {
+    --nav-cor-destaque: #22c55e;
+    --nav-cor-hover: #4ade80;
+    --nav-bg: rgba(7, 25, 12, 0.90);
+    --nav-borda: rgba(34, 197, 94, 0.22);
+    --nav-glow: rgba(34, 197, 94, 0.35);
+    --nav-accent: rgba(34, 197, 94, 0.15);
+}
+
+.navbar-container.tema-tennis {
+    --nav-cor-destaque: #38bdf8;
+    --nav-cor-hover: #7dd3fc;
+    --nav-bg: rgba(4, 21, 38, 0.92);
+    --nav-borda: rgba(56, 189, 248, 0.28);
+    --nav-glow: rgba(56, 189, 248, 0.38);
+    --nav-accent: rgba(56, 189, 248, 0.15);
+}
+
+.navbar-container.tema-futvolei {
+    --nav-cor-destaque: #f97316;
+    --nav-cor-hover: #fb923c;
+    --nav-bg: rgba(32, 13, 4, 0.92);
+    --nav-borda: rgba(249, 115, 22, 0.28);
+    --nav-glow: rgba(249, 115, 22, 0.38);
+    --nav-accent: rgba(249, 115, 22, 0.15);
+}
+
+.navbar-container.tema-beachtennis {
+    --nav-cor-destaque: #facc15;
+    --nav-cor-hover: #fde047;
+    --nav-bg: rgba(30, 24, 2, 0.92);
+    --nav-borda: rgba(250, 204, 21, 0.28);
+    --nav-glow: rgba(250, 204, 21, 0.38);
+    --nav-accent: rgba(250, 204, 21, 0.15);
+}
+
+/* =========================================================================
+   2. ESTRUTURA GERAL DA NAVBAR
+   ========================================================================= */
 .navbar-container {
     position: sticky;
     top: 0;
     z-index: 1000;
     width: 100%;
+    transition: background 0.35s ease, border-color 0.35s ease;
 }
 
 .navbar-container-home {
@@ -23,11 +68,12 @@
     align-items: center;
     min-height: 70px;
     padding: 0 28px;
-    background-color: rgba(7, 25, 12, 0.88);
+    background-color: var(--nav-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(87, 199, 133, 0.2);
+    border-bottom: 1px solid var(--nav-borda);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+    transition: background-color 0.35s ease, border-color 0.35s ease;
 }
 
 .logo-container {
@@ -50,7 +96,7 @@
 
 .logo-container img:hover {
     transform: scale(1.05);
-    filter: drop-shadow(0 0 8px rgba(87, 199, 133, 0.4));
+    filter: drop-shadow(0 0 10px var(--nav-glow));
 }
 
 .nav-links {
@@ -66,7 +112,7 @@
 
 .nav-links li a {
     text-decoration: none;
-    color: #c8dccb;
+    color: #e2e8f0;
     font-size: 15px;
     font-weight: 500;
     letter-spacing: 0.3px;
@@ -83,14 +129,14 @@
     left: 0;
     width: 0%;
     height: 2.5px;
-    background: linear-gradient(90deg, #57C785, #45a069);
+    background: linear-gradient(90deg, var(--nav-cor-destaque), var(--nav-cor-hover));
     border-radius: 2px;
     transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-links li a:hover,
 .nav-links li a.active {
-    color: #57C785;
+    color: var(--nav-cor-destaque);
 }
 
 .nav-links li a:hover::after,
@@ -110,7 +156,7 @@
     display: flex;
     align-items: center;
     gap: 7px;
-    color: #c8dccb;
+    color: #cbd5e1;
     font-size: 12px;
     white-space: nowrap;
 }
@@ -118,7 +164,7 @@
 .controle-pagamento-teste input {
     width: 16px;
     height: 16px;
-    accent-color: #57c785;
+    accent-color: var(--nav-cor-destaque);
 }
 
 .search-container {
@@ -126,16 +172,16 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid #2a5c35;
+    border: 1px solid var(--nav-borda);
     border-radius: 24px;
     padding: 4px 6px 4px 16px;
     transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .search-container:focus-within {
-    border-color: #57C785;
-    background-color: rgba(87, 199, 133, 0.08);
-    box-shadow: 0 0 14px rgba(87, 199, 133, 0.25);
+    border-color: var(--nav-cor-destaque);
+    background-color: var(--nav-accent);
+    box-shadow: 0 0 14px var(--nav-glow);
 }
 
 .search-input {
@@ -150,7 +196,7 @@
 }
 
 .search-input::placeholder {
-    color: #8ab894;
+    color: #94a3b8;
     opacity: 0.85;
 }
 
@@ -162,7 +208,7 @@
     background: transparent;
     border: none;
     outline: none;
-    color: #57C785;
+    color: var(--nav-cor-destaque);
     font-size: 15px;
     cursor: pointer;
     padding: 6px 8px;
@@ -175,7 +221,7 @@
 
 .search-btn:hover {
     transform: scale(1.15);
-    background-color: rgba(87, 199, 133, 0.15);
+    background-color: var(--nav-accent);
 }
 
 .avatar-usuario-btn {
@@ -183,7 +229,7 @@
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    color: #c8dccb;
+    color: #cbd5e1;
     font-weight: 600;
     font-size: 14px;
     padding: 4px 8px;
@@ -200,8 +246,8 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: rgba(87, 199, 133, 0.15);
-    color: #57C785;
+    background-color: var(--nav-accent);
+    color: var(--nav-cor-destaque);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -217,8 +263,8 @@
 }
 
 .circulo-avatar.deslogado {
-    background-color: rgba(87, 199, 133, 0.15);
-    color: #57C785;
+    background-color: var(--nav-accent);
+    color: var(--nav-cor-destaque);
 }
 
 .circulo-avatar:hover {

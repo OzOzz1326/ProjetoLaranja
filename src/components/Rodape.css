@@ -1,11 +1,52 @@
+/* =========================================================================
+   1. SISTEMA DE TEMAS NO RODAPÉ
+   ========================================================================= */
+
+.rodape-simples.tema-futebol,
+.rodape-simples {
+  --rodape-bg: linear-gradient(180deg, rgba(8, 28, 17, 0.95) 0%, rgba(4, 15, 9, 0.98) 100%);
+  --rodape-borda: rgba(74, 222, 128, 0.22);
+  --rodape-glow: rgba(34, 197, 94, 0.35);
+  --rodape-titulo: #f0fdf4;
+  --rodape-texto: #a7caa5;
+}
+
+.rodape-simples.tema-tennis {
+  --rodape-bg: linear-gradient(180deg, rgba(4, 24, 42, 0.95) 0%, rgba(2, 14, 26, 0.98) 100%);
+  --rodape-borda: rgba(56, 189, 248, 0.25);
+  --rodape-glow: rgba(56, 189, 248, 0.4);
+  --rodape-titulo: #f0f9ff;
+  --rodape-texto: #93c5fd;
+}
+
+.rodape-simples.tema-futvolei {
+  --rodape-bg: linear-gradient(180deg, rgba(36, 15, 5, 0.95) 0%, rgba(18, 7, 2, 0.98) 100%);
+  --rodape-borda: rgba(249, 115, 22, 0.25);
+  --rodape-glow: rgba(249, 115, 22, 0.4);
+  --rodape-titulo: #fff7ed;
+  --rodape-texto: #fed7aa;
+}
+
+.rodape-simples.tema-beachtennis {
+  --rodape-bg: linear-gradient(180deg, rgba(34, 26, 3, 0.95) 0%, rgba(18, 14, 1, 0.98) 100%);
+  --rodape-borda: rgba(250, 204, 21, 0.25);
+  --rodape-glow: rgba(250, 204, 21, 0.4);
+  --rodape-titulo: #fefce8;
+  --rodape-texto: #fef08a;
+}
+
+/* =========================================================================
+   2. ESTRUTURA DO RODAPÉ
+   ========================================================================= */
 .rodape-simples {
   width: 100%;
   margin-top: auto;
-  background: linear-gradient(180deg, rgba(8, 28, 17, 0.94) 0%, rgba(4, 15, 9, 0.98) 100%);
-  border-top: 1px solid rgba(74, 222, 128, 0.18);
+  background: var(--rodape-bg);
+  border-top: 1px solid var(--rodape-borda);
   box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(8px);
   padding: 24px 20px;
+  transition: background 0.35s ease, border-color 0.35s ease;
 }
 
 .rodape-simples-conteudo {
@@ -30,19 +71,22 @@
   width: 32px;
   height: 32px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(34, 197, 94, 0.25));
+  filter: drop-shadow(0 2px 6px var(--rodape-glow));
+  transition: filter 0.35s ease;
 }
 
 .rodape-simples-titulo {
   font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 1.2px;
-  color: #f0fdf4;
+  color: var(--rodape-titulo);
+  transition: color 0.35s ease;
 }
 
 .rodape-simples-direitos {
   margin: 0;
   font-size: 0.84rem;
-  color: #a7caa5;
+  color: var(--rodape-texto);
   letter-spacing: 0.2px;
+  transition: color 0.35s ease;
 }

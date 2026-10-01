@@ -5,7 +5,7 @@ export const esportes = [
         valor: "futebol",
         aliases: [],
         tema: "futebol",
-        paleta: ["#0c6a30", "#167d41", "#2c9e57", "#57c785", "#8be0aa"],
+        paleta: ["#0c6a30", "#167d41", "#22c55e", "#4ade80", "#86efac"],
     },
     {
         nome: "Fut-vôlei",
@@ -13,7 +13,7 @@ export const esportes = [
         valor: "futvolei",
         aliases: ["fut-vôlei", "fut volei"],
         tema: "futvolei",
-        paleta: ["#a98307", "#d4a202", "#efb807", "#fdc516", "#ffd03a"],
+        paleta: ["#9a3412", "#c2410c", "#ea580c", "#f97316", "#fb923c"],
     },
     {
         nome: "Tennis",
@@ -21,7 +21,7 @@ export const esportes = [
         valor: "tennis",
         aliases: ["tênis", "tenis"],
         tema: "tennis",
-        paleta: ["#062443", "#17496f", "#326f9c", "#5f99bc", "#a0cbe0"],
+        paleta: ["#0369a1", "#0284c7", "#0ea5e9", "#38bdf8", "#7dd3fc"],
     },
     {
         nome: "BeachTennis",
@@ -29,7 +29,7 @@ export const esportes = [
         valor: "beachtennis",
         aliases: ["beach tennis", "beach tênis", "beachtenis"],
         tema: "beachtennis",
-        paleta: ["#8d4925", "#b96e48", "#e28000", "#ff9800", "#ffc340"],
+        paleta: ["#854d0e", "#a16207", "#ca8a04", "#eab308", "#facc15"],
     },
 ];
 

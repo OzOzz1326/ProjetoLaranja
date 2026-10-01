@@ -1,10 +1,12 @@
+import { useTema } from '../context/TemaContext';
 import './Rodape.css';
 
 function Rodape() {
   const anoAtual = new Date().getFullYear();
+  const { tema } = useTema();
 
   return (
-    <footer className="rodape-simples" role="contentinfo">
+    <footer className={`rodape-simples ${tema}`} role="contentinfo">
       <div className="rodape-simples-conteudo">
         <div className="rodape-simples-marca">
           <img src="/logosfundo.png" alt="Sport In City" className="rodape-simples-logo" />

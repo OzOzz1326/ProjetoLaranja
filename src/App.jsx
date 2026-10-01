@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BackgroundGotas from "./components/BackgroundGotas";
 import MenuSuperior from "./components/MenuSuperior";
 import Rodape from "./components/Rodape";
@@ -12,16 +12,14 @@ import Contato from "./pages/Contato";
 import Detalhes from "./pages/Detalhes";
 import Perfil from "./pages/Perfil";
 import Sobre from "./pages/Sobre";
-import { obterTemaEsporte } from "./esportes";
+import { TemaProvider, useTema } from "./context/TemaContext";
 
 function ConteudoApp() {
-  const location = useLocation();
-  const esporteSelecionado = new URLSearchParams(location.search).get("esporte");
-  const tema = obterTemaEsporte(esporteSelecionado);
+  const { tema, temaInfo } = useTema();
 
   return (
-    <div id="app-shell" className={`tema-${tema.tema}`}>
-      <BackgroundGotas cores={tema.paleta} />
+    <div id="app-shell" className={tema}>
+      <BackgroundGotas cores={temaInfo.paleta} />
       <MenuSuperior />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -46,7 +44,9 @@ function ConteudoApp() {
 function App() {
   return (
     <BrowserRouter>
-      <ConteudoApp />
+      <TemaProvider>
+        <ConteudoApp />
+      </TemaProvider>
     </BrowserRouter>
   );
 }

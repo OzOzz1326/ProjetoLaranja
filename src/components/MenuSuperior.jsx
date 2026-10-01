@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { carregarPerfilUsuario, dadosBasicosUsuario, supabase } from '../supabase';
 import { definirPagamentoTesteAtivo, lerPagamentoTesteAtivo, usuarioEhAdministrador } from '../configuracaoAdmin';
+import { useTema } from '../context/TemaContext';
 import './MenuSuperior.css';
 
 function MenuSuperior() {
@@ -93,8 +94,10 @@ function MenuSuperior() {
         setPagamentoTesteAtivo(ativo);
     }
 
+    const { tema } = useTema();
+
     return (
-        <header className={`navbar-container${estaNaHome ? " navbar-container-home" : ""}${estaNaHome && !homeRolada ? " navbar-container-home-oculta" : ""}`}>
+        <header className={`navbar-container ${tema}${estaNaHome ? " navbar-container-home" : ""}${estaNaHome && !homeRolada ? " navbar-container-home-oculta" : ""}`}>
             <nav className="navbar">
                 <div className="logo-container">
                     <Link to="/pagina-inicial" aria-label="Ir para a página inicial">
