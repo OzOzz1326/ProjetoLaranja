@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { eventoPagamentoTeste, lerPagamentoTesteAtivo } from "../configuracaoAdmin";
 import { carregarPerfilUsuario, supabase } from "../supabase";
+import { nomeDoEsporte } from "../esportes";
 import "./Pagamento.css";
 
 function carregarReservaPendente() {
@@ -243,7 +244,7 @@ function Pagamento() {
                         <span className="marca-quadra-pagamento" aria-hidden="true">SC</span>
                         <div>
                             <h3>{reserva.quadraNome}</h3>
-                            <p>{reserva.tipoJogo}</p>
+                            <p>{nomeDoEsporte(reserva.tipoJogo)}</p>
                         </div>
                     </div>
 

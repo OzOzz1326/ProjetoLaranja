@@ -5,6 +5,18 @@
     width: 100%;
 }
 
+.navbar-container-home {
+    position: fixed;
+    inset: 0 0 auto;
+    transition: transform 220ms ease, visibility 220ms ease;
+}
+
+.navbar-container-home-oculta {
+    visibility: hidden;
+    transform: translateY(-110%);
+    pointer-events: none;
+}
+
 .navbar {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -262,6 +274,12 @@
         justify-content: center;
         width: 100%;
         flex-wrap: wrap;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar-container-home {
+        transition: none;
     }
 }
 

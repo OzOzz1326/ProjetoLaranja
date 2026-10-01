@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { carregarPerfilUsuario, dadosBasicosUsuario, supabase } from "../supabase";
+import { nomeDoEsporte } from "../esportes";
 import "./Perfil.css";
 
 function converterHorarioEmMinutos(horario) {
@@ -415,7 +416,7 @@ function Perfil() {
                                     </p>
                                     {proximaReserva.quadra && (
                                         <p className="item-partida">
-                                            {proximaReserva.quadra.nome} · {proximaReserva.quadra.tipo_jogo}
+                                            {proximaReserva.quadra.nome} · {nomeDoEsporte(proximaReserva.quadra.tipo_jogo)}
                                         </p>
                                     )}
                                     <button

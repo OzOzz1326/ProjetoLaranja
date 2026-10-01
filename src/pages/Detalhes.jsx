@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { supabase } from "../supabase";
+import { nomeDoEsporte } from "../esportes";
 import "./Detalhes.css";
 
 const diasDaSemana = [
@@ -167,7 +168,7 @@ function Detalhes() {
             sessionStorage.setItem("reservaPendente", JSON.stringify({
                 quadraId: quadra.id,
                 quadraNome: quadra.nome,
-                tipoJogo: quadra.tipo_jogo,
+                tipoJogo: nomeDoEsporte(quadra.tipo_jogo),
                 dataReserva,
                 horarioInicioReserva,
                 horarioFimReserva,
@@ -311,7 +312,7 @@ function Detalhes() {
                 <Link to="/quadras" className="voltar-detalhes">← Voltar para quadras</Link>
                 <div className="detalhes-header">
                     <h1>{quadra.nome}</h1>
-                    <span className="tipo-jogo-badge">{quadra.tipo_jogo}</span>
+                    <span className="tipo-jogo-badge">{nomeDoEsporte(quadra.tipo_jogo)}</span>
                 </div>
 
             <div className="detalhes-content">

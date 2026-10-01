@@ -1,17 +1,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase";
+import { chaveEsporte, nomeDoEsporte } from "../esportes";
 import "./Quadras.css"
 import { Link, useSearchParams } from "react-router-dom";
-
-const nomesEsportes = {
-    futebol: "Futebol",
-    futsal: "Futsal",
-    futvolei: "Futvôlei",
-    basquete: "Basquete",
-    volei: "Vôlei",
-    tenis: "Tênis",
-    beachtenis: "Beach Tênis",
-};
 
 const ITENS_POR_PAGINA = 10;
 const PAGINAS_MINIMAS = 4;
@@ -93,25 +84,11 @@ function listarTiposJogo(valor) {
     return [valor];
 }
 
-function nomeEsporteEmTexto(valor) {
-    if (valor === null || valor === undefined || valor === "") {
-        return "";
-    }
-
-    const valorNormalizado = normalizarTipoJogo(valor);
-
-    if (!valorNormalizado) {
-        return "";
-    }
-
-    return nomesEsportes[valorNormalizado] || String(valor).trim();
-}
-
 function Quadras(){
     const [parametros] = useSearchParams();
     const esporteSelecionado = parametros.get("esporte");
     const termoBusca = normalizarTipoJogo(parametros.get("busca"));
-    const nomeEsporte = nomesEsportes[normalizarTipoJogo(esporteSelecionado)] || "esporte";
+    const nomeEsporte = nomeDoEsporte(esporteSelecionado) || "esporte";
     const chaveFiltros = `${esporteSelecionado || ""}|${termoBusca}`;
 
     const [quadras, setQuadras] = useState([]);
@@ -183,8 +160,8 @@ function Quadras(){
             if (esporteSelecionado) {
                 lista = lista.filter((quadra) => {
                     const tipos = listarTiposJogo(quadra.tipo_jogo)
-                        .map((tipo) => normalizarTipoJogo(tipo));
-                    const esporteNormalizado = normalizarTipoJogo(esporteSelecionado);
+                        .map((tipo) => chaveEsporte(tipo));
+                    const esporteNormalizado = chaveEsporte(esporteSelecionado);
 
                     return tipos.includes(esporteNormalizado);
                 });
@@ -193,7 +170,7 @@ function Quadras(){
             if (termoBusca) {
                 lista = lista.filter((quadra) => {
                     const tipos = listarTiposJogo(quadra.tipo_jogo)
-                        .map((tipo) => nomeEsporteEmTexto(tipo));
+                        .map((tipo) => nomeDoEsporte(tipo));
                     const valoresEsportes = tipos.join(" ").toLowerCase();
 
                     return correspondeBusca(quadra.nome, termoBusca)
@@ -242,7 +219,7 @@ function Quadras(){
                 <div className="lista-quadras">
                     {quadrasDaPagina.map((quadra) => {
                         const tipos = listarTiposJogo(quadra.tipo_jogo)
-                            .map((tipo) => nomeEsporteEmTexto(tipo));
+                            .map((tipo) => nomeDoEsporte(tipo));
 
                         return (
                             <article className="card-quadra" key={quadra.id}>

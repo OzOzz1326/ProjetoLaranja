@@ -1,58 +1,25 @@
 import "./Home.css"
 import { Link } from "react-router-dom";
+import { esportes } from "../esportes";
+import Sobre from "./Sobre";
 
 function Home() {
-  const esportes = [
-    {
-      nome: "Futebol",
-      descricao: "Encontre campos e horários para montar sua partida.",
-      icone: "⚽",
-      valor: "futebol",
-    },
-    {
-      nome: "Futsal",
-      descricao: "Quadras de salão prontas para seu próximo jogo.",
-      icone: "🥅",
-      valor: "futsal",
-    },
-    {
-      nome: "Basquete",
-      descricao: "Escolha uma quadra e reserve seu horário.",
-      icone: "🏀",
-      valor: "basquete",
-    },
-    {
-      nome: "Vôlei",
-      descricao: "Pratique na areia com quem você gosta.",
-      icone: "🏐",
-      valor: "vôlei",
-    },
-  ];
-
   return (
     <main id="pagina-inicial" className="pagina-inicial">
-      <section className="cabecalho-inicial">
-        <p className="etiqueta-inicial">SPORT IN CITY</p>
-        <h1>Qual esporte você quer praticar?</h1>
-        <p>Escolha uma modalidade para encontrar quadras disponíveis perto de você.</p>
+      <section className="selecao-esportes" aria-label="Escolha um esporte">
+        <div className="lista-esportes">
+          {esportes.map((esporte) => (
+            <Link
+              className="card-esporte"
+              key={esporte.valor}
+              to={`/quadras?esporte=${encodeURIComponent(esporte.valor)}`}
+            >
+              <span>{esporte.nome}</span>
+            </Link>
+          ))}
+        </div>
       </section>
-
-      <section className="lista-esportes" aria-label="Escolha um esporte">
-        {esportes.map((esporte) => (
-          <Link
-            className="card-esporte"
-            key={esporte.valor}
-            to={`/quadras?esporte=${esporte.valor}`}
-          >
-            <span className="icone-esporte" aria-hidden="true">{esporte.icone}</span>
-            <span className="conteudo-esporte">
-              <strong>{esporte.nome}</strong>
-              <span>{esporte.descricao}</span>
-            </span>
-            <span className="seta-esporte" aria-hidden="true">→</span>
-          </Link>
-        ))}
-      </section>
+      <Sobre embutido />
     </main>
   );
 }

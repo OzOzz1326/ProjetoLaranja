@@ -1,14 +1,30 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { carregarPerfilUsuario, dadosBasicosUsuario, supabase } from '../supabase';
 import { definirPagamentoTesteAtivo, lerPagamentoTesteAtivo, usuarioEhAdministrador } from '../configuracaoAdmin';
 import './MenuSuperior.css';
 
 function MenuSuperior() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [termoBusca, setTermoBusca] = useState("");
     const [usuarioLogado, setUsuarioLogado] = useState(null);
     const [pagamentoTesteAtivo, setPagamentoTesteAtivo] = useState(lerPagamentoTesteAtivo);
+    const [homeRolada, setHomeRolada] = useState(false);
+    const estaNaHome = location.pathname === "/" || location.pathname === "/pagina-inicial";
+
+    useEffect(() => {
+        if (!estaNaHome) {
+            setHomeRolada(false);
+            return undefined;
+        }
+
+        const atualizarVisibilidade = () => setHomeRolada(window.scrollY > 60);
+        atualizarVisibilidade();
+        window.addEventListener("scroll", atualizarVisibilidade, { passive: true });
+
+        return () => window.removeEventListener("scroll", atualizarVisibilidade);
+    }, [estaNaHome]);
 
     useEffect(() => {
         let ativo = true;
@@ -78,7 +94,7 @@ function MenuSuperior() {
     }
 
     return (
-        <header className="navbar-container">
+        <header className={`navbar-container${estaNaHome ? " navbar-container-home" : ""}${estaNaHome && !homeRolada ? " navbar-container-home-oculta" : ""}`}>
             <nav className="navbar">
                 <div className="logo-container">
                     <Link to="/pagina-inicial" aria-label="Ir para a página inicial">

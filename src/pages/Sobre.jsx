@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import "./Sobre.css";
 
-function Sobre() {
+function Sobre({ embutido = false }) {
+	const ElementoRaiz = embutido ? "section" : "main";
+
 	return (
-		<main id="pagina-sobre">
+		<ElementoRaiz id="pagina-sobre">
 			<section className="hero-sobre" aria-labelledby="titulo-sobre">
 				<img src="/estadio.jpg" alt="Estádio esportivo iluminado" />
 				<div className="conteudo-hero-sobre">
@@ -50,7 +52,7 @@ function Sobre() {
 					</div>
 				</section>
 			</div>
-		</main>
+		</ElementoRaiz>
 	);
 }
 

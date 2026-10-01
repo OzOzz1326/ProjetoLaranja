@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../supabase";
+import { esportes } from "../esportes";
 import "./CriarQuadra.css";
-
-const esportesDisponiveis = [
-    { valor: "futebol", nome: "Futebol" },
-    { valor: "futsal", nome: "Futsal" },
-    { valor: "basquete", nome: "Basquete" },
-    { valor: "volei", nome: "Vôlei" },
-    
-];
 
 const diasDaSemana = [
     { valor: "segunda", nome: "Segunda-feira", coluna: "funcionamento_seg" },
@@ -224,7 +217,7 @@ function CriarQuadra() {
                     <span>Esporte</span>
                     <select value={esporte} onChange={(evento) => setEsporte(evento.target.value)} required>
                         <option value="">Selecione o esporte</option>
-                        {esportesDisponiveis.map((opcao) => (
+                        {esportes.map((opcao) => (
                             <option value={opcao.valor} key={opcao.valor}>{opcao.nome}</option>
                         ))}
                     </select>
