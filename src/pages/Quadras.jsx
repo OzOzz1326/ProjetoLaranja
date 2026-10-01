@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase";
 import { chaveEsporte, nomeDoEsporte } from "../esportes";
-import "./Quadras.css"
+import "./Quadras.css";
 import { Link, useSearchParams } from "react-router-dom";
 
-const ITENS_POR_PAGINA = 10;
-const PAGINAS_MINIMAS = 4;
+// 12 itens por página para manter as linhas da grade de 4 sempre preenchidas
+const ITENS_POR_PAGINA = 12;
+const PAGINAS_MINIMAS = 1;
+
+const FILTROS_ESPORTES = [
+    { chave: "", nome: "Todos os Esportes", icone: "🏆", tema: "tema-todos" },
+    { chave: "futebol", nome: "Futebol", icone: "⚽", tema: "tema-futebol" },
+    { chave: "tennis", nome: "Tennis", icone: "🎾", tema: "tema-tennis" },
+    { chave: "futvolei", nome: "Fut-vôlei", icone: "🏐", tema: "tema-futvolei" },
+    { chave: "beachtennis", nome: "Beach Tennis", icone: "🏖️", tema: "tema-beachtennis" },
+];
 
 function normalizarTipoJogo(valor) {
     if (valor === null || valor === undefined) return "";
@@ -84,13 +93,34 @@ function listarTiposJogo(valor) {
     return [valor];
 }
 
-function Quadras(){
-    const [parametros] = useSearchParams();
+function obterClasseEsporte(valor) {
+    const chave = chaveEsporte(valor);
+    if (chave === "futebol") return "esporte-verde";
+    if (chave === "tennis") return "esporte-azul";
+    if (chave === "futvolei") return "esporte-laranja";
+    if (chave === "beachtennis") return "esporte-amarelo";
+    return "esporte-verde";
+}
+
+function obterTemaPagina(esporte) {
+    if (!esporte) return "tema-todos";
+    const chave = chaveEsporte(esporte);
+    if (chave === "futebol") return "tema-futebol";
+    if (chave === "tennis") return "tema-tennis";
+    if (chave === "futvolei") return "tema-futvolei";
+    if (chave === "beachtennis") return "tema-beachtennis";
+    return "tema-todos";
+}
+
+function Quadras() {
+    const [parametros, setSearchParams] = useSearchParams();
     const esporteSelecionado = parametros.get("esporte");
     const temaEsporte = esporteSelecionado ? ` tema-${chaveEsporte(esporteSelecionado)}` : "";
     const termoBusca = normalizarTipoJogo(parametros.get("busca"));
-    const nomeEsporte = nomeDoEsporte(esporteSelecionado) || "esporte";
+    const nomeEsporte = nomeDoEsporte(esporteSelecionado) || "Todas as Quadras";
     const chaveFiltros = `${esporteSelecionado || ""}|${termoBusca}`;
+
+    const temaAtual = obterTemaPagina(esporteSelecionado);
 
     const [quadras, setQuadras] = useState([]);
     const [carregando, setCarregando] = useState(true);
@@ -104,6 +134,16 @@ function Quadras(){
         (paginaAtual - 1) * ITENS_POR_PAGINA,
         paginaAtual * ITENS_POR_PAGINA
     );
+
+    function alternarFiltroEsporte(chave) {
+        const novosParametros = new URLSearchParams(parametros);
+        if (!chave) {
+            novosParametros.delete("esporte");
+        } else {
+            novosParametros.set("esporte", chave);
+        }
+        setSearchParams(novosParametros);
+    }
 
     useEffect(() => {
         let ativo = true;
@@ -190,26 +230,64 @@ function Quadras(){
     return (
         <main id="pagina-quadras" className={`pagina-quadras${temaEsporte}`}>
             <div className="cabecalho-quadras">
-                <Link className="voltar-quadras" to="/pagina-inicial">← Escolher outro esporte</Link>
-                <p className="etiqueta-quadras">QUADRAS DISPONÍVEIS</p>
-                <h1>{esporteSelecionado ? `Quadras de ${nomeEsporte}` : "Encontre sua quadra"}</h1>
-                <p>Veja os locais e escolha o melhor horário para jogar.</p>
-                {ehSocio && (
-                    <Link className="botao-cadastrar-quadra" to="/cadastrar-quadra">
-                        Cadastrar nova quadra
-                    </Link>
-                )}
+                <Link className="voltar-quadras" to="/pagina-inicial">
+                    ← Voltar para início
+                </Link>
+                <div className="cabecalho-principal">
+                    <div>
+                        <p className="etiqueta-quadras">QUADRAS DISPONÍVEIS</p>
+                        <h1>{esporteSelecionado ? `Quadras de ${nomeEsporte}` : "Encontre sua Quadra"}</h1>
+                        <p className="subtitulo-quadras">
+                            Selecione a modalidade esportiva desejada e alugue seu horário em poucos cliques.
+                        </p>
+                    </div>
+
+                    {ehSocio && (
+                        <Link className="botao-cadastrar-quadra" to="/cadastrar-quadra">
+                            + Cadastrar nova quadra
+                        </Link>
+                    )}
+                </div>
+
+                {/* Filtro de Esportes com Cores Dinâmicas */}
+                <div className="filtros-esportes-barra" role="tablist" aria-label="Filtrar por esporte">
+                    {FILTROS_ESPORTES.map((filtro) => {
+                        const chaveNorm = chaveEsporte(esporteSelecionado);
+                        const ativa = (!esporteSelecionado && filtro.chave === "")
+                            || (esporteSelecionado && chaveNorm === chaveEsporte(filtro.chave));
+
+                        return (
+                            <button
+                                key={filtro.chave || "todos"}
+                                type="button"
+                                className={`filtro-esporte-btn ${filtro.tema} ${ativa ? "ativo" : ""}`}
+                                onClick={() => alternarFiltroEsporte(filtro.chave)}
+                            >
+                                <span className="filtro-icone">{filtro.icone}</span>
+                                <span className="filtro-nome">{filtro.nome}</span>
+                            </button>
+                        );
+                    })}
+                </div>
             </div>
 
+            {/* Conteúdo: Carregando, Vazio ou Grid de 4 */}
             {carregando ? (
                 <div className="estado-vazio">
-                    <h2>Carregando quadras...</h2>
+                    <div className="spinner-carregando" aria-hidden="true"></div>
+                    <h2>Buscando quadras disponíveis...</h2>
                 </div>
             ) : quadras.length === 0 ? (
                 <div className="estado-vazio">
-                    <h2>Nenhuma quadra cadastrada</h2>
-                    <p>As quadras estarão disponíveis assim que forem cadastradas.</p>
-                    <Link className="botao-voltar" to="/pagina-inicial">Voltar para esportes</Link>
+                    <h2>Nenhuma quadra encontrada</h2>
+                    <p>Não encontramos quadras para essa modalidade no momento.</p>
+                    <button
+                        type="button"
+                        className="botao-voltar-filtro"
+                        onClick={() => alternarFiltroEsporte("")}
+                    >
+                        Ver todos os esportes
+                    </button>
                 </div>
             ) : quadrasDaPagina.length === 0 ? (
                 <div className="estado-vazio">
@@ -217,25 +295,21 @@ function Quadras(){
                     <p>Escolha outra página para continuar navegando.</p>
                 </div>
             ) : (
-                <div className="lista-quadras">
+                <div className="lista-quadras-grade">
                     {quadrasDaPagina.map((quadra) => {
-                        const tipos = listarTiposJogo(quadra.tipo_jogo)
-                            .map((tipo) => nomeDoEsporte(tipo));
+                        const tipos = listarTiposJogo(quadra.tipo_jogo);
+                        const primeiroEsporte = tipos[0] || "";
+                        const esporteExibicao = nomeDoEsporte(primeiroEsporte) || "Quadra";
+                        const classeCorBadge = obterClasseEsporte(primeiroEsporte);
 
                         return (
                             <article className="card-quadra" key={quadra.id}>
-                                <div className="conteudo-card-quadra">
-                                    <div className="info-card-quadra">
-                                        <h2>{quadra.nome}</h2>
-                                        <p><strong>Descrição:</strong> {quadra.descricao}</p>
-                                        <p><strong>Esporte:</strong> {tipos.join(", ") || "Não informado"}</p>
-                                        <p><strong>Preço:</strong> R$ {Number(quadra.preco || 0).toFixed(2)}</p>
-                                        {/* Link que direciona para a página de detalhes com o ID da quadra selecionada */}
-                                        <Link to={`/detalhes?id=${quadra.id}`} className="botao-voltar">
-                                            Ver detalhes da quadra
-                                        </Link>
-                                    </div>
-
+                                <Link
+                                    to={`/detalhes?id=${quadra.id}`}
+                                    className="card-quadra-link"
+                                    title={`Alugar ${quadra.nome}`}
+                                >
+                                    {/* Imagem com Badge do Esporte */}
                                     <div className="imagem-card-quadra">
                                         {quadra.imagem ? (
                                             <img
@@ -245,17 +319,44 @@ function Quadras(){
                                                 decoding="async"
                                             />
                                         ) : (
-                                            <div className="imagem-placeholder">Imagem da quadra</div>
+                                            <div className="imagem-placeholder">
+                                                <span>🏟️ Sem imagem</span>
+                                            </div>
                                         )}
+                                        <span className={`badge-esporte-card ${classeCorBadge}`}>
+                                            {esporteExibicao}
+                                        </span>
                                     </div>
-                                </div>
+
+                                    {/* Conteúdo Enxuto: Nome, Preço e Ação de Alugar */}
+                                    <div className="conteudo-card-quadra">
+                                        <h2 className="nome-quadra">{quadra.nome}</h2>
+
+                                        <div className="rodape-card-quadra">
+                                            <div className="preco-container">
+                                                <span className="preco-rotulo">A partir de</span>
+                                                <div className="preco-destaque">
+                                                    <strong>
+                                                        R$ {Number(quadra.preco || 0).toFixed(2).replace(".", ",")}
+                                                    </strong>
+                                                    <span className="preco-periodo">/h</span>
+                                                </div>
+                                            </div>
+
+                                            <span className="botao-alugar-card">
+                                                Alugar <span>→</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </Link>
                             </article>
                         );
                     })}
                 </div>
             )}
 
-            {!carregando && (
+            {/* Paginação */}
+            {!carregando && totalPaginas > 1 && (
                 <nav className="paginacao-quadras" aria-label="Paginação das quadras">
                     <button
                         className="botao-pagina-quadras"
