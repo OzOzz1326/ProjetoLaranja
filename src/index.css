@@ -7,11 +7,29 @@ body {
     margin: 0;
     color: #f0f0f0;
     background-color: #07190c;
-    background-image:
-        linear-gradient(rgba(7, 25, 12, 0.70), rgba(7, 25, 12, 0.75)),
-        url('/estadio.jpg');
-    background-size: cover;
-    background-position: center;
+}
+
+#app-shell {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    background-color: var(--fundo-app, #07190c);
+}
+
+#app-shell.tema-futebol {
+    --fundo-app: #07190c;
+}
+
+#app-shell.tema-futvolei {
+    --fundo-app: #211a06;
+}
+
+#app-shell.tema-tennis {
+    --fundo-app: #061b30;
+}
+
+#app-shell.tema-beachtennis {
+    --fundo-app: #241307;
 }
 
 h1, h2, h3, h4, h5, h6 {

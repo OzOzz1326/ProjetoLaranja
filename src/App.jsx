@@ -1,4 +1,5 @@
-  import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import BackgroundGotas from "./components/BackgroundGotas";
 import MenuSuperior from "./components/MenuSuperior";
 import Rodape from "./components/Rodape";
 import Home from "./pages/Home";
@@ -11,10 +12,16 @@ import Contato from "./pages/Contato";
 import Detalhes from "./pages/Detalhes";
 import Perfil from "./pages/Perfil";
 import Sobre from "./pages/Sobre";
+import { obterTemaEsporte } from "./esportes";
 
-function App() {
+function ConteudoApp() {
+  const location = useLocation();
+  const esporteSelecionado = new URLSearchParams(location.search).get("esporte");
+  const tema = obterTemaEsporte(esporteSelecionado);
+
   return (
-    <BrowserRouter>
+    <div id="app-shell" className={`tema-${tema.tema}`}>
+      <BackgroundGotas cores={tema.paleta} />
       <MenuSuperior />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -32,6 +39,14 @@ function App() {
         <Route path="/sobre" element={<Sobre />} />
       </Routes>
       <Rodape />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <ConteudoApp />
     </BrowserRouter>
   );
 }

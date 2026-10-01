@@ -7,7 +7,6 @@ function Sobre({ embutido = false }) {
 	return (
 		<ElementoRaiz id="pagina-sobre">
 			<section className="hero-sobre" aria-labelledby="titulo-sobre">
-				<img src="/estadio.jpg" alt="Estádio esportivo iluminado" />
 				<div className="conteudo-hero-sobre">
 					<p className="etiqueta-sobre">SPORT IN CITY</p>
 					<h1 id="titulo-sobre">O esporte acontece quando a cidade se encontra.</h1>

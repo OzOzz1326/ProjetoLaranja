@@ -4,12 +4,6 @@
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
-    background-image:
-        linear-gradient(rgba(7, 25, 12, 0.65), rgba(7, 25, 12, 0.65)),
-        url('/estadio.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
 }
 
 #pagina-cadastro .card-cadastro {

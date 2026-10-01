@@ -1,0 +1,11 @@
+.background-gotas {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    filter: blur(34px) contrast(1.8) saturate(1.1);
+    opacity: 0.42;
+}

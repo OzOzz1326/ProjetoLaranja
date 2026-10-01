@@ -5,6 +5,7 @@ export const esportes = [
         valor: "futebol",
         aliases: [],
         tema: "futebol",
+        paleta: ["#0c6a30", "#167d41", "#2c9e57", "#57c785", "#8be0aa"],
     },
     {
         nome: "Fut-vôlei",
@@ -12,6 +13,7 @@ export const esportes = [
         valor: "futvolei",
         aliases: ["fut-vôlei", "fut volei"],
         tema: "futvolei",
+        paleta: ["#a98307", "#d4a202", "#efb807", "#fdc516", "#ffd03a"],
     },
     {
         nome: "Tennis",
@@ -19,6 +21,7 @@ export const esportes = [
         valor: "tennis",
         aliases: ["tênis", "tenis"],
         tema: "tennis",
+        paleta: ["#062443", "#17496f", "#326f9c", "#5f99bc", "#a0cbe0"],
     },
     {
         nome: "BeachTennis",
@@ -26,6 +29,7 @@ export const esportes = [
         valor: "beachtennis",
         aliases: ["beach tennis", "beach tênis", "beachtenis"],
         tema: "beachtennis",
+        paleta: ["#8d4925", "#b96e48", "#e28000", "#ff9800", "#ffc340"],
     },
 ];
 
@@ -61,4 +65,9 @@ export function nomeDoEsporte(valor) {
 
     const chave = normalizarChave(valor);
     return nomesEsportesAntigos[chave] || String(valor || "").trim();
+}
+
+export function obterTemaEsporte(valor) {
+    const chave = chaveEsporte(valor);
+    return esportes.find((esporte) => esporte.valor === chave) || esportes[0];
 }
