@@ -427,6 +427,11 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+#pagina-detalhes .form-group select option {
+  background-color: #ffffff;
+  color: #111827;
+}
+
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
