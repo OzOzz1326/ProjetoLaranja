@@ -15,11 +15,11 @@ function formatarMinutosEmHorario(minutos) {
     return `${hora}:${minuto}`;
 }
 
-async function buscarProximaReserva(idUsuario) {
+async function buscarProximasReservas(idUsuario) {
     const agora = new Date();
     const dataHoje = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, "0")}-${String(agora.getDate()).padStart(2, "0")}`;
     const horaAtual = `${String(agora.getHours()).padStart(2, "0")}:${String(agora.getMinutes()).padStart(2, "0")}`;
-    const { data: reservas, error } = await supabase
+    const { data: registros, error } = await supabase
         .from("reservas")
         .select("id,grupo_reserva,dia_reserva,horaio,id_quadra")
         .eq("id_usuario", idUsuario)
@@ -29,36 +29,49 @@ async function buscarProximaReserva(idUsuario) {
 
     if (error) throw error;
 
-    const reserva = (reservas || []).find((item) => (
-        item.dia_reserva > dataHoje || item.horaio >= horaAtual
+    const gruposPorReserva = new Map();
+    (registros || []).forEach((registro) => {
+        const chave = registro.grupo_reserva
+            ? `grupo:${registro.grupo_reserva}`
+            : `reserva:${registro.id}`;
+        if (!gruposPorReserva.has(chave)) gruposPorReserva.set(chave, []);
+        gruposPorReserva.get(chave).push(registro);
+    });
+
+    const gruposFuturos = [...gruposPorReserva.values()].filter((grupo) => (
+        grupo.some((registro) => (
+            registro.dia_reserva > dataHoje
+            || (registro.dia_reserva === dataHoje && String(registro.horaio).slice(0, 5) >= horaAtual)
+        ))
     ));
+    const idsQuadras = [...new Set(gruposFuturos.map((grupo) => grupo[0].id_quadra).filter(Boolean))];
+    let quadrasPorId = new Map();
 
-    if (!reserva?.id_quadra) return reserva || null;
+    if (idsQuadras.length) {
+        const { data: quadras, error: erroQuadras } = await supabase
+            .from("quadras")
+            .select("id,nome,tipo_jogo,imagem")
+            .in("id", idsQuadras);
 
-    let horariosReserva = [String(reserva.horaio).slice(0, 5)];
-    if (reserva.grupo_reserva) {
-        const { data: grupo, error: erroGrupo } = await supabase
-            .from("reservas")
-            .select("horaio")
-            .eq("grupo_reserva", reserva.grupo_reserva)
-            .order("horaio", { ascending: true });
-
-        if (erroGrupo) throw erroGrupo;
-        horariosReserva = (grupo || []).map((item) => String(item.horaio).slice(0, 5));
+        if (erroQuadras) throw erroQuadras;
+        quadrasPorId = new Map((quadras || []).map((quadra) => [String(quadra.id), quadra]));
     }
 
-    const horarioInicio = horariosReserva[0];
-    const horarioFim = formatarMinutosEmHorario(converterHorarioEmMinutos(horariosReserva.at(-1)) + 60);
+    return gruposFuturos.map((grupo) => {
+        const primeiraReserva = grupo[0];
+        const ultimaReserva = grupo[grupo.length - 1];
+        const horarioInicio = String(primeiraReserva.horaio).slice(0, 5);
+        const horarioFim = formatarMinutosEmHorario(
+            converterHorarioEmMinutos(ultimaReserva.horaio) + 60,
+        );
 
-    const { data: quadra, error: erroQuadra } = await supabase
-        .from("quadras")
-        .select("nome,tipo_jogo,imagem")
-        .eq("id", reserva.id_quadra)
-        .maybeSingle();
-
-    if (erroQuadra) throw erroQuadra;
-
-    return { ...reserva, horarioInicio, horarioFim, quadra };
+        return {
+            ...primeiraReserva,
+            horarioInicio,
+            horarioFim,
+            quadra: quadrasPorId.get(String(primeiraReserva.id_quadra)) || null,
+        };
+    });
 }
 
 function Perfil() {
@@ -68,8 +81,8 @@ function Perfil() {
     const [nomeEditado, setNomeEditado] = useState("");
     const [salvando, setSalvando] = useState(false);
     const [carregando, setCarregando] = useState(true);
-    const [proximaReserva, setProximaReserva] = useState(null);
-    const [cancelandoReserva, setCancelandoReserva] = useState(false);
+    const [proximasReservas, setProximasReservas] = useState([]);
+    const [cancelandoReservaId, setCancelandoReservaId] = useState(null);
     const [erroReserva, setErroReserva] = useState(false);
     const [atualizandoFoto, setAtualizandoFoto] = useState(false);
     const inputFotoRef = useRef(null);
@@ -113,8 +126,8 @@ function Perfil() {
 
                 if (dados.perfil_id) {
                     try {
-                        const reserva = await buscarProximaReserva(dados.perfil_id);
-                        if (ativo) setProximaReserva(reserva);
+                        const reservas = await buscarProximasReservas(dados.perfil_id);
+                        if (ativo) setProximasReservas(reservas);
                     } catch (erroReserva) {
                         console.error("Erro ao carregar próxima reserva:", erroReserva);
                         if (ativo) setErroReserva(true);
@@ -136,33 +149,37 @@ function Perfil() {
         };
     }, []);
 
-    async function cancelarReserva() {
-        if (!proximaReserva?.id || !usuario?.perfil_id) return;
+    async function cancelarReserva(reserva) {
+        if (!reserva?.id || !usuario?.perfil_id) return;
 
         const confirmar = window.confirm("Deseja cancelar esta reserva? O horário ficará disponível para outras pessoas.");
         if (!confirmar) return;
 
-        setCancelandoReserva(true);
+        setCancelandoReservaId(reserva.id);
         try {
             let consultaExclusao = supabase
                 .from("reservas")
                 .delete()
                 .eq("id_usuario", usuario.perfil_id);
 
-            consultaExclusao = proximaReserva.grupo_reserva
-                ? consultaExclusao.eq("grupo_reserva", proximaReserva.grupo_reserva)
-                : consultaExclusao.eq("id", proximaReserva.id);
+            consultaExclusao = reserva.grupo_reserva
+                ? consultaExclusao.eq("grupo_reserva", reserva.grupo_reserva)
+                : consultaExclusao.eq("id", reserva.id);
 
             const { error } = await consultaExclusao;
 
             if (error) throw error;
 
-            setProximaReserva(null);
+            setProximasReservas((reservas) => reservas.filter((item) => (
+                reserva.grupo_reserva
+                    ? item.grupo_reserva !== reserva.grupo_reserva
+                    : item.id !== reserva.id
+            )));
         } catch (error) {
             console.error("Erro ao cancelar reserva:", error);
             alert(`Não foi possível cancelar a reserva: ${error.message || "verifique a conexão com o banco."}`);
         } finally {
-            setCancelandoReserva(false);
+            setCancelandoReservaId(null);
         }
     }
 
@@ -389,50 +406,55 @@ function Perfil() {
                         </div>
                     </div>
 
-                    {/* Próxima reserva futura deste usuário */}
-                    <div className="card-proxima-partida">
-                        <div className="foto-quadra-partida">
-                            {proximaReserva?.quadra && (
-                                <img
-                                    src={proximaReserva.quadra.imagem || "/quadracontato.jpg"}
-                                    alt={`Foto da quadra ${proximaReserva.quadra.nome}`}
-                                    loading="lazy"
-                                    decoding="async"
-                                    onError={(evento) => {
-                                        evento.currentTarget.onerror = null;
-                                        evento.currentTarget.src = "/quadracontato.jpg";
-                                    }}
-                                />
-                            )}
-                        </div>
-                        <div className="detalhes-partida">
-                            <h2>Próxima reserva</h2>
-                            {erroReserva ? (
-                                <p className="item-partida">Não foi possível carregar suas reservas.</p>
-                            ) : proximaReserva ? (
-                                <>
-                                    <p className="item-partida">
-                                        {proximaReserva.dia_reserva.split("-").reverse().join("/")} · {proximaReserva.horarioInicio} às {proximaReserva.horarioFim}
-                                    </p>
-                                    {proximaReserva.quadra && (
-                                        <p className="item-partida">
-                                            {proximaReserva.quadra.nome} · {nomeDoEsporte(proximaReserva.quadra.tipo_jogo)}
-                                        </p>
-                                    )}
-                                    <button
-                                        type="button"
-                                        className="btn-cancelar-reserva"
-                                        onClick={cancelarReserva}
-                                        disabled={cancelandoReserva}
+                    <section className="secao-proximas-reservas" aria-labelledby="titulo-proximas-reservas">
+                        <h2 id="titulo-proximas-reservas" className="titulo-proximas-reservas">Próximas reservas</h2>
+                        {erroReserva ? (
+                            <p className="item-partida">Não foi possível carregar suas reservas.</p>
+                        ) : proximasReservas.length ? (
+                            <div className="lista-proximas-reservas">
+                                {proximasReservas.map((reserva, indice) => (
+                                    <article
+                                        className="card-proxima-partida"
+                                        key={reserva.grupo_reserva || reserva.id}
                                     >
-                                        {cancelandoReserva ? "Cancelando..." : "Cancelar reserva"}
-                                    </button>
-                                </>
-                            ) : (
-                                <p className="item-partida">Você não tem reservas futuras.</p>
-                            )}
-                        </div>
-                    </div>
+                                        <div className="foto-quadra-partida">
+                                            <img
+                                                src={reserva.quadra?.imagem || "/quadracontato.jpg"}
+                                                alt={reserva.quadra ? `Foto da quadra ${reserva.quadra.nome}` : "Quadra reservada"}
+                                                loading="lazy"
+                                                decoding="async"
+                                                onError={(evento) => {
+                                                    evento.currentTarget.onerror = null;
+                                                    evento.currentTarget.src = "/quadracontato.jpg";
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="detalhes-partida">
+                                            <h3>{reserva.quadra?.nome || `Reserva ${indice + 1}`}</h3>
+                                            <p className="item-partida">
+                                                {reserva.dia_reserva.split("-").reverse().join("/")} · {reserva.horarioInicio} às {reserva.horarioFim}
+                                            </p>
+                                            {reserva.quadra && (
+                                                <p className="item-partida">
+                                                    {nomeDoEsporte(reserva.quadra.tipo_jogo)}
+                                                </p>
+                                            )}
+                                            <button
+                                                type="button"
+                                                className="btn-cancelar-reserva"
+                                                onClick={() => cancelarReserva(reserva)}
+                                                disabled={cancelandoReservaId !== null}
+                                            >
+                                                {cancelandoReservaId === reserva.id ? "Cancelando..." : "Cancelar reserva"}
+                                            </button>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="item-partida">Você não tem reservas futuras.</p>
+                        )}
+                    </section>
 
                     {/* Botão de Logout no canto inferior esquerdo como na página 13 */}
                     <div className="rodape-acoes-perfil">

@@ -39,8 +39,8 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Exibir perfil, permitir edição de nome e encerrar sessão via Supabase Auth.
 - [x] Tratar erros retornados ao atualizar o perfil e ao salvar dados complementares; não considerar a operação concluída quando o Supabase retorna erro.
 - [x] Garantir que o perfil e o menu sejam carregados da sessão autenticada, em vez de depender exclusivamente do valor salvo no `localStorage`.
-- [x] Checklist Ana: cadastro grava os dados complementares em `usuarios`; login navega sem recarga integral; cadastro de quadra valida sessão no acesso e no envio; perfil consulta a próxima reserva futura; mensagens de sucesso redundantes foram removidas.
-- [x] Mostrar no perfil a próxima reserva futura do usuário, ordenada por data e hora em `reservas` e relacionada à quadra.
+- [x] Checklist Ana: cadastro grava os dados complementares em `usuarios`; login navega sem recarga integral; cadastro de quadra valida sessão no acesso e no envio; perfil lista reservas futuras; mensagens de sucesso redundantes foram removidas.
+- [x] Mostrar no perfil todas as reservas futuras do usuário, ordenadas por data e hora, agrupando blocos com o mesmo `grupo_reserva` e relacionando cada reserva à quadra.
 - [x] Remover alerts de sucesso redundantes de login, cadastro, salvamento de nome, logout e cadastro de quadra; erros e confirmações importantes continuam visíveis.
 - [x] Exibir orientação de cadastro junto ao erro genérico de credenciais inválidas, sem revelar se um e-mail específico existe; explicar o limite temporário de envio de e-mails quando o Supabase retornar rate limit.
 - [x] Permitir selecionar uma foto JPG, PNG ou WebP de até 5 MB e salvar no bucket público `avatars`, com URL nos metadados do Auth.
@@ -64,7 +64,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Consultar reservas existentes e inserir reserva na tabela `reservas`.
 - [x] Ligar reserva e pagamento no fluxo simulado, levando quadra, data, horários, participantes e preço selecionados para a tela de pagamento.
 - [x] Ligar a seleção da reserva à tela de pagamento de teste; gravar a reserva em `reservas` somente após a confirmação simulada e bloquear horário já reservado.
-- [x] Permitir cancelar a próxima reserva pelo perfil, removendo somente a reserva do usuário autenticado e liberando o horário.
+- [x] Permitir cancelar individualmente cada reserva futura pelo perfil, removendo somente o grupo selecionado do usuário autenticado e liberando os horários.
 - [x] Exibir no pagamento o resumo dinâmico da quadra, data, horário, participantes e preço.
 - [x] Resolver o perfil do pagador pela mesma busca case-insensitive usada no login, evitando falha de correspondência por caixa do e-mail.
 - [x] Calcular o total pelo número de horas reservadas e limitar participantes à capacidade cadastrada da quadra.
@@ -83,7 +83,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Remover emojis usados como ícones decorativos; manter rótulos textuais, controles claros e apenas símbolos simples quando apropriado.
 - [x] Exibir a foto cadastrada da quadra no cartão da próxima reserva do perfil, usando `public/quadracontato.jpg` quando a imagem estiver ausente ou indisponível.
 - [ ] Integrar o formulário de contato a um canal de atendimento, validar os dados enviados e confirmar como as preferências de atualização serão usadas.
-- [x] Substituir a próxima partida fixa no perfil pela próxima reserva real do usuário, com dados da quadra e opção de cancelamento.
+- [x] Substituir a próxima partida fixa no perfil por uma lista das reservas futuras reais do usuário, com dados da quadra e cancelamento individual.
 - [x] Aplicar fundo animado de partículas conectadas e paleta cinza à tela inicial, páginas comuns, menu e rodapé, mantendo o fundo temático nas rotas de quadras e detalhes esportivos.
 - [ ] Revisar acessibilidade, mensagens e comportamento responsivo dos fluxos de busca, cadastro e reserva.
 
@@ -94,6 +94,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] `npm.cmd run lint` e `npm.cmd run build` passaram após implementar consulta de próxima reserva, upload de avatar e proteção da tela de cadastro de quadra.
 - [x] Em 01/10/2026, ESLint focado passou para `src/pages/Quadras.jsx` e `npm.cmd run build` passou após a busca aproximada; Vite ainda avisa que o bundle ultrapassa 500 kB.
 - [x] Em 02/10/2026, lint focado de `src/components/MenuSuperior.jsx`, build de produção e teste no navegador passaram após ajustar a Home; verificado que só os quatro esportes aparecem no topo e que a navbar fixa surge ao rolar. O aviso de bundle acima de 500 kB permanece.
+- [x] Em 02/10/2026, lint focado de `src/pages/Perfil.jsx` e build de produção passaram após implementar a lista de reservas futuras agrupadas e canceláveis individualmente; o aviso de bundle acima de 500 kB permanece.
 - [ ] Corrigir os três erros atuais do lint global: `setState` síncrono em effect e regra de Fast Refresh em `src/context/TemaContext.jsx`, além da variável `temaAtual` não usada em `src/pages/Quadras.jsx`.
 - [ ] Testar com Supabase configurado: cadastro, login, logout, busca, cadastro de quadra, detalhes, reserva concorrente e erros de rede/banco.
 - [ ] Testar rotas protegidas com sessão ausente, expirada e válida.
