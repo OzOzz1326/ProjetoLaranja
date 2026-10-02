@@ -5,11 +5,42 @@
 }
 
 #pagina-inicial .selecao-esportes {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
     min-height: 100vh;
     min-height: 100svh;
-    place-items: center;
-    padding: 24px;
+    padding: 24px 24px 76px;
+}
+
+#pagina-inicial .marca-inicial {
+    position: relative;
+    margin: 0;
+    padding-bottom: 18px;
+    background: linear-gradient(105deg, #79f2c0 0%, #effff8 50%, #68dedb 100%);
+    background-clip: text;
+    color: transparent;
+    font-size: 58px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    text-shadow: 0 0 28px rgba(105, 232, 202, 0.18);
+    -webkit-background-clip: text;
+}
+
+#pagina-inicial .marca-inicial::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 64px;
+    height: 3px;
+    margin: 0 auto;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #55dfa8, #73deda);
+    content: "";
 }
 
 #pagina-inicial .lista-esportes {
@@ -116,7 +147,12 @@
 
 @media (max-width: 650px) {
     #pagina-inicial .selecao-esportes {
-        padding: 16px;
+        gap: 24px;
+        padding: 16px 16px 52px;
+    }
+
+    #pagina-inicial .marca-inicial {
+        font-size: 44px;
     }
 
     #pagina-inicial .lista-esportes {

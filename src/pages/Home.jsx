@@ -7,6 +7,7 @@ function Home() {
   return (
     <main id="pagina-inicial" className="pagina-inicial">
       <section className="selecao-esportes" aria-label="Escolha um esporte">
+        <h1 className="marca-inicial">Sport In City</h1>
         <div className="lista-esportes">
           {esportes.map((esporte) => (
             <Link

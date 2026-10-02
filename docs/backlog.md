@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-Revisado em 01/10/2026 comparando o código de `src/` com as migrações versionadas. O projeto tem autenticação Supabase, busca de quadras com tolerância a acentos e pequenos erros, cadastro de quadras, perfil com reservas reais e um fluxo de reserva com pagamento simulado. Ainda não está pronto para produção: não há proteção central das rotas, o pagamento não processa cobranças, o formulário de contato não envia mensagens, existe uma rota `/perfil` duplicada e os detalhes ainda usam o ID padrão `23` quando falta identificação.
+Revisado em 02/10/2026 comparando o código de `src/` com as migrações versionadas. O projeto tem autenticação Supabase, busca de quadras com tolerância a acentos e pequenos erros, cadastro de quadras, perfil com reservas reais e um fluxo de reserva com pagamento simulado. Ainda não está pronto para produção: não há proteção central das rotas, o pagamento não processa cobranças, o formulário de contato não envia mensagens, existe uma rota `/perfil` duplicada e os detalhes ainda usam o ID padrão `23` quando falta identificação.
 
 O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`. Conforme confirmação do usuário em 01/10/2026, as migrações de reservas e armazenamento de avatares foram executadas no projeto Supabase. A execução da migração de cadastro de quadras por sócios ainda não foi confirmada. O esquema completo e a cobertura atual das políticas RLS também precisam ser verificados.
 
@@ -78,7 +78,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Criar página de contato com formulário responsivo, seleção de assunto com foco automático na descrição e foto de campo ao lado, além da página sobre e navegação do rodapé.
 - [x] Aplicar CSS próprio às telas e componentes existentes.
 - [x] Definir o título da aba do navegador como `Sport In City` e usar uma versão compacta e legível da marca como favicon.
-- [x] Exibir somente quatro cards compactos de esporte na primeira tela da Home, mostrar a seção Sobre ao rolar e revelar a navbar global após o início do scroll.
+- [x] Exibir somente os quatro esportes no primeiro viewport da Home; mostrar a seção Sobre abaixo da primeira tela e revelar a navbar fixa após iniciar o scroll, mantendo-a no topo enquanto a página rola.
 - [x] Substituir a foto repetida do estádio pelo fundo animado de gotas fundidas, com paleta verde padrão e cores temáticas por esporte nas listagens filtradas.
 - [x] Remover emojis usados como ícones decorativos; manter rótulos textuais, controles claros e apenas símbolos simples quando apropriado.
 - [x] Exibir a foto cadastrada da quadra no cartão da próxima reserva do perfil, usando `public/quadracontato.jpg` quando a imagem estiver ausente ou indisponível.
@@ -93,6 +93,8 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] `npm.cmd run lint` passou em 29/09/2026 após corrigir a inicialização do estado do perfil.
 - [x] `npm.cmd run lint` e `npm.cmd run build` passaram após implementar consulta de próxima reserva, upload de avatar e proteção da tela de cadastro de quadra.
 - [x] Em 01/10/2026, ESLint focado passou para `src/pages/Quadras.jsx` e `npm.cmd run build` passou após a busca aproximada; Vite ainda avisa que o bundle ultrapassa 500 kB.
+- [x] Em 02/10/2026, lint focado de `src/components/MenuSuperior.jsx`, build de produção e teste no navegador passaram após ajustar a Home; verificado que só os quatro esportes aparecem no topo e que a navbar fixa surge ao rolar. O aviso de bundle acima de 500 kB permanece.
+- [ ] Corrigir os três erros atuais do lint global: `setState` síncrono em effect e regra de Fast Refresh em `src/context/TemaContext.jsx`, além da variável `temaAtual` não usada em `src/pages/Quadras.jsx`.
 - [ ] Testar com Supabase configurado: cadastro, login, logout, busca, cadastro de quadra, detalhes, reserva concorrente e erros de rede/banco.
 - [ ] Testar rotas protegidas com sessão ausente, expirada e válida.
 - [ ] Confirmar variáveis de ambiente, esquema, chaves estrangeiras, índices e políticas RLS no ambiente de publicação.
