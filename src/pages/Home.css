@@ -1,18 +1,99 @@
+/* ══════════════════════════════════════════════════════
+   HOME — PÁGINA INICIAL
+   ══════════════════════════════════════════════════════ */
+
 #pagina-inicial {
     padding: 0;
     background: transparent;
     color: #f0f0f0;
+    position: relative;
+    overflow-x: hidden;
 }
 
+/* ── SEÇÃO HERO ──────────────────────────────────────── */
 #pagina-inicial .selecao-esportes {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 30px;
+    gap: 36px;
     min-height: 100vh;
     min-height: 100svh;
-    padding: 24px 24px 76px;
+    padding: 100px 24px 96px;
+    overflow: hidden;
+}
+
+/* ── ORBES DE FUNDO ──────────────────────────────────── */
+.hero-orbes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.orbe {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0;
+    animation: orbe-aparece 1.6s ease forwards;
+}
+
+.orbe-1 {
+    width: 420px;
+    height: 420px;
+    top: -100px;
+    left: -120px;
+    background: radial-gradient(circle, rgba(85, 223, 168, 0.22) 0%, transparent 70%);
+    animation-delay: 0.1s;
+}
+
+.orbe-2 {
+    width: 320px;
+    height: 320px;
+    bottom: 80px;
+    right: -80px;
+    background: radial-gradient(circle, rgba(115, 222, 218, 0.18) 0%, transparent 70%);
+    animation-delay: 0.4s;
+}
+
+.orbe-3 {
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 60%;
+    background: radial-gradient(circle, rgba(121, 242, 192, 0.12) 0%, transparent 70%);
+    animation-delay: 0.7s;
+}
+
+@keyframes orbe-aparece {
+    to { opacity: 1; }
+}
+
+/* ── CABEÇALHO DO HERO ───────────────────────────────── */
+.hero-cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    will-change: transform, opacity;
+    animation: hero-entra 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-pretitulo {
+    display: inline-block;
+    padding: 5px 14px;
+    border: 1px solid rgba(85, 223, 168, 0.35);
+    border-radius: 9999px;
+    background: rgba(85, 223, 168, 0.08);
+    color: #79f2c0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    backdrop-filter: blur(6px);
 }
 
 #pagina-inicial .marca-inicial {
@@ -22,12 +103,12 @@
     background: linear-gradient(105deg, #79f2c0 0%, #effff8 50%, #68dedb 100%);
     background-clip: text;
     color: transparent;
-    font-size: 58px;
-    font-weight: 800;
+    font-size: clamp(48px, 8vw, 76px);
+    font-weight: 900;
     line-height: 1;
     text-align: center;
-    text-shadow: 0 0 28px rgba(105, 232, 202, 0.18);
     -webkit-background-clip: text;
+    letter-spacing: -1.5px;
 }
 
 #pagina-inicial .marca-inicial::after {
@@ -43,101 +124,149 @@
     content: "";
 }
 
+.hero-descricao {
+    margin: 0;
+    color: #94a3b8;
+    font-size: clamp(15px, 2vw, 18px);
+    max-width: 480px;
+    line-height: 1.6;
+    animation: hero-entra 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+@keyframes hero-entra {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── LISTA DE ESPORTES ───────────────────────────────── */
 #pagina-inicial .lista-esportes {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
-    width: min(100%, 780px);
+    width: min(100%, 800px);
 }
 
-#pagina-inicial .indicador-scroll {
-    display: grid;
-    width: 48px;
-    height: 48px;
-    place-items: center;
-    border: 1px solid rgba(115, 222, 218, 0.62);
-    border-radius: 50%;
-    color: #79f2c0;
-    font-size: 30px;
-    line-height: 1;
-    text-decoration: none;
-    animation: seta-desce 1.5s ease-in-out infinite;
-    transition: border-color 180ms ease, color 180ms ease;
-}
-
-#pagina-inicial .indicador-scroll:hover,
-#pagina-inicial .indicador-scroll:focus-visible {
-    border-color: #effff8;
-    color: #effff8;
-    outline: 2px solid rgba(115, 222, 218, 0.5);
-    outline-offset: 3px;
-}
-
+/* ── CARD ESPORTE: estado inicial (oculto) ───────────── */
 #pagina-inicial .card-esporte {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     min-width: 0;
     min-height: 112px;
-    padding: 18px 22px;
+    padding: 20px 24px;
     overflow: hidden;
-    border: 1px solid rgba(235, 246, 237, 0.18);
-    border-radius: 8px;
-    background: rgba(8, 21, 16, 0.78);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
-    backdrop-filter: blur(8px);
+    border: 1px solid rgba(235, 246, 237, 0.12);
+    border-radius: 12px;
+    background: rgba(8, 21, 16, 0.72);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(10px);
     color: inherit;
     text-decoration: none;
-    animation: esporte-entra 450ms ease both;
-    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+
+    /* Animação de entrada — controlada pela classe .visivel */
+    opacity: 0;
+    transform: translateY(22px) scale(0.97);
+    transition:
+        opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms),
+        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms),
+        border-color 0.22s ease,
+        background-color 0.22s ease,
+        box-shadow 0.22s ease;
 }
 
+/* Classe adicionada pelo IntersectionObserver */
+#pagina-inicial .card-esporte.visivel {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Barra colorida lateral */
 #pagina-inicial .card-esporte::before {
     position: absolute;
-    top: 18px;
-    bottom: 18px;
+    top: 20px;
+    bottom: 20px;
     left: 0;
     width: 4px;
     border-radius: 0 4px 4px 0;
     background: var(--cor-esporte);
     content: "";
+    transition: top 0.2s ease, bottom 0.2s ease;
+}
+
+/* Brilho de hover via pseudo-element */
+#pagina-inicial .card-esporte::after {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 0% 50%, var(--cor-esporte-suave, transparent) 0%, transparent 60%);
+    content: "";
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+#pagina-inicial .card-esporte:hover::after {
+    opacity: 1;
 }
 
 #pagina-inicial .card-esporte-futebol {
     --cor-esporte: #c6e86b;
-    animation-delay: 40ms;
+    --cor-esporte-suave: rgba(198, 232, 107, 0.1);
 }
 
 #pagina-inicial .card-esporte-futvolei {
     --cor-esporte: #f3b95f;
-    animation-delay: 100ms;
+    --cor-esporte-suave: rgba(243, 185, 95, 0.1);
 }
 
 #pagina-inicial .card-esporte-tennis {
     --cor-esporte: #78d3dc;
-    animation-delay: 160ms;
+    --cor-esporte-suave: rgba(120, 211, 220, 0.1);
 }
 
 #pagina-inicial .card-esporte-beachtennis {
     --cor-esporte: #f09b7a;
-    animation-delay: 220ms;
+    --cor-esporte-suave: rgba(240, 155, 122, 0.1);
 }
 
 #pagina-inicial .card-esporte:hover,
 #pagina-inicial .card-esporte:focus-visible {
-    transform: translateY(-3px);
+    transform: translateY(-4px) scale(1.01);
     border-color: var(--cor-esporte);
-    background: rgba(20, 39, 29, 0.94);
-    outline: 2px solid var(--cor-esporte);
-    outline-offset: 3px;
+    background: rgba(20, 39, 29, 0.9);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--cor-esporte);
+    outline: none;
+}
+
+#pagina-inicial .card-esporte:hover::before {
+    top: 10px;
+    bottom: 10px;
+}
+
+/* Ícone do esporte */
+.card-esporte-icone {
+    font-size: 26px;
+    line-height: 1;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    transition: transform 0.2s ease;
+}
+
+#pagina-inicial .card-esporte:hover .card-esporte-icone {
+    transform: scale(1.15) rotate(-5deg);
 }
 
 #pagina-inicial .nome-esporte {
     min-width: 0;
-    max-width: 100%;
+    flex: 1;
     color: #f4fff6;
-    font-size: 21px;
+    font-size: 19px;
     font-weight: 700;
     line-height: 1.2;
     overflow-wrap: anywhere;
@@ -146,46 +275,58 @@
 #pagina-inicial .seta-esporte {
     margin-left: auto;
     color: var(--cor-esporte);
-    font-size: 23px;
+    font-size: 22px;
     line-height: 1;
-    transition: transform 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
 }
 
 #pagina-inicial .card-esporte:hover .seta-esporte,
 #pagina-inicial .card-esporte:focus-visible .seta-esporte {
-    transform: translate(2px, -2px);
+    transform: translateX(5px);
 }
 
-@keyframes esporte-entra {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ── INDICADOR DE SCROLL ─────────────────────────────── */
+#pagina-inicial .indicador-scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    animation: hero-entra 0.9s ease 0.6s both;
+    transition: opacity 0.2s ease;
 }
 
-@keyframes seta-desce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(5px);
-    }
+#pagina-inicial .indicador-scroll:hover {
+    opacity: 0.7;
 }
 
+.scroll-linha {
+    display: block;
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, rgba(85, 223, 168, 0.8), transparent);
+    animation: scroll-pulsa 2s ease-in-out infinite;
+}
+
+.scroll-texto {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+@keyframes scroll-pulsa {
+    0%, 100% { opacity: 0.5; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.08); }
+}
+
+/* ── RESPONSIVIDADE ──────────────────────────────────── */
 @media (max-width: 650px) {
     #pagina-inicial .selecao-esportes {
-        gap: 24px;
-        padding: 16px 16px 52px;
-    }
-
-    #pagina-inicial .marca-inicial {
-        font-size: 44px;
+        gap: 28px;
+        padding: 80px 16px 72px;
     }
 
     #pagina-inicial .lista-esportes {
@@ -194,19 +335,44 @@
     }
 
     #pagina-inicial .card-esporte {
-        min-height: 72px;
-        padding: 12px 16px;
+        min-height: 76px;
+        padding: 14px 18px;
     }
 
     #pagina-inicial .nome-esporte {
-        font-size: 18px;
+        font-size: 17px;
+    }
+
+    .card-esporte-icone {
+        font-size: 22px;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    #pagina-inicial .card-esporte,
+    #pagina-inicial .card-esporte {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .hero-cabecalho,
+    .hero-descricao,
     #pagina-inicial .indicador-scroll {
         animation: none;
-        transition: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .orbe {
+        animation: none;
+        opacity: 1;
+    }
+
+    .scroll-linha {
+        animation: none;
+    }
+
+    #pagina-inicial .hero-cabecalho {
+        will-change: auto !important;
     }
 }
