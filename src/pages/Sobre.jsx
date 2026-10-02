@@ -50,7 +50,7 @@ function Sobre({ embutido = false }) {
 					</div>
 					<div className="acoes-sobre">
 						<Link className="botao-sobre botao-principal-sobre" to="/quadras">Explorar quadras</Link>
-						<Link className="botao-sobre botao-secundario-sobre" to="/contato">Fale com a equipe</Link>
+						<Link className="botao-sobre botao-secundario-sobre" to="/contato">Cadastre uma quadra</Link>
 					</div>
 				</section>
 			</div>
