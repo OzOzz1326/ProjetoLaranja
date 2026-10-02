@@ -17,10 +17,12 @@ import { TemaProvider, useTema } from "./context/TemaContext";
 
 function ConteudoApp() {
   const { tema, temaInfo } = useTema();
-  const { pathname } = useLocation();
-  const rotaEsportiva = ["/quadras", "/detalhes"].some(
-    (rota) => pathname === rota || pathname.startsWith(`${rota}/`),
-  );
+  const { pathname, search } = useLocation();
+  const params = new URLSearchParams(search);
+  const esporteSelecionado = params.get("esporte");
+  const ehQuadrasComEsporte = (pathname === "/quadras" || pathname.startsWith("/quadras/")) && Boolean(esporteSelecionado);
+  const ehDetalhes = pathname === "/detalhes" || pathname.startsWith("/detalhes/");
+  const rotaEsportiva = ehQuadrasComEsporte || ehDetalhes;
 
   return (
     <div id="app-shell" className={`${tema}${rotaEsportiva ? "" : " app-comum"}`}>

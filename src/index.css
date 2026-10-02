@@ -45,6 +45,10 @@ body {
     border-color: rgba(209, 213, 214, 0.24);
 }
 
+#app-shell.tema-todos {
+    --fundo-app: transparent;
+}
+
 #app-shell.tema-futebol {
     --fundo-app: #07190c;
 }

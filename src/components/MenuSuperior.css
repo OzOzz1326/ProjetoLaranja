@@ -2,6 +2,15 @@
    1. SISTEMA DE TEMAS NO MENU SUPERIOR
    ========================================================================= */
 
+.navbar-container.tema-todos {
+    --nav-cor-destaque: #d1d5d6;
+    --nav-cor-hover: #ffffff;
+    --nav-bg: rgba(29, 36, 48, 0.9);
+    --nav-borda: rgba(209, 213, 214, 0.22);
+    --nav-glow: rgba(209, 213, 214, 0.28);
+    --nav-accent: rgba(209, 213, 214, 0.12);
+}
+
 .navbar-container.tema-futebol,
 .navbar-container {
     --nav-cor-destaque: #22c55e;

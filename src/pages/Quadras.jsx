@@ -115,7 +115,7 @@ function obterTemaPagina(esporte) {
 function Quadras() {
     const [parametros, setSearchParams] = useSearchParams();
     const esporteSelecionado = parametros.get("esporte");
-    const temaEsporte = esporteSelecionado ? ` tema-${chaveEsporte(esporteSelecionado)}` : "";
+    const temaEsporte = esporteSelecionado ? ` tema-${chaveEsporte(esporteSelecionado)}` : " tema-todos";
     const termoBusca = normalizarTipoJogo(parametros.get("busca"));
     const nomeEsporte = nomeDoEsporte(esporteSelecionado) || "Todas as Quadras";
     const chaveFiltros = `${esporteSelecionado || ""}|${termoBusca}`;

@@ -67,7 +67,17 @@ export function nomeDoEsporte(valor) {
     return nomesEsportesAntigos[chave] || String(valor || "").trim();
 }
 
+export const temaNeutro = {
+    nome: "Todos os Esportes",
+    descricao: "Todas as modalidades esportivas.",
+    valor: "todos",
+    aliases: ["todos", "todas"],
+    tema: "todos",
+    paleta: ["#334155", "#475569", "#64748b", "#94a3b8", "#cbd5e1"],
+};
+
 export function obterTemaEsporte(valor) {
     const chave = chaveEsporte(valor);
-    return esportes.find((esporte) => esporte.valor === chave) || esportes[0];
+    if (!chave || chave === "todos") return temaNeutro;
+    return esportes.find((esporte) => esporte.valor === chave) || temaNeutro;
 }

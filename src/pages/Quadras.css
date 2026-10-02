@@ -2,16 +2,17 @@
    SISTEMA DE TEMAS E PALETAS DE CORES POR ESPORTE
    ========================================================================= */
 
-/* Tema Padrão (Todos os Esportes) */
-.pagina-quadras.tema-todos {
-  --cor-primaria: #22c55e;
-  --cor-primaria-hover: #16a34a;
-  --cor-secundaria: #4ade80;
-  --cor-fundo-suave: rgba(34, 197, 94, 0.12);
-  --cor-borda: rgba(34, 197, 94, 0.28);
-  --cor-borda-hover: rgba(34, 197, 94, 0.7);
-  --cor-glow: rgba(34, 197, 94, 0.22);
-  --cor-botao-texto: #061e0e;
+/* Tema Padrão (Todos os Esportes - Neutro) */
+.pagina-quadras.tema-todos,
+.pagina-quadras {
+  --cor-primaria: #e2e8f0;
+  --cor-primaria-hover: #ffffff;
+  --cor-secundaria: #cbd5e1;
+  --cor-fundo-suave: rgba(255, 255, 255, 0.08);
+  --cor-borda: rgba(209, 213, 214, 0.24);
+  --cor-borda-hover: rgba(255, 255, 255, 0.65);
+  --cor-glow: rgba(255, 255, 255, 0.2);
+  --cor-botao-texto: #0f172a;
 }
 
 /* Tema Futebol (Verde) */
@@ -83,7 +84,7 @@
   align-items: center;
   gap: 6px;
   margin-bottom: 20px;
-  color: #a7caa5;
+  color: #cbd5e1;
   font-size: 0.9rem;
   text-decoration: none;
   font-weight: 500;
@@ -155,14 +156,14 @@
    ========================================================================= */
 .filtros-esportes-barra {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 12px;
   padding: 14px 18px;
-  background: rgba(10, 30, 18, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border: none;
   border-radius: 14px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .filtro-esporte-btn {
@@ -187,10 +188,15 @@
 
 /* Estilo do botão ativo para cada esporte */
 .filtro-esporte-btn.tema-todos.ativo {
-  background: #22c55e;
-  border-color: #22c55e;
-  color: #051e0f;
-  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
+  background: #f1f5f9;
+  border-color: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.35);
+}
+
+.filtro-esporte-btn.tema-todos.ativo:hover {
+  background: #ffffff;
+  color: #0f172a;
 }
 
 .filtro-esporte-btn.tema-futebol.ativo {
@@ -241,7 +247,7 @@
    ========================================================================= */
 .card-quadra {
   border-radius: 16px;
-  background: rgba(11, 28, 18, 0.85);
+  background: rgba(24, 32, 42, 0.85);
   border: 1px solid var(--cor-borda);
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
@@ -434,7 +440,7 @@
   padding: 48px 24px;
   border-radius: 16px;
   border: 1px solid var(--cor-borda);
-  background: rgba(11, 28, 18, 0.8);
+  background: rgba(24, 32, 42, 0.85);
   text-align: center;
   backdrop-filter: blur(8px);
 }
@@ -507,7 +513,7 @@
   padding: 0 14px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 8px;
-  background: rgba(11, 28, 18, 0.85);
+  background: rgba(24, 32, 42, 0.85);
   color: #e2e8f0;
   font-size: 0.92rem;
   font-weight: 600;
@@ -587,6 +593,19 @@
   .conteudo-card-quadra {
     padding: 14px;
   }
+}
+
+#pagina-quadras.tema-todos {
+	--tema-principal: #d1d5d6;
+	--tema-claro: #ffffff;
+	--tema-borda: rgba(209, 213, 214, 0.24);
+	--tema-superficie: rgba(24, 32, 42, 0.88);
+	--tema-superficie-hover: rgba(36, 48, 63, 0.96);
+	--tema-suave: rgba(255, 255, 255, 0.08);
+	--tema-divisor: rgba(209, 213, 214, 0.22);
+	--tema-texto-suave: #cbd5e1;
+	--tema-contraste: #0f172a;
+	--tema-brilho: rgba(255, 255, 255, 0.06);
 }
 
 #pagina-quadras.tema-futebol {

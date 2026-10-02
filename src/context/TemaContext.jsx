@@ -3,8 +3,8 @@ import { useLocation } from "react-router-dom";
 import { chaveEsporte, obterTemaEsporte } from "../esportes";
 
 const TemaContext = createContext({
-    tema: "tema-futebol",
-    temaInfo: obterTemaEsporte("futebol"),
+    tema: "tema-todos",
+    temaInfo: obterTemaEsporte("todos"),
     setTemaManual: () => {},
 });
 
@@ -21,7 +21,7 @@ export function TemaProvider({ children }) {
             if (esporte) {
                 return chaveEsporte(esporte);
             }
-            return "futebol";
+            return "todos";
         }
 
         // Se estiver em /detalhes e houver tema definido pelo esporte da quadra
@@ -34,7 +34,7 @@ export function TemaProvider({ children }) {
             return chaveEsporte(temaManual);
         }
 
-        return "futebol";
+        return "todos";
     })();
 
     const temaInfo = obterTemaEsporte(chaveAtual);
