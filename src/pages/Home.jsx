@@ -20,6 +20,14 @@ function Home() {
             </Link>
           ))}
         </div>
+        <a
+          className="indicador-scroll"
+          href="#pagina-sobre"
+          aria-label="Rolar para Sobre nós"
+          onClick={() => window.dispatchEvent(new Event("sportincity:show-navigation"))}
+        >
+          <span aria-hidden="true">↓</span>
+        </a>
       </section>
       <Sobre embutido />
     </main>

@@ -14,6 +14,9 @@ function Sobre({ embutido = false }) {
 				</div>
 			</section>
 
+			<hr className="divisor-sobre" />
+			<h2 className="titulo-secao-sobre">Sobre nós</h2>
+
 			<div className="conteudo-sobre">
 				<section className="introducao-sobre" aria-labelledby="titulo-proposta-sobre">
 					<p className="marcador-sobre">NOSSA IDEIA</p>

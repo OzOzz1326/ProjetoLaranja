@@ -62,7 +62,8 @@
 .navbar-container-home {
     position: fixed;
     inset: 0 0 auto;
-    transition: transform 220ms ease, visibility 220ms ease;
+    transform: translateY(0);
+    transition: transform 220ms ease;
 }
 
 .navbar-container-home-oculta {

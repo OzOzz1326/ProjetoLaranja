@@ -78,7 +78,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Criar página de contato com formulário responsivo, seleção de assunto com foco automático na descrição e foto de campo ao lado, além da página sobre e navegação do rodapé.
 - [x] Aplicar CSS próprio às telas e componentes existentes.
 - [x] Definir o título da aba do navegador como `Sport In City` e usar uma versão compacta e legível da marca como favicon.
-- [x] Exibir somente os quatro esportes no primeiro viewport da Home; mostrar a seção Sobre abaixo da primeira tela e revelar a navbar fixa após iniciar o scroll, mantendo-a no topo enquanto a página rola.
+- [x] Exibir somente os quatro esportes no primeiro viewport da Home; incluir seta acessível para rolar até Sobre nós e revelar a navbar fixa ao ativá-la ou iniciar o scroll; separar a seção com `<hr>` e título `<h2>Sobre nós</h2>` estilizado.
 - [x] Substituir a foto repetida do estádio pelo fundo animado de gotas fundidas, com paleta verde padrão e cores temáticas por esporte nas listagens filtradas.
 - [x] Remover emojis usados como ícones decorativos; manter rótulos textuais, controles claros e apenas símbolos simples quando apropriado.
 - [x] Exibir a foto cadastrada da quadra no cartão da próxima reserva do perfil, usando `public/quadracontato.jpg` quando a imagem estiver ausente ou indisponível.

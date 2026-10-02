@@ -50,6 +50,29 @@
     width: min(100%, 780px);
 }
 
+#pagina-inicial .indicador-scroll {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 1px solid rgba(115, 222, 218, 0.62);
+    border-radius: 50%;
+    color: #79f2c0;
+    font-size: 30px;
+    line-height: 1;
+    text-decoration: none;
+    animation: seta-desce 1.5s ease-in-out infinite;
+    transition: border-color 180ms ease, color 180ms ease;
+}
+
+#pagina-inicial .indicador-scroll:hover,
+#pagina-inicial .indicador-scroll:focus-visible {
+    border-color: #effff8;
+    color: #effff8;
+    outline: 2px solid rgba(115, 222, 218, 0.5);
+    outline-offset: 3px;
+}
+
 #pagina-inicial .card-esporte {
     position: relative;
     display: flex;
@@ -145,6 +168,16 @@
     }
 }
 
+@keyframes seta-desce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(5px);
+    }
+}
+
 @media (max-width: 650px) {
     #pagina-inicial .selecao-esportes {
         gap: 24px;
@@ -171,7 +204,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    #pagina-inicial .card-esporte {
+    #pagina-inicial .card-esporte,
+    #pagina-inicial .indicador-scroll {
         animation: none;
         transition: none;
     }

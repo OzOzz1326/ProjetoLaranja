@@ -18,12 +18,15 @@ function MenuSuperior() {
         if (!estaNaHome) return undefined;
 
         const atualizarVisibilidade = () => setHomeRolada(window.scrollY > 60);
+        const mostrarNavegacao = () => setHomeRolada(true);
         const quadro = window.requestAnimationFrame(atualizarVisibilidade);
         window.addEventListener("scroll", atualizarVisibilidade, { passive: true });
+        window.addEventListener("sportincity:show-navigation", mostrarNavegacao);
 
         return () => {
             window.cancelAnimationFrame(quadro);
             window.removeEventListener("scroll", atualizarVisibilidade);
+            window.removeEventListener("sportincity:show-navigation", mostrarNavegacao);
         };
     }, [estaNaHome]);
 

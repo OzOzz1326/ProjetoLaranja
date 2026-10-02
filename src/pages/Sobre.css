@@ -18,6 +18,29 @@
 	backdrop-filter: blur(8px);
 }
 
+#pagina-sobre {
+	scroll-margin-top: 90px;
+}
+
+#pagina-sobre .divisor-sobre {
+	width: min(100%, 980px);
+	height: 1px;
+	margin: 0 auto 22px;
+	border: 0;
+	background: rgba(209, 213, 214, 0.32);
+}
+
+#pagina-sobre .titulo-secao-sobre {
+	width: min(100%, 980px);
+	margin: 0 auto 34px;
+	padding-left: 14px;
+	border-left: 3px solid #55dfa8;
+	color: #effff8;
+	font-size: 32px;
+	font-weight: 800;
+	line-height: 1.2;
+}
+
 #pagina-sobre .conteudo-hero-sobre {
 	position: relative;
 	z-index: 1;
@@ -163,6 +186,15 @@
 	#pagina-sobre .hero-sobre {
 		min-height: 360px;
 		margin-bottom: 42px;
+	}
+
+	#pagina-sobre .divisor-sobre {
+		margin-bottom: 18px;
+	}
+
+	#pagina-sobre .titulo-secao-sobre {
+		margin-bottom: 28px;
+		font-size: 28px;
 	}
 
 	#pagina-sobre .conteudo-hero-sobre {
