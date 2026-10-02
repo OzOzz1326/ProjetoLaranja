@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import BackgroundTeia from "./components/BackgroundTeia";
 import BackgroundGotas from "./components/BackgroundGotas";
 import MenuSuperior from "./components/MenuSuperior";
 import Rodape from "./components/Rodape";
@@ -16,10 +17,14 @@ import { TemaProvider, useTema } from "./context/TemaContext";
 
 function ConteudoApp() {
   const { tema, temaInfo } = useTema();
+  const { pathname } = useLocation();
+  const rotaEsportiva = ["/quadras", "/detalhes"].some(
+    (rota) => pathname === rota || pathname.startsWith(`${rota}/`),
+  );
 
   return (
-    <div id="app-shell" className={tema}>
-      <BackgroundGotas cores={temaInfo.paleta} />
+    <div id="app-shell" className={`${tema}${rotaEsportiva ? "" : " app-comum"}`}>
+      {rotaEsportiva ? <BackgroundGotas cores={temaInfo.paleta} /> : <BackgroundTeia />}
       <MenuSuperior />
       <Routes>
         <Route path="/" element={<Home />} />

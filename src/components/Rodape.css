@@ -35,6 +35,14 @@
   --rodape-texto: #fef08a;
 }
 
+.app-comum .rodape-simples {
+  --rodape-bg: linear-gradient(180deg, rgba(62, 70, 73, 0.96) 0%, rgba(29, 36, 48, 0.98) 100%);
+  --rodape-borda: rgba(209, 213, 214, 0.2);
+  --rodape-glow: rgba(209, 213, 214, 0.24);
+  --rodape-titulo: #f4f5f5;
+  --rodape-texto: #c3c8ca;
+}
+
 /* =========================================================================
    2. ESTRUTURA DO RODAPÉ
    ========================================================================= */

@@ -13,7 +13,37 @@ body {
     position: relative;
     isolation: isolate;
     min-height: 100vh;
-    background-color: var(--fundo-app, #07190c);
+    background: var(--fundo-app, #07190c);
+}
+
+#app-shell.app-comum {
+    background: linear-gradient(125deg, #1d2430 0%, #3e4649 38%, #697174 70%, #4e5a60 100%);
+}
+
+#app-shell.app-comum > :not(.background-teia):not(.navbar-container) {
+    position: relative;
+    z-index: 1;
+}
+
+.app-comum #pagina-perfil .painel-principal-perfil,
+.app-comum #pagina-perfil .painel-lateral-perfil,
+.app-comum #pagina-perfil .card-dados-conta,
+.app-comum #pagina-perfil .card-atalhos-perfil,
+.app-comum #pagina-perfil .card-sem-sessao,
+.app-comum #pagina-perfil .card-proxima-partida,
+.app-comum #pagina-login .card-login,
+.app-comum #pagina-cadastro .card-cadastro,
+.app-comum #pagina-contato .formulario-contato,
+.app-comum #pagina-criar-quadra .formulario-quadra,
+.app-comum #pagina-pagamento .selecao-pagamento,
+.app-comum #pagina-pagamento .resumo-pagamento {
+    background-color: rgba(62, 70, 73, 0.94);
+    border-color: rgba(209, 213, 214, 0.24);
+}
+
+.app-comum #pagina-sobre .hero-sobre {
+    background-color: rgba(62, 70, 73, 0.48);
+    border-color: rgba(209, 213, 214, 0.24);
 }
 
 #app-shell.tema-futebol {

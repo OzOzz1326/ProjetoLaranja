@@ -11,20 +11,20 @@ function MenuSuperior() {
     const [termoBusca, setTermoBusca] = useState("");
     const [usuarioLogado, setUsuarioLogado] = useState(null);
     const [pagamentoTesteAtivo, setPagamentoTesteAtivo] = useState(lerPagamentoTesteAtivo);
-    const [homeRolada, setHomeRolada] = useState(false);
     const estaNaHome = location.pathname === "/" || location.pathname === "/pagina-inicial";
+    const [homeRolada, setHomeRolada] = useState(() => window.scrollY > 60);
 
     useEffect(() => {
-        if (!estaNaHome) {
-            setHomeRolada(false);
-            return undefined;
-        }
+        if (!estaNaHome) return undefined;
 
         const atualizarVisibilidade = () => setHomeRolada(window.scrollY > 60);
-        atualizarVisibilidade();
+        const quadro = window.requestAnimationFrame(atualizarVisibilidade);
         window.addEventListener("scroll", atualizarVisibilidade, { passive: true });
 
-        return () => window.removeEventListener("scroll", atualizarVisibilidade);
+        return () => {
+            window.cancelAnimationFrame(quadro);
+            window.removeEventListener("scroll", atualizarVisibilidade);
+        };
     }, [estaNaHome]);
 
     useEffect(() => {

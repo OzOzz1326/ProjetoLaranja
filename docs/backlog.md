@@ -84,6 +84,7 @@ O cliente Supabase depende de `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 - [x] Exibir a foto cadastrada da quadra no cartão da próxima reserva do perfil, usando `public/quadracontato.jpg` quando a imagem estiver ausente ou indisponível.
 - [ ] Integrar o formulário de contato a um canal de atendimento, validar os dados enviados e confirmar como as preferências de atualização serão usadas.
 - [x] Substituir a próxima partida fixa no perfil pela próxima reserva real do usuário, com dados da quadra e opção de cancelamento.
+- [x] Aplicar fundo animado de partículas conectadas e paleta cinza à tela inicial, páginas comuns, menu e rodapé, mantendo o fundo temático nas rotas de quadras e detalhes esportivos.
 - [ ] Revisar acessibilidade, mensagens e comportamento responsivo dos fluxos de busca, cadastro e reserva.
 
 ## Validação e publicação
