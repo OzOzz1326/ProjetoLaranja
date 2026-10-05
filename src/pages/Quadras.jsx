@@ -102,28 +102,20 @@ function obterClasseEsporte(valor) {
     return "esporte-verde";
 }
 
-function obterTemaPagina(esporte) {
-    if (!esporte) return "tema-todos";
-    const chave = chaveEsporte(esporte);
-    if (chave === "futebol") return "tema-futebol";
-    if (chave === "tennis") return "tema-tennis";
-    if (chave === "futvolei") return "tema-futvolei";
-    if (chave === "beachtennis") return "tema-beachtennis";
-    return "tema-todos";
-}
-
 function Quadras() {
     const [parametros, setSearchParams] = useSearchParams();
     const esporteSelecionado = parametros.get("esporte");
+    const precoMaximoParam = parametros.get("precoMax");
     const temaEsporte = esporteSelecionado ? ` tema-${chaveEsporte(esporteSelecionado)}` : " tema-todos";
     const termoBusca = normalizarTipoJogo(parametros.get("busca"));
     const nomeEsporte = nomeDoEsporte(esporteSelecionado) || "Todas as Quadras";
-    const chaveFiltros = `${esporteSelecionado || ""}|${termoBusca}`;
-
-    const temaAtual = obterTemaPagina(esporteSelecionado);
+    const chaveFiltros = `${esporteSelecionado || ""}|${termoBusca}|${precoMaximoParam || "todos"}`;
+    const precoMaximo = Number(precoMaximoParam || 0);
 
     const [quadras, setQuadras] = useState([]);
     const [carregando, setCarregando] = useState(true);
+    const [erroConsulta, setErroConsulta] = useState(false);
+    const [tentativaBusca, setTentativaBusca] = useState(0);
     const [ehSocio, setEhSocio] = useState(false);
     const [paginaSelecionada, setPaginaSelecionada] = useState({ chaveFiltros, numero: 1 });
     const paginaAtual = paginaSelecionada.chaveFiltros === chaveFiltros
@@ -141,6 +133,16 @@ function Quadras() {
             novosParametros.delete("esporte");
         } else {
             novosParametros.set("esporte", chave);
+        }
+        setSearchParams(novosParametros);
+    }
+
+    function aplicarFiltroPreco(valor) {
+        const novosParametros = new URLSearchParams(parametros);
+        if (!valor) {
+            novosParametros.delete("precoMax");
+        } else {
+            novosParametros.set("precoMax", valor);
         }
         setSearchParams(novosParametros);
     }
@@ -184,48 +186,63 @@ function Quadras() {
     }, []);
 
     useEffect(() => {
+        let ativo = true;
+
         async function buscaQuadras() {
             setCarregando(true);
+            setErroConsulta(false);
 
-            const { data, error } = await supabase.from("quadras").select();
+            try {
+                if (!supabase) throw new Error("Cliente Supabase indisponível.");
 
-            if (error) {
-                console.log(error);
-                setQuadras([]);
-                setCarregando(false);
-                return;
+                const { data, error } = await supabase.from("quadras").select();
+                if (error) throw error;
+
+                let lista = data || [];
+
+                if (esporteSelecionado) {
+                    lista = lista.filter((quadra) => {
+                        const tipos = listarTiposJogo(quadra.tipo_jogo)
+                            .map((tipo) => chaveEsporte(tipo));
+                        const esporteNormalizado = chaveEsporte(esporteSelecionado);
+
+                        return tipos.includes(esporteNormalizado);
+                    });
+                }
+
+                if (termoBusca) {
+                    lista = lista.filter((quadra) => {
+                        const tipos = listarTiposJogo(quadra.tipo_jogo)
+                            .map((tipo) => nomeDoEsporte(tipo));
+                        const valoresEsportes = tipos.join(" ").toLowerCase();
+
+                        return correspondeBusca(quadra.nome, termoBusca)
+                            || correspondeBusca(quadra.descricao, termoBusca)
+                            || correspondeBusca(valoresEsportes, termoBusca);
+                    });
+                }
+
+                if (precoMaximo > 0) {
+                    lista = lista.filter((quadra) => Number(quadra.preco || 0) <= precoMaximo);
+                }
+
+                if (ativo) setQuadras(lista);
+            } catch {
+                if (ativo) {
+                    setQuadras([]);
+                    setErroConsulta(true);
+                }
+            } finally {
+                if (ativo) setCarregando(false);
             }
-
-            let lista = data || [];
-
-            if (esporteSelecionado) {
-                lista = lista.filter((quadra) => {
-                    const tipos = listarTiposJogo(quadra.tipo_jogo)
-                        .map((tipo) => chaveEsporte(tipo));
-                    const esporteNormalizado = chaveEsporte(esporteSelecionado);
-
-                    return tipos.includes(esporteNormalizado);
-                });
-            }
-
-            if (termoBusca) {
-                lista = lista.filter((quadra) => {
-                    const tipos = listarTiposJogo(quadra.tipo_jogo)
-                        .map((tipo) => nomeDoEsporte(tipo));
-                    const valoresEsportes = tipos.join(" ").toLowerCase();
-
-                    return correspondeBusca(quadra.nome, termoBusca)
-                        || correspondeBusca(quadra.descricao, termoBusca)
-                        || correspondeBusca(valoresEsportes, termoBusca);
-                });
-            }
-
-            setQuadras(lista);
-            setCarregando(false);
         }
 
         buscaQuadras();
-    }, [esporteSelecionado, termoBusca]);
+
+        return () => {
+            ativo = false;
+        };
+    }, [esporteSelecionado, termoBusca, precoMaximo, tentativaBusca]);
 
     return (
         <main id="pagina-quadras" className={`pagina-quadras${temaEsporte}`}>
@@ -268,6 +285,23 @@ function Quadras() {
                         );
                     })}
                 </div>
+
+                <div className="controles-filtros-quadras">
+                    <label className="filtro-preco" htmlFor="filtro-preco-maximo">
+                        <span>Preço máximo</span>
+                        <select
+                            id="filtro-preco-maximo"
+                            value={precoMaximoParam || ""}
+                            onChange={(evento) => aplicarFiltroPreco(evento.target.value)}
+                        >
+                            <option value="">Qualquer valor</option>
+                            <option value="50">Até R$ 50</option>
+                            <option value="80">Até R$ 80</option>
+                            <option value="120">Até R$ 120</option>
+                            <option value="200">Até R$ 200</option>
+                        </select>
+                    </label>
+                </div>
             </div>
 
             {/* Conteúdo: Carregando, Vazio ou Grid de 4 */}
@@ -275,6 +309,18 @@ function Quadras() {
                 <div className="estado-vazio">
                     <div className="spinner-carregando" aria-hidden="true"></div>
                     <h2>Buscando quadras disponíveis...</h2>
+                </div>
+            ) : erroConsulta ? (
+                <div className="estado-vazio estado-erro" role="alert">
+                    <h2>Não foi possível carregar as quadras</h2>
+                    <p>Verifique sua conexão e tente novamente.</p>
+                    <button
+                        type="button"
+                        className="botao-voltar-filtro"
+                        onClick={() => setTentativaBusca((tentativa) => tentativa + 1)}
+                    >
+                        Tentar novamente
+                    </button>
                 </div>
             ) : quadras.length === 0 ? (
                 <div className="estado-vazio">

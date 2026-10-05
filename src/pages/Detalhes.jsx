@@ -71,10 +71,10 @@ function Detalhes() {
     // =========================================================================
     // O Hook useSearchParams captura parâmetros passados na URL (ex: /detalhes?id=22)
     // O Hook useParams captura parâmetros definidos nas rotas (ex: /detalhes/22)
-    // Aqui garantimos que pegamos o id de uma das duas formas. Se falhar, usa 23 como teste.
+    // O ID pode vir do parâmetro de busca ou da rota.
     const [searchParams] = useSearchParams();
     const params = useParams();
-    const quadraId = searchParams.get("id") || params.id || 23;
+    const quadraId = searchParams.get("id") || params.id;
 
     // =========================================================================
     // 2. ESTADOS (STATE) DA PÁGINA E DO MODAL DE RESERVA
@@ -233,10 +233,28 @@ function Detalhes() {
     }, [quadraId]);
 
     useEffect(() => {
-        if (quadra?.tipo_jogo) {
-            setTemaManual(quadra.tipo_jogo);
+        if (!quadra?.tipo_jogo) {
+            return undefined;
         }
+
+        setTemaManual(quadra.tipo_jogo);
+
+        return () => {
+            setTemaManual(null);
+        };
     }, [quadra?.tipo_jogo, setTemaManual]);
+
+    if (!quadraId) {
+        return (
+            <div id="pagina-detalhes" className="pagina-detalhes tema-futebol">
+                <div className="error-container">
+                    <h2>Identificação da quadra ausente</h2>
+                    <p>O endereço acessado não informa qual quadra deve ser exibida.</p>
+                    <Link to="/quadras" className="voltar-detalhes">Voltar para quadras</Link>
+                </div>
+            </div>
+        );
+    }
 
     if (loading) {
         return (

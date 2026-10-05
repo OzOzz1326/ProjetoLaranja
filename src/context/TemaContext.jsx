@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { chaveEsporte, obterTemaEsporte } from "../esportes";
 
@@ -10,42 +11,48 @@ const TemaContext = createContext({
 
 export function TemaProvider({ children }) {
     const location = useLocation();
-    const [temaManual, setTemaManual] = useState(null);
 
-    // Determina o tema com base na rota e nos query params
-    const chaveAtual = (() => {
-        // Se estiver em /quadras, segue a query string ?esporte=...
+    const temaManual = useMemo(() => {
+        if (!location.pathname.startsWith("/detalhes")) {
+            return null;
+        }
+
+        try {
+            return sessionStorage.getItem("temaManualEsporte");
+        } catch {
+            return null;
+        }
+    }, [location.pathname]);
+
+    const chaveAtual = useMemo(() => {
         if (location.pathname === "/quadras") {
             const params = new URLSearchParams(location.search);
             const esporte = params.get("esporte");
-            if (esporte) {
-                return chaveEsporte(esporte);
-            }
-            return "todos";
+            return esporte ? chaveEsporte(esporte) : "todos";
         }
 
-        // Se estiver em /detalhes e houver tema definido pelo esporte da quadra
         if (location.pathname.startsWith("/detalhes") && temaManual) {
             return chaveEsporte(temaManual);
         }
 
-        // Se houver tema manual ativo
-        if (temaManual) {
-            return chaveEsporte(temaManual);
-        }
-
         return "todos";
-    })();
+    }, [location.pathname, location.search, temaManual]);
 
     const temaInfo = obterTemaEsporte(chaveAtual);
     const temaClasse = `tema-${temaInfo.tema}`;
 
-    // Reseta o tema manual quando o usuário sai da página de detalhes
-    useEffect(() => {
-        if (!location.pathname.startsWith("/detalhes")) {
-            setTemaManual(null);
+    const setTemaManual = (valor) => {
+        try {
+            if (!valor) {
+                sessionStorage.removeItem("temaManualEsporte");
+                return;
+            }
+
+            sessionStorage.setItem("temaManualEsporte", String(valor));
+        } catch {
+            // Ignora falhas de armazenamento em ambientes sem sessão disponível.
         }
-    }, [location.pathname]);
+    };
 
     return (
         <TemaContext.Provider value={{ tema: temaClasse, temaInfo, setTemaManual }}>

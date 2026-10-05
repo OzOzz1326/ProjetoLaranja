@@ -166,6 +166,35 @@
   border-radius: 14px;
 }
 
+.controles-filtros-quadras {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.filtro-preco {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.45);
+  color: #e2e8f0;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.filtro-preco select {
+  min-width: 150px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.8);
+  color: #f8fafc;
+  font: inherit;
+}
+
 .filtro-esporte-btn {
   display: inline-flex;
   align-items: center;
@@ -443,6 +472,14 @@
   background: rgba(24, 32, 42, 0.85);
   text-align: center;
   backdrop-filter: blur(8px);
+}
+
+.estado-vazio.estado-erro {
+  border-color: rgba(248, 113, 113, 0.5);
+}
+
+.estado-vazio.estado-erro h2 {
+  color: #fca5a5;
 }
 
 .estado-vazio h2 {

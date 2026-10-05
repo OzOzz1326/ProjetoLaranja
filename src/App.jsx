@@ -40,7 +40,6 @@ function ConteudoApp() {
         <Route path="/contato" element={<Contato />} />
         <Route path="/detalhes" element={<Detalhes />} />
         <Route path="/detalhes/:id" element={<Detalhes />} />
-        <Route path="/perfil" element={<Perfil />} />
         <Route path="/sobre" element={<Sobre />} />
       </Routes>
       <Rodape />
