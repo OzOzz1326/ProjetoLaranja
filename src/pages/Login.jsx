@@ -115,12 +115,6 @@ function Login() {
                         </div>
                     </div>
 
-                    <div className="esqueci-senha">
-                        <a href="#" onClick={(e) => { e.preventDefault(); alert("Entre em contato com o suporte para redefinir sua senha."); }}>
-                            Esqueci minha senha
-                        </a>
-                    </div>
-
                     <button type="submit" className="btn-entrar" disabled={entrando}>
                         {entrando ? "Entrando..." : "Entrar"}
                     </button>
