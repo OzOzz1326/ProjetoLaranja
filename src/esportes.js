@@ -1,7 +1,7 @@
 export const esportes = [
     {
         nome: "Futebol",
-        icone: "⚽",
+        icone: "",
         descricao: "Encontre campos e horários para montar sua partida.",
         valor: "futebol",
         aliases: [],
@@ -10,7 +10,7 @@ export const esportes = [
     },
     {
         nome: "Fut-vôlei",
-        icone: "🏐",
+        icone: "",
         descricao: "Jogue na areia usando os pés, a cabeça e muita habilidade.",
         valor: "futvolei",
         aliases: ["fut-vôlei", "fut volei"],
@@ -19,7 +19,7 @@ export const esportes = [
     },
     {
         nome: "Tennis",
-        icone: "🎾",
+        icone: "",
         descricao: "Escolha uma quadra e reserve seu horário.",
         valor: "tennis",
         aliases: ["tênis", "tenis"],
@@ -28,7 +28,7 @@ export const esportes = [
     },
     {
         nome: "BeachTennis",
-        icone: "🏖️",
+        icone: "",
         descricao: "Pratique na areia com quem você gosta.",
         valor: "beachtennis",
         aliases: ["beach tennis", "beach tênis", "beachtenis"],

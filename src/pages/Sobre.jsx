@@ -4,32 +4,32 @@ import "./Sobre.css";
 
 /* Estatísticas exibidas na seção de impacto */
 const STATS = [
-  { valor: "4", sufixo: "+", rotulo: "Modalidades" },
-  { valor: "100", sufixo: "%", rotulo: "Gratuito" },
+  { valor: "4", sufixo: "", rotulo: "Modalidades" },
+  { valor: "R$", sufixo: "", rotulo: "Aluguel por quadra" },
   { valor: "∞", sufixo: "", rotulo: "Possibilidades" },
 ];
 
 /* Pilares do projeto — bento grid */
 const PILARES = [
   {
-    icone: "🏟️",
+    icone: "",
     titulo: "Encontre quadras perto de você",
     descricao:
       "Consulte espaços disponíveis na sua cidade, filtre por modalidade e planeje sua próxima partida com facilidade.",
     destaque: true,
   },
   {
-    icone: "⚡",
+    icone: "",
     titulo: "Simples e direto",
     descricao: "Sem cadastros desnecessários para explorar. Navegue, veja e decida.",
   },
   {
-    icone: "🤝",
+    icone: "",
     titulo: "Para jogadores e proprietários",
     descricao: "Quem joga encontra onde jogar. Quem tem quadra ganha visibilidade.",
   },
   {
-    icone: "🏙️",
+    icone: "",
     titulo: "A cidade em movimento",
     descricao:
       "O esporte une pessoas e dinamiza bairros. O Sport In City quer ser parte disso.",
@@ -131,9 +131,7 @@ function Sobre({ embutido = false }) {
               key={p.titulo}
               style={{ "--delay-pilar": `${i * 90}ms` }}
             >
-              <span className="pilar-icone" aria-hidden="true">
-                {p.icone}
-              </span>
+              <span className="pilar-icone" aria-hidden="true" />
               <h2 className="pilar-titulo">{p.titulo}</h2>
               <p className="pilar-desc">{p.descricao}</p>
 

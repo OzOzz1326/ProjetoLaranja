@@ -271,7 +271,7 @@
 
 .pilares-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: auto auto;
     gap: 16px;
 }
@@ -308,7 +308,6 @@
 
 /* Card destaque: ocupa 2 colunas */
 .pilar-destaque {
-    grid-column: span 2;
     background: linear-gradient(135deg, rgba(12, 35, 22, 0.9) 0%, rgba(8, 21, 16, 0.95) 100%);
     border-color: rgba(85, 223, 168, 0.2);
 }
@@ -516,11 +515,7 @@
    ══════════════════════════════════════════════════════ */
 @media (max-width: 900px) {
     .pilares-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .pilar-destaque {
-        grid-column: span 2;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .sobre-hero {

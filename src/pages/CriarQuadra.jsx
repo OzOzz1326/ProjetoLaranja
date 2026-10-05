@@ -120,10 +120,17 @@ function CriarQuadra() {
                 return;
             }
 
+            const emailUsuario = sessao.user.email?.trim();
+
+            if (!emailUsuario) {
+                window.alert("Não foi possível identificar o e-mail da sua conta para validar o cadastro.");
+                return;
+            }
+
             const { data: usuario, error: erroUsuario } = await supabase
                 .from("usuarios")
                 .select("id,socio")
-                .ilike("email", sessao.user.email.trim())
+                .ilike("email", emailUsuario)
                 .maybeSingle();
 
             if (erroUsuario || !usuario) {
@@ -162,7 +169,16 @@ function CriarQuadra() {
 
             if (error) {
                 console.error("Não foi possível cadastrar a quadra no Supabase:", error);
-                window.alert(`Não foi possível cadastrar a quadra: ${error.message}`);
+                const mensagemDePermissao =
+                    error?.code === "42501" || /policy|rls|permission|insufficient/i.test(error?.message || "");
+
+                if (mensagemDePermissao) {
+                    window.alert(
+                        "Sua conta está autenticada, mas o banco ainda não permite salvar quadras para sócios. Execute a migration de sócios/quadras no Supabase e tente novamente."
+                    );
+                } else {
+                    window.alert(`Não foi possível cadastrar a quadra: ${error.message}`);
+                }
                 return;
             }
 

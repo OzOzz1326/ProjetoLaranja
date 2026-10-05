@@ -18,52 +18,54 @@
     align-items: center;
     justify-content: center;
     gap: 36px;
+    width: min(100%, 1400px);
+    margin: 0 auto;
     min-height: 100vh;
     min-height: 100svh;
     padding: 100px 24px 96px;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* ── ORBES DE FUNDO ──────────────────────────────────── */
 .hero-orbes {
     position: absolute;
-    inset: 0;
+    inset: -12vh -8vw;
     pointer-events: none;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .orbe {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
+    filter: blur(90px);
     opacity: 0;
     animation: orbe-aparece 1.6s ease forwards;
 }
 
 .orbe-1 {
-    width: 420px;
-    height: 420px;
-    top: -100px;
-    left: -120px;
-    background: radial-gradient(circle, rgba(85, 223, 168, 0.22) 0%, transparent 70%);
+    width: min(46vw, 620px);
+    height: min(46vw, 620px);
+    top: -8vh;
+    left: -10vw;
+    background: radial-gradient(circle, rgba(85, 223, 168, 0.28) 0%, rgba(85, 223, 168, 0.12) 30%, transparent 72%);
     animation-delay: 0.1s;
 }
 
 .orbe-2 {
-    width: 320px;
-    height: 320px;
-    bottom: 80px;
-    right: -80px;
-    background: radial-gradient(circle, rgba(115, 222, 218, 0.18) 0%, transparent 70%);
+    width: min(38vw, 520px);
+    height: min(38vw, 520px);
+    bottom: -6vh;
+    right: -8vw;
+    background: radial-gradient(circle, rgba(115, 222, 218, 0.18) 0%, rgba(115, 222, 218, 0.08) 28%, transparent 72%);
     animation-delay: 0.4s;
 }
 
 .orbe-3 {
-    width: 200px;
-    height: 200px;
-    top: 50%;
-    left: 60%;
-    background: radial-gradient(circle, rgba(121, 242, 192, 0.12) 0%, transparent 70%);
+    width: min(24vw, 330px);
+    height: min(24vw, 330px);
+    top: 44%;
+    left: 56%;
+    background: radial-gradient(circle, rgba(121, 242, 192, 0.12) 0%, rgba(121, 242, 192, 0.04) 25%, transparent 70%);
     animation-delay: 0.7s;
 }
 
@@ -77,6 +79,8 @@
     flex-direction: column;
     align-items: center;
     gap: 14px;
+    width: min(100%, 1100px);
+    margin: 0 auto;
     text-align: center;
     will-change: transform, opacity;
     animation: hero-entra 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -98,6 +102,8 @@
 
 #pagina-inicial .marca-inicial {
     position: relative;
+    display: block;
+    width: 100%;
     margin: 0;
     padding-bottom: 18px;
     background: linear-gradient(105deg, #79f2c0 0%, #effff8 50%, #68dedb 100%);

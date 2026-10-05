@@ -9,7 +9,7 @@ function Rodape() {
     <footer className={`rodape-simples ${tema}`} role="contentinfo">
       <div className="rodape-simples-conteudo">
         <div className="rodape-simples-marca">
-          <img src="/logosfundo.png" alt="Sport In City" className="rodape-simples-logo" />
+          <img src="/sportincitylogo.png" alt="Sport In City" className="rodape-simples-logo" />
           <span className="rodape-simples-titulo">SPORT IN CITY</span>
         </div>
         <p className="rodape-simples-direitos">

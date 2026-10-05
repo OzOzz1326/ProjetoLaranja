@@ -1,278 +1,294 @@
 #pagina-contato {
-	min-height: calc(100vh - 142px);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 48px 20px 72px;
+    min-height: calc(100vh - 142px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px 72px;
+    background: rgba(11, 18, 17, 0.2);
 }
 
 #pagina-contato .conteudo-contato {
-	width: min(100%, 1240px);
-	display: grid;
-	grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-	align-items: stretch;
-	gap: 24px;
-	margin-block: auto;
+    width: min(100%, 1280px);
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: stretch;
+    gap: 28px;
+    margin: 0 auto;
 }
 
-#pagina-contato .formulario-contato {
-	width: 100%;
-	padding: 34px 34px 36px;
-	border: 1px solid #255b35;
-	border-radius: 8px;
-	background: rgba(13, 43, 23, 0.94);
-	box-shadow: 0 18px 54px rgba(0, 0, 0, 0.4);
-	color: #f0f0f0;
-}
-
-#pagina-contato .imagem-campo-contato {
-	position: relative;
-	min-height: 620px;
-	overflow: hidden;
-	border: 1px solid rgba(87, 199, 133, 0.35);
-	border-radius: 8px;
-	background: #07190c;
-}
-
-#pagina-contato .imagem-campo-contato::after {
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(180deg, rgba(7, 25, 12, 0.02) 35%, rgba(7, 25, 12, 0.88) 100%);
-	content: "";
-}
-
-#pagina-contato .imagem-campo-contato img {
-	position: absolute;
-	inset: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: center;
-}
-
-#pagina-contato .legenda-campo-contato {
-	position: absolute;
-	right: 32px;
-	bottom: 32px;
-	left: 32px;
-	z-index: 1;
-}
-
-#pagina-contato .legenda-campo-contato span {
-	color: #8be0aa;
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 2px;
-}
-
-#pagina-contato .legenda-campo-contato h2 {
-	max-width: 420px;
-	margin-top: 10px;
-	color: #f4fff6;
-	font-size: 32px;
-	line-height: 1.15;
+#pagina-contato .bloco-formulario-contato {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
 }
 
 #pagina-contato .cabecalho-formulario-contato {
-	margin-bottom: 28px;
-	text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 8px;
 }
 
-#pagina-contato .cabecalho-formulario-contato img {
-	width: 86px;
-	height: 56px;
-	object-fit: contain;
-}
-
-#pagina-contato .cabecalho-formulario-contato p {
-	margin: 4px 0 16px;
-	color: #57c785;
-	font-size: 11px;
-	font-weight: 800;
-	letter-spacing: 1.5px;
+#pagina-contato .marcador-contato {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border: 1px solid rgba(86, 212, 175, 0.5);
+    border-radius: 999px;
+    background: rgba(86, 212, 175, 0.08);
+    color: #8ff1cf;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 #pagina-contato .cabecalho-formulario-contato h1 {
-	color: #f4fff6;
-	font-size: 30px;
-	line-height: 1.2;
+    margin: 0;
+    color: #f4fff6;
+    font-size: clamp(3rem, 5vw, 6.2rem);
+    line-height: 0.9;
+    font-weight: 900;
+    letter-spacing: -0.06em;
 }
 
-#pagina-contato .cabecalho-formulario-contato span {
-	display: block;
-	margin: 9px auto 0;
-	color: #a9c4ae;
-	font-size: 14px;
-	line-height: 1.5;
+#pagina-contato .cabecalho-formulario-contato p {
+    margin: 0;
+    max-width: 560px;
+    color: rgba(220, 234, 227, 0.8);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+#pagina-contato .formulario-contato {
+    width: 100%;
+    padding: 26px 26px 22px;
+    border: 1px solid rgba(164, 197, 188, 0.18);
+    border-radius: 18px;
+    background: rgba(9, 24, 17, 0.78);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+    color: #f0f0f0;
+    backdrop-filter: blur(10px);
 }
 
 #pagina-contato .campos-contato {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 18px 16px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 16px;
 }
 
 #pagina-contato .campo-contato {
-	min-width: 0;
-	display: flex;
-	flex-direction: column;
-	gap: 7px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#pagina-contato .campo-amplo {
+    grid-column: 1 / -1;
 }
 
 #pagina-contato .campo-contato label {
-	color: #e2f1e5;
-	font-size: 13px;
-	font-weight: 700;
+    color: #e6f1ec;
+    font-size: 13px;
+    font-weight: 700;
 }
 
 #pagina-contato .campo-contato input,
 #pagina-contato .campo-contato select,
 #pagina-contato .campo-contato textarea {
-	width: 100%;
-	border: 1px solid #356d45;
-	border-radius: 4px;
-	background: rgba(7, 25, 12, 0.82);
-	color: #f4fff6;
-	font: inherit;
-	font-size: 14px;
-	outline: none;
-	transition: border-color 0.18s, box-shadow 0.18s;
+    width: 100%;
+    border: 1px solid rgba(136, 174, 160, 0.3);
+    border-radius: 10px;
+    background: rgba(12, 24, 20, 0.68);
+    color: #f4fff6;
+    font: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
 
 #pagina-contato .campo-contato input {
-	min-height: 44px;
-	padding: 10px 12px;
+    min-height: 48px;
+    padding: 12px 14px;
 }
 
 #pagina-contato .campo-contato select {
-	min-height: 44px;
-	padding: 10px 12px;
-	cursor: pointer;
+    min-height: 48px;
+    padding: 12px 14px;
+    cursor: pointer;
 }
 
 #pagina-contato .campo-contato textarea {
-	min-height: 132px;
-	padding: 12px;
-	resize: vertical;
+    min-height: 150px;
+    padding: 12px 14px;
+    resize: vertical;
 }
 
 #pagina-contato .campo-contato input::placeholder,
 #pagina-contato .campo-contato textarea::placeholder {
-	color: #9eb5a3;
+    color: rgba(180, 196, 190, 0.9);
 }
 
 #pagina-contato .campo-contato input:focus,
 #pagina-contato .campo-contato select:focus,
 #pagina-contato .campo-contato textarea:focus {
-	border-color: #57c785;
-	box-shadow: 0 0 0 3px rgba(87, 199, 133, 0.16);
+    border-color: #6fe2b3;
+    box-shadow: 0 0 0 3px rgba(111, 226, 179, 0.18);
 }
 
 #pagina-contato .campo-descricao-contato {
-	grid-column: 1 / -1;
+    grid-column: 1 / -1;
 }
 
 #pagina-contato .preferencias-contato {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 12px 22px;
-	margin: 22px 0 24px;
-	padding: 0;
-	border: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    margin: 22px 0 18px;
+    padding: 0;
+    border: 0;
 }
 
 #pagina-contato .preferencias-contato legend {
-	margin-bottom: 12px;
-	color: #e2f1e5;
-	font-size: 13px;
-	font-weight: 700;
+    margin-bottom: 10px;
+    color: #e2f1e5;
+    font-size: 13px;
+    font-weight: 700;
 }
 
 #pagina-contato .preferencias-contato label {
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
-	color: #b7cbbb;
-	font-size: 13px;
-	cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #dbe7e2;
+    font-size: 13px;
+    cursor: pointer;
 }
 
 #pagina-contato .preferencias-contato input {
-	width: 16px;
-	height: 16px;
-	margin: 0;
-	accent-color: #57c785;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: #56d4ab;
 }
 
 #pagina-contato .botao-enviar-contato {
-	width: 100%;
-	min-height: 48px;
-	border: 0;
-	border-radius: 4px;
-	background: #57c785;
-	color: #07190c;
-	font: inherit;
-	font-size: 15px;
-	font-weight: 700;
-	cursor: pointer;
-	transition: background-color 0.18s, transform 0.18s;
+    width: 100%;
+    min-height: 52px;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #62e0b1 0%, #7be7c8 100%);
+    color: #061a14;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    box-shadow: 0 14px 28px rgba(86, 212, 175, 0.18);
 }
 
 #pagina-contato .botao-enviar-contato:hover {
-	transform: translateY(-1px);
-	background: #8be0aa;
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+    box-shadow: 0 18px 32px rgba(86, 212, 175, 0.24);
 }
 
 #pagina-contato .botao-enviar-contato:focus-visible,
 #pagina-contato .preferencias-contato input:focus-visible {
-	outline: 3px solid #8be0aa;
-	outline-offset: 3px;
+    outline: 3px solid rgba(143, 241, 207, 0.6);
+    outline-offset: 3px;
 }
 
-@media (max-width: 900px) {
-	#pagina-contato .conteudo-contato {
-		max-width: 680px;
-		grid-template-columns: 1fr;
-	}
-
-	#pagina-contato .imagem-campo-contato {
-		min-height: 360px;
-	}
+#pagina-contato .imagem-campo-contato {
+    position: relative;
+    min-height: 620px;
+    overflow: hidden;
+    border: 1px solid rgba(172, 194, 187, 0.2);
+    border-radius: 22px;
+    background: #07190c;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
 }
 
-@media (max-width: 600px) {
-	#pagina-contato {
-		padding: 32px 16px 48px;
-	}
+#pagina-contato .imagem-campo-contato::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(8, 18, 14, 0.02) 30%, rgba(8, 18, 14, 0.72) 100%);
+    content: "";
+}
 
-	#pagina-contato .formulario-contato {
-		padding: 28px 22px 30px;
-	}
+#pagina-contato .imagem-campo-contato img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
 
-	#pagina-contato .imagem-campo-contato {
-		min-height: 300px;
-	}
+#pagina-contato .legenda-campo-contato {
+    position: absolute;
+    right: 26px;
+    bottom: 26px;
+    left: 26px;
+    z-index: 1;
+}
 
-	#pagina-contato .legenda-campo-contato {
-		right: 22px;
-		bottom: 22px;
-		left: 22px;
-	}
+#pagina-contato .legenda-campo-contato span {
+    color: #8ff1cf;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
 
-	#pagina-contato .legenda-campo-contato h2 {
-		font-size: 27px;
-	}
+#pagina-contato .legenda-campo-contato h2 {
+    max-width: 380px;
+    margin-top: 10px;
+    color: #f4fff6;
+    font-size: clamp(1.8rem, 2vw, 2.8rem);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+}
 
-	#pagina-contato .cabecalho-formulario-contato h1 {
-		font-size: 26px;
-	}
+@media (max-width: 920px) {
+    #pagina-contato .conteudo-contato {
+        max-width: 720px;
+        grid-template-columns: 1fr;
+    }
 
-	#pagina-contato .campos-contato {
-		grid-template-columns: 1fr;
-		gap: 15px;
-	}
+    #pagina-contato .imagem-campo-contato {
+        min-height: 380px;
+    }
+}
 
-	#pagina-contato .campo-descricao-contato {
-		grid-column: auto;
-	}
+@media (max-width: 620px) {
+    #pagina-contato {
+        padding: 32px 16px 48px;
+    }
+
+    #pagina-contato .formulario-contato {
+        padding: 22px 18px 20px;
+    }
+
+    #pagina-contato .cabecalho-formulario-contato h1 {
+        font-size: clamp(2.6rem, 14vw, 4rem);
+    }
+
+    #pagina-contato .campos-contato {
+        grid-template-columns: 1fr;
+    }
+
+    #pagina-contato .campo-descricao-contato {
+        grid-column: auto;
+    }
+
+    #pagina-contato .imagem-campo-contato {
+        min-height: 300px;
+    }
 }

@@ -70,9 +70,7 @@ function Home() {
               to={`/quadras?esporte=${encodeURIComponent(esporte.valor)}`}
               style={{ "--delay": `${i * 80}ms` }}
             >
-              <span className="card-esporte-icone" aria-hidden="true">
-                {esporte.icone ?? "🏟️"}
-              </span>
+              <span className="card-esporte-icone" aria-hidden="true" />
               <span className="nome-esporte">{esporte.nome}</span>
               <span className="seta-esporte" aria-hidden="true">→</span>
             </Link>

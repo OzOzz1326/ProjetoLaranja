@@ -104,7 +104,7 @@ function MenuSuperior() {
             <nav className="navbar">
                 <div className="logo-container">
                     <Link to="/pagina-inicial" aria-label="Ir para a página inicial">
-                        <img src="/logosfundo.png" alt="SportInCity Logo" />
+                        <img src="/sportincitylogo.png" alt="SportInCity Logo" />
                     </Link>
                 </div>
 

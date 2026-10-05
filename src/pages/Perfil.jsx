@@ -133,6 +133,7 @@ function Perfil() {
                         if (ativo) setErroReserva(true);
                     }
                 }
+
             } catch (error) {
                 console.error("Erro ao carregar sessão do usuário:", error);
                 localStorage.removeItem("usuario");
