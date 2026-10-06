@@ -68,7 +68,7 @@ function Pagamento() {
             const { data: sessao, error: erroSessao } = await supabase.auth.getUser();
             if (erroSessao) throw erroSessao;
             if (!sessao.user) {
-                alert("Faça login para confirmar a reserva.");
+                alert("Faça login/cadastro para reservar uma quadra");
                 navigate("/login");
                 return;
             }

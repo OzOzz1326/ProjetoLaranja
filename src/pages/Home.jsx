@@ -57,7 +57,7 @@ function Home() {
           <span className="hero-pretitulo">Bem-vindo ao</span>
           <h1 className="marca-inicial">Sport In City</h1>
           <p className="hero-descricao">
-            Encontre quadras, escolha seu esporte e jogue na cidade.
+            Uma nova forma de praticar esporte.
           </p>
         </div>
 
